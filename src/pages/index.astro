@@ -3,6 +3,7 @@ import Header from "../components/Header.astro";
 import Nav from "../components/Nav.astro";
 import Card from "../components/Card.astro";
 import Contact from "./contact.astro";
+import Icons from "../components/icons.astro";
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
@@ -22,9 +23,9 @@ import Contact from "./contact.astro";
         class="bg-linear-to-t from-pink-100 to-pink min-h-screen flex justify-center "
     >
         <div
-            class="w-10/12 max-w-5xl bg-white backdrop-blur-lg shadow-lg rounded-2xl p-6 flex px-5"
+            class="md:w-10/12    max-w-5xl   bg-white backdrop-blur-lg shadow-lg rounded-2xl p-6 flex px-5"
         >
-             
+             <Nav/>
             <main class="  p-6">
                 <Header />
                 <p class="text-gray-700 text-sm/6 mt-4">
@@ -35,10 +36,12 @@ import Contact from "./contact.astro";
                 </p>
 
                 <Card />
+                
 
                 <!-- Contact Section -->
                     <Contact />
+                    
             </main>
-        </div>
+        </div><Icons />
     </body>
 </html>

@@ -1,0 +1,61 @@
+
+
+<nav id="bottom-nav" class="fixed bottom-0 left-0 w-full backdrop-blur-lg  bg-linear-to-t from-pink-200  to-pink-50  text-black p-2 md:hidden lg:hidden shadow-md">
+    <ul class="flex justify-around items-center">
+        <li class="flex flex-col items-center icon">
+            <a href="/" class="flex flex-col items-center">
+            <svg viewBox="0 0 45 45" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        </g>
+            </svg>
+            <span class="text-xs">Нүүр</span>
+            </a>
+        </li>
+        <li class="flex flex-col items-center icon">
+            <a href="/category" class="flex flex-col items-center">
+                <img src="../icons8-category-24.png" alt="">
+                <span class="text-xs">project</span>
+            </a>
+        </li>
+        <li class="flex flex-col items-center icon">
+            <a href="/cart" class="flex flex-col items-center">
+                <img src="/public/img/icons8-cart-24.png" alt="">
+                <span class="text-xs">contact</span>
+            </a>
+        </li>
+        
+         
+    </ul>
+</nav>
+
+<style>
+    @media (min-width: 768px) {
+        #bottom-nav {
+            display: none;
+        }
+        .icon {
+            display: none;
+        }
+    }
+</style>
+
+<script>
+    let timeout: number | undefined;
+    const bottomNav = document.getElementById('bottom-nav');
+
+    function hideNav() {
+        if (bottomNav) {
+            bottomNav.style.transform = 'translateY(100%)';
+        }
+    }
+
+    function showNav() {
+        if (bottomNav) {
+            bottomNav.style.transform = 'translateY(0)';
+            clearTimeout(timeout);
+            timeout = setTimeout(hideNav, 3000);
+        }
+    }
+
+    window.addEventListener('scroll', showNav);
+    document.addEventListener('DOMContentLoaded', showNav);
+</script>
