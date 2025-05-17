@@ -16,8 +16,28 @@ import Icons from "../components/icons.astro";
         <meta name="viewport" content="width=device-width" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <meta name="generator" content={Astro.generator} />
-        <title>Astro Basics</title>
-    </head>
+        
+  <title>Нэр | Portfolio</title>
+  <meta name="description" content="Full Stack Developer portfolio. Built with Astro, Tailwind, Spring Boot, Flutter.">
+  <meta name="author" content="Таны нэр">
+  <meta name="keywords" content="portfolio, software engineer, astro, tailwind css, spring boot, flutter, vercel">
+  <meta name="robots" content="index, follow">
+
+  <!-- OpenGraph (Facebook, LinkedIn) -->
+  <meta property="og:title" content="Нэр | Full Stack Portfolio">
+  <meta property="og:description" content="Modern developer portfolio built with Astro.">
+  <meta property="og:image" content="/images/og-image.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://vercel-port-taupe.vercel.app/">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Full Stack Developer Portfolio">
+  <meta name="twitter:description" content="Check out my latest work and skills.">
+  <meta name="twitter:image" content="/images/og-image.png">
+</head>
+
+    
 
     <body
         class="bg-linear-to-t from-pink-100 to-pink min-h-screen flex justify-center "
@@ -26,17 +46,87 @@ import Icons from "../components/icons.astro";
             class="md:w-10/12    max-w-5xl   bg-white backdrop-blur-lg shadow-lg rounded-2xl p-6 flex px-5"
         >
              <Nav/>
-            <main class="  p-6">
+            <main class=" w-4/3 p-6">
                 <Header />
                 <p class="text-gray-700 text-sm/6 mt-4">
-                    Hello! I'm <strong>Ichko</strong>, a passionate web
-                    developer based in Khovd, Mongolia. I specialize in
-                    building responsive and accessible web applications with
-                    modern technologies.
+                    Hello! I'm <strong>Ichko</strong>,Full Stack Developer with hands-on experience in modern frontend (Tailwind CSS, Astro, JavaScript) and backend (Spring Boot, MySQL) technologies. Passionate about building scalable web applications and intuitive user interfaces. Experienced with Git-based team workflows, REST API development, and CI/CD deployment pipelines using GitHub and Vercel. Also skilled in mobile-first development using Flutter for cross-platform apps. Fast learner with a strong foundation in clean code, system architecture, and agile collaboration.
+
                 </p>
 
                 <Card />
-                
+                <section class="  py-8 px-4">
+  <div class="max-w-4xl mx-auto">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6">Skills</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="bg-white p-4 rounded-2xl shadow">
+        <h3 class="text-lg font-semibold text-blue-600 mb-2">Languages</h3>
+        <ul class="list-disc list-inside text-gray-700">
+          <li>Java</li>
+          <li>JavaScript</li>
+          <li>Dart</li>
+          <li>HTML & CSS</li>
+        </ul>
+      </div>
+      <div class="bg-white p-4 rounded-2xl shadow">
+        <h3 class="text-lg font-semibold text-blue-600 mb-2">Frontend</h3>
+        <ul class="list-disc list-inside text-gray-700">
+          <li>Tailwind CSS</li>
+          <li>Astro</li>
+          <li>React (Basics)</li>
+        </ul>
+      </div>
+      <div class="bg-white p-4 rounded-2xl shadow">
+        <h3 class="text-lg font-semibold text-blue-600 mb-2">Backend</h3>
+        <ul class="list-disc list-inside text-gray-700">
+          <li>Spring Boot</li>
+          <li>REST API</li>
+          <li>MVC, JWT</li>
+        </ul>
+      </div>
+      <div class="bg-white p-4 rounded-2xl shadow">
+        <h3 class="text-lg font-semibold text-blue-600 mb-2">Database</h3>
+        <ul class="list-disc list-inside text-gray-700">
+          <li>MySQL</li>
+          <li>JPA, Hibernate</li>
+        </ul>
+      </div>
+      <div class="bg-white p-4 rounded-2xl shadow">
+        <h3 class="text-lg font-semibold text-blue-600 mb-2">Mobile & Tools</h3>
+        <ul class="list-disc list-inside text-gray-700">
+          <li>Flutter</li>
+          <li>Git, GitHub</li>
+          <li>Postman</li>
+        </ul>
+      </div>
+      <div class="bg-white p-4 rounded-2xl shadow">
+        <h3 class="text-lg font-semibold text-blue-600 mb-2">DevOps</h3>
+        <ul class="list-disc list-inside text-gray-700">
+          <li>Vercel</li>
+          <li>GitHub Actions</li>
+          <li>Docker (Basics)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+
+<style>
+@media print {
+  body {
+    background-color: white !important;
+    color: black !important;
+  }
+  a {
+    text-decoration: underline !important;
+    color: black !important;
+  }
+  section {
+    page-break-inside: avoid;
+  }
+}
+</style>
+
 
                 <!-- Contact Section -->
                     <Contact />
