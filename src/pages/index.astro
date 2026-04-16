@@ -1,138 +1,73 @@
 ---
+import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import Nav from "../components/Nav.astro";
 import Card from "../components/Card.astro";
-import Education from "../components/Education.astro"; 
-import Contact from "./contact.astro"; 
-// Import the Education component
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Education from "../components/Education.astro";
+import Contact from "./contact.astro";
+import LanguageToggle from "../components/LanguageToggle.astro";
 ---
 
-<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <meta name="generator" content={Astro.generator} />
-        
-  <title>Нэр | Portfolio</title>
-  <meta name="description" content="Full Stack Developer portfolio. Built with Astro, Tailwind, Spring Boot, Flutter.">
-  <meta name="author" content="Таны нэр">
-  <meta name="keywords" content="portfolio, software engineer, astro, tailwind css, spring boot, flutter, vercel">
-  <meta name="robots" content="index, follow">
+<Layout
+  title="G. Ichko | Portfolio"
+  description="Junior full stack developer portfolio focused on Astro, Spring Boot, MySQL, and Flutter projects."
+>
+  <div class="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(16,185,129,0.16),_transparent_30%),linear-gradient(180deg,#f6fff8_0%,#fffdf7_45%,#f8fafc_100%)]">
+    <div class="mx-auto flex w-full max-w-7xl gap-8 px-4 py-8 md:px-6 lg:px-8">
+      <Nav />
 
-  <!-- OpenGraph (Facebook, LinkedIn) -->
-  <meta property="og:title" content="Нэр | Full Stack Portfolio">
-  <meta property="og:description" content="Modern developer portfolio built with Astro.">
-  <meta property="og:image" content="/images/og-image.png">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://vercel-port-taupe.vercel.app/">
+      <main class="w-full space-y-12">
+        <div class="flex justify-end lg:hidden">
+          <LanguageToggle />
+        </div>
 
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Full Stack Developer Portfolio">
-  <meta name="twitter:description" content="Check out my latest work and skills.">
-  <meta name="twitter:image" content="/images/og-image.png">
-</head>
+        <Header />
 
-    
+        <section id="skills" class="rounded-[2rem] border border-white/70 bg-white/90 p-8 shadow-[0_18px_60px_rgba(15,23,42,0.06)]">
+          <p data-lang="en" class="text-sm font-semibold uppercase tracking-[0.28em] text-emerald-700">Core Skills</p>
+          <p data-lang="mn" class="hidden text-sm font-semibold uppercase tracking-[0.28em] text-emerald-700">Гол ур чадвар</p>
+          <h2 data-lang="en" class="mt-3 text-3xl font-bold text-slate-900">Technology stack with practical focus</h2>
+          <h2 data-lang="mn" class="hidden mt-3 text-3xl font-bold text-slate-900">Практик хэрэглээтэй технологийн стек</h2>
 
-    <body
-        class="bg-linear-to-t from-pink-100 to-pink min-h-screen flex justify-center "
-    >
-        <div
-            class="md:w-10/12    max-w-5xl   bg-white backdrop-blur-lg shadow-lg rounded-2xl p-6 flex px-5"
-        >
-             <Nav/>
-            <main class=" w-4/3 p-6">
-                <Header />
-                <p class="text-gray-700 text-sm/6 mt-4">
-                    Hello! I'm <strong>Ichko</strong>,Full Stack Developer with hands-on experience in modern frontend (Tailwind CSS, Astro, JavaScript) and backend (Spring Boot, MySQL) technologies. Passionate about building scalable web applications and intuitive user interfaces. Experienced with Git-based team workflows, REST API development, and CI/CD deployment pipelines using GitHub and Vercel. Also skilled in mobile-first development using Flutter for cross-platform apps. Fast learner with a strong foundation in clean code, system architecture, and agile collaboration.
+          <div class="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            <div class="rounded-[1.5rem] bg-slate-50 p-5">
+              <h3 class="text-lg font-semibold text-slate-900">Frontend</h3>
+              <p data-lang="en" class="mt-3 text-sm leading-7 text-slate-600">Astro, Tailwind CSS, JavaScript, responsive layout, component-based UI.</p>
+              <p data-lang="mn" class="hidden mt-3 text-sm leading-7 text-slate-600">Astro, Tailwind CSS, JavaScript, responsive layout, component-based UI.</p>
+            </div>
+            <div class="rounded-[1.5rem] bg-slate-50 p-5">
+              <h3 class="text-lg font-semibold text-slate-900">Backend</h3>
+              <p data-lang="en" class="mt-3 text-sm leading-7 text-slate-600">Spring Boot, REST API design, JWT authentication, MVC architecture.</p>
+              <p data-lang="mn" class="hidden mt-3 text-sm leading-7 text-slate-600">Spring Boot, REST API дизайн, JWT authentication, MVC architecture.</p>
+            </div>
+            <div class="rounded-[1.5rem] bg-slate-50 p-5">
+              <h3 class="text-lg font-semibold text-slate-900">Database</h3>
+              <p data-lang="en" class="mt-3 text-sm leading-7 text-slate-600">MySQL, JPA, Hibernate, entity modeling, and data persistence flows.</p>
+              <p data-lang="mn" class="hidden mt-3 text-sm leading-7 text-slate-600">MySQL, JPA, Hibernate, entity загварчлал, өгөгдөл хадгалалтын урсгал.</p>
+            </div>
+            <div class="rounded-[1.5rem] bg-slate-50 p-5">
+              <h3 class="text-lg font-semibold text-slate-900">Mobile</h3>
+              <p data-lang="en" class="mt-3 text-sm leading-7 text-slate-600">Flutter for mobile-first interfaces and cross-platform app development.</p>
+              <p data-lang="mn" class="hidden mt-3 text-sm leading-7 text-slate-600">Flutter ашиглан mobile-first интерфэйс болон cross-platform апп хөгжүүлэлт.</p>
+            </div>
+            <div class="rounded-[1.5rem] bg-slate-50 p-5">
+              <h3 class="text-lg font-semibold text-slate-900">Tools</h3>
+              <p data-lang="en" class="mt-3 text-sm leading-7 text-slate-600">Git, GitHub, Postman, Vercel, and collaborative team workflows.</p>
+              <p data-lang="mn" class="hidden mt-3 text-sm leading-7 text-slate-600">Git, GitHub, Postman, Vercel болон багийн хамтын ажлын урсгал.</p>
+            </div>
+            <div class="rounded-[1.5rem] bg-slate-50 p-5">
+              <h3 data-lang="en" class="text-lg font-semibold text-slate-900">Learning Now</h3>
+              <h3 data-lang="mn" class="hidden text-lg font-semibold text-slate-900">Суралцаж буй</h3>
+              <p data-lang="en" class="mt-3 text-sm leading-7 text-slate-600">Deeper system design thinking, better project architecture, and production-ready polish.</p>
+              <p data-lang="mn" class="hidden mt-3 text-sm leading-7 text-slate-600">Илүү гүн system design сэтгэлгээ, сайн project architecture, production-ready polish.</p>
+            </div>
+          </div>
+        </section>
 
-                </p>
-
-                <Card />
-              
-                <section class="  py-8 px-4">
-  <div class="max-w-4xl mx-auto">
-    <h2 class="text-2xl font-bold text-gray-800 mb-6">Skills</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      <div class="bg-white p-4 rounded-2xl shadow">
-        <h3 class="text-lg font-semibold text-blue-600 mb-2">Languages</h3>
-        <ul class="list-disc list-inside text-gray-700">
-          <li>Java</li>
-          <li>JavaScript</li>
-          <li>Dart</li>
-          <li>HTML & CSS</li>
-        </ul>
-      </div>
-      <div class="bg-white p-4 rounded-2xl shadow">
-        <h3 class="text-lg font-semibold text-blue-600 mb-2">Frontend</h3>
-        <ul class="list-disc list-inside text-gray-700">
-          <li>Tailwind CSS</li>
-          <li>Astro</li>
-          <li>React (Basics)</li>
-        </ul>
-      </div>
-      <div class="bg-white p-4 rounded-2xl shadow">
-        <h3 class="text-lg font-semibold text-blue-600 mb-2">Backend</h3>
-        <ul class="list-disc list-inside text-gray-700">
-          <li>Spring Boot</li>
-          <li>REST API</li>
-          <li>MVC, JWT</li>
-        </ul>
-      </div>
-      <div class="bg-white p-4 rounded-2xl shadow">
-        <h3 class="text-lg font-semibold text-blue-600 mb-2">Database</h3>
-        <ul class="list-disc list-inside text-gray-700">
-          <li>MySQL</li>
-          <li>JPA, Hibernate</li>
-        </ul>
-      </div>
-      <div class="bg-white p-4 rounded-2xl shadow">
-        <h3 class="text-lg font-semibold text-blue-600 mb-2">Mobile & Tools</h3>
-        <ul class="list-disc list-inside text-gray-700">
-          <li>Flutter</li>
-          <li>Git, GitHub</li>
-          <li>Postman</li>
-        </ul>
-      </div>
-      <div class="bg-white p-4 rounded-2xl shadow">
-        <h3 class="text-lg font-semibold text-blue-600 mb-2">DevOps</h3>
-        <ul class="list-disc list-inside text-gray-700">
-          <li>Vercel</li>
-          <li>GitHub Actions</li> 
-        </ul>
-      </div>
+        <Card />
+        <Education />
+        <Contact />
+      </main>
     </div>
   </div>
-</section>
- 
-  <Education />
-<style>
-@media print {
-  body {
-    background-color: white !important;
-    color: black !important;
-  }
-  a {
-    text-decoration: underline !important;
-    color: black !important;
-  }
-  section {
-    page-break-inside: avoid;
-  }
-}
-</style>
-
-
-                <!-- Contact Section -->
-                    <Contact />
-                    
-            </main>
-        </div> 
-    </body>
-</html>
+</Layout>

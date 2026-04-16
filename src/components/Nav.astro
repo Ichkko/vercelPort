@@ -1,16 +1,43 @@
+---
+import LanguageToggle from "./LanguageToggle.astro";
+---
 
+<aside class="top-8 hidden h-fit w-full max-w-xs rounded-[2rem] border border-white/70 bg-white/80 p-6 shadow-[0_18px_60px_rgba(15,23,42,0.08)] backdrop-blur lg:sticky lg:block">
+  <div class="flex flex-col items-center text-center">
+    <img src="/pro.jpg" alt="Profile photo of G. Ichko" class="h-32 w-32 rounded-full border-4 border-white object-cover shadow-md" />
+    <h2 class="mt-4 text-xl font-semibold text-slate-900">G. Ichko</h2>
+    <p data-lang="en" class="text-sm text-slate-500">Full Stack Developer</p>
+    <p data-lang="mn" class="hidden text-sm text-slate-500">Full Stack Хөгжүүлэгч</p>
+    <p data-lang="en" class="mt-3 text-sm leading-6 text-slate-600">
+      Building practical web and mobile products with a clean engineering mindset.
+    </p>
+    <p data-lang="mn" class="hidden mt-3 text-sm leading-6 text-slate-600">
+      Практик, цэвэр шийдэлтэй web болон mobile бүтээгдэхүүн хөгжүүлдэг.
+    </p>
+  </div>
 
-<aside class="  w-1/4 p- hidden md:block rounded-lg ">
-    <div class="flex flex-col items-center">
-        <img src="../pro.jpg" alt="Profile" class="rounded-full border-4 border-white shadow-md hover:scale-105 transition-transform duration-300">
-        <h2 class="mt-4 text-lg font-semibold text-gray-800">Г.Ичко</h2>
-        <p class="text-gray-600 text-sm">Web Developer</p>
-    </div>
-    <nav class="mt-5">
-        <ul class="space-y-2">
-            <li><a href="/about" class="block text-gray-700 hover:text-purple-500 hover:scale-105 transition-transform duration-300">🏠 Home</a></li>
-            <li><a href="#projects" class="block text-gray-700 hover:text-purple-500 hover:scale-105 transition-transform duration-300">📂 Projects</a></li>
-            <li><a href="#contact" class="block text-gray-700 hover:text-purple-500 hover:scale-105 transition-transform duration-300">📧 Contact</a></li>
-        </ul>
-    </nav>
+  <div class="mt-6 flex justify-center">
+    <LanguageToggle />
+  </div>
+
+  <nav class="mt-8">
+    <ul class="space-y-2 text-sm font-medium text-slate-700">
+      <li><a href="#about" class="block rounded-xl px-4 py-3 transition hover:bg-emerald-50 hover:text-emerald-800"><span data-lang="en">About</span><span data-lang="mn" class="hidden">Тухай</span></a></li>
+      <li><a href="#projects" class="block rounded-xl px-4 py-3 transition hover:bg-emerald-50 hover:text-emerald-800"><span data-lang="en">Projects</span><span data-lang="mn" class="hidden">Төслүүд</span></a></li>
+      <li><a href="#skills" class="block rounded-xl px-4 py-3 transition hover:bg-emerald-50 hover:text-emerald-800"><span data-lang="en">Skills</span><span data-lang="mn" class="hidden">Ур чадвар</span></a></li>
+      <li><a href="#education" class="block rounded-xl px-4 py-3 transition hover:bg-emerald-50 hover:text-emerald-800"><span data-lang="en">Education</span><span data-lang="mn" class="hidden">Боловсрол</span></a></li>
+      <li><a href="#contact" class="block rounded-xl px-4 py-3 transition hover:bg-emerald-50 hover:text-emerald-800"><span data-lang="en">Contact</span><span data-lang="mn" class="hidden">Холбоо</span></a></li>
+    </ul>
+  </nav>
+
+  <div class="mt-8 rounded-2xl bg-slate-950 p-5 text-sm text-slate-200">
+    <p data-lang="en" class="font-semibold text-white">Open to</p>
+    <p data-lang="mn" class="hidden font-semibold text-white">Нээлттэй</p>
+    <p data-lang="en" class="mt-2 leading-6 text-slate-300">
+      Internship, junior full stack roles, and freelance website work.
+    </p>
+    <p data-lang="mn" class="hidden mt-2 leading-6 text-slate-300">
+      Дадлага, junior ажлын байр, freelance website ажлуудад нээлттэй.
+    </p>
+  </div>
 </aside>

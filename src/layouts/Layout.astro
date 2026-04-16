@@ -1,22 +1,79 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  image?: string;
+}
+
+const {
+  title = "G. Ichko | Full Stack Developer",
+  description = "Portfolio of G. Ichko, a junior full stack developer building modern web and mobile products with Astro, Spring Boot, and Flutter.",
+  canonical = "https://vercel-port-taupe.vercel.app/",
+  image = "/gg.png",
+} = Astro.props;
+---
+
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonical} />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="G. Ichko" />
+    <meta
+      name="keywords"
+      content="G. Ichko, portfolio, full stack developer, Astro, Spring Boot, Flutter, Java, Tailwind CSS"
+    />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={image} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+  </head>
+  <body>
+    <slot />
+    <script is:inline>
+      const applyLanguage = (lang) => {
+        document.documentElement.lang = lang === "mn" ? "mn" : "en";
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+        document.querySelectorAll("[data-lang]").forEach((node) => {
+          const isVisible = node.getAttribute("data-lang") === lang;
+          node.classList.toggle("hidden", !isVisible);
+        });
+
+        document.querySelectorAll("[data-lang-toggle]").forEach((button) => {
+          const active = button.getAttribute("data-lang-toggle") === lang;
+          button.setAttribute("aria-pressed", active ? "true" : "false");
+          button.classList.toggle("bg-slate-900", active);
+          button.classList.toggle("text-white", active);
+          button.classList.toggle("text-slate-500", !active);
+          button.classList.toggle("text-slate-800", !active);
+        });
+
+        window.localStorage.setItem("portfolio-lang", lang);
+      };
+
+      const savedLang = window.localStorage.getItem("portfolio-lang") || "en";
+
+      document.addEventListener("click", (event) => {
+        const target = event.target.closest("[data-lang-toggle]");
+        if (!target) return;
+        applyLanguage(target.getAttribute("data-lang-toggle"));
+      });
+
+      applyLanguage(savedLang);
+    </script>
+  </body>
+</html>
