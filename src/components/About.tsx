@@ -130,7 +130,7 @@ export function About() {
                 className="relative overflow-hidden rounded-[16px] shadow-[0_16px_48px_rgba(8,145,178,0.2)]"
               >
                 <Image
-                  src="/ichko.jpg"
+                  src="/assets/images/model-1785171963986.png"
                   alt="Гомбосүрэн Ичинхорлоо — хувийн зураг"
                   width={320}
                   height={320}

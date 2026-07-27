@@ -16,7 +16,7 @@ interface GalleryItem {
 const galleryItems: GalleryItem[] = [
   {
     id: 1,
-    src: "/ichko.jpg",
+    src: "/assets/images/model-1785171963986.png",
     alt: "Portrait photo of Ichko",
     category: "photo",
     labelEn: "Portrait",
@@ -56,7 +56,7 @@ const galleryItems: GalleryItem[] = [
   },
   {
     id: 6,
-    src: "/assets/images/model-1785171664466.png",
+    src: "/assets/images/ichkkkko-1785171948972.jpg",
     alt: "Creative photo of Ichko in nature",
     category: "photo",
     labelEn: "Nature",
