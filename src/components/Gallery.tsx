@@ -16,7 +16,7 @@ interface GalleryItem {
 const galleryItems: GalleryItem[] = [
   {
     id: 1,
-    src: "/assets/images/model-1785171963986.png",
+    src: "/assets/images/b6bffd14-e8d3-48a2-8f7a-19700eb0152c-1785172311996.jpg",
     alt: "Portrait photo of Ichko",
     category: "photo",
     labelEn: "Portrait",
