@@ -62,14 +62,13 @@ export function AmbientPlayer() {
 
   // Auto-play after track index changes (manual skip OR auto-advance)
   useEffect(() => {
-    if (!isOpen) return;
     if (!autoPlayNextRef.current) return;
     const timer = setTimeout(() => {
       sendCmd("playVideo");
       sendCmd("setVolume", [Math.round(volume * 100)]);
       setIsPlaying(true);
       autoPlayNextRef.current = false;
-    }, 900);
+    }, 1500);
     return () => clearTimeout(timer);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [trackIndex]);
