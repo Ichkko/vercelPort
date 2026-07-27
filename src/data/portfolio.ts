@@ -26,7 +26,7 @@ export const projectsMeta = [
     image: "/assets/images/foodmenu1-1785171287595.png",
     images: [
       "/assets/images/foodmenu1-1785171287595.png",
-      "/assets/images/c0ac7376-d408-4ad6-bbb6-3a601a9b6e76-1785171352102.jpg",
+      "/assets/images/foodmenu2-1785173306419.png",
       "/assets/images/411397da-05c0-491e-b154-d17e0c0dbc23-1785171330984.jpg",
     ],
     tags: ["Spring Boot", "WebSocket", "MySQL", "Next.js"],
@@ -40,7 +40,7 @@ export const projectsMeta = [
     image: "/travel.png",
     images: [
       "/travel.png",
-      "/assets/images/b6bffd14-e8d3-48a2-8f7a-19700eb0152c-1785171404964.jpg",
+      "/assets/images/foodmenu3-1785173330944.png",
       "/assets/images/c0ac7376-d408-4ad6-bbb6-3a601a9b6e76-1785171429507.jpg",
     ],
     tags: ["Next.js", "Tailwind", "API"],
@@ -68,8 +68,8 @@ export const projectsMeta = [
     image: "/assets/images/411397da-05c0-491e-b154-d17e0c0dbc23-1785171330984.jpg",
     images: [
       "/assets/images/411397da-05c0-491e-b154-d17e0c0dbc23-1785171330984.jpg",
-      "/assets/images/model-1785171098212.png",
-      "/assets/images/model-1785171664466.png",
+      "/assets/images/foodmenu4-1785173342054.png",
+      "/assets/images/foodmenu5-1785173355844.png",
     ],
     tags: ["Flutter", "Dart", "Firebase"],
     liveUrl: "https://github.com/Ichkko",
