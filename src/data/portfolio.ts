@@ -24,6 +24,11 @@ export const projectsMeta = [
   {
     id: "1" as const,
     image: "/assets/images/foodmenu1-1785171287595.png",
+    images: [
+      "/assets/images/foodmenu1-1785171287595.png",
+      "/assets/images/c0ac7376-d408-4ad6-bbb6-3a601a9b6e76-1785171352102.jpg",
+      "/assets/images/411397da-05c0-491e-b154-d17e0c0dbc23-1785171330984.jpg",
+    ],
     tags: ["Spring Boot", "WebSocket", "MySQL", "Next.js"],
     liveUrl: "https://github.com/Ichkko",
     githubUrl: "https://github.com/Ichkko",
@@ -33,6 +38,11 @@ export const projectsMeta = [
   {
     id: "2" as const,
     image: "/travel.png",
+    images: [
+      "/travel.png",
+      "/assets/images/b6bffd14-e8d3-48a2-8f7a-19700eb0152c-1785171404964.jpg",
+      "/assets/images/c0ac7376-d408-4ad6-bbb6-3a601a9b6e76-1785171429507.jpg",
+    ],
     tags: ["Next.js", "Tailwind", "API"],
     liveUrl: "https://github.com/Ichkko/travelguide",
     githubUrl: "https://github.com/Ichkko/travelguide",
@@ -42,6 +52,11 @@ export const projectsMeta = [
   {
     id: "3" as const,
     image: "/1.png",
+    images: [
+      "/1.png",
+      "/assets/images/03b1f65f-a430-4d79-a3bd-d4cc83297d7e-1785171826292.jpg",
+      "/assets/images/b6bffd14-e8d3-48a2-8f7a-19700eb0152c-1785172311996.jpg",
+    ],
     tags: ["Java", "Spring Boot", "MySQL", "JWT"],
     liveUrl: "https://github.com/Ichkko",
     githubUrl: "https://github.com/Ichkko",
@@ -51,6 +66,11 @@ export const projectsMeta = [
   {
     id: "4" as const,
     image: "/assets/images/411397da-05c0-491e-b154-d17e0c0dbc23-1785171330984.jpg",
+    images: [
+      "/assets/images/411397da-05c0-491e-b154-d17e0c0dbc23-1785171330984.jpg",
+      "/assets/images/model-1785171098212.png",
+      "/assets/images/model-1785171664466.png",
+    ],
     tags: ["Flutter", "Dart", "Firebase"],
     liveUrl: "https://github.com/Ichkko",
     githubUrl: "https://github.com/Ichkko",

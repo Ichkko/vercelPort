@@ -1,11 +1,114 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { Code2, ExternalLink, GitBranch, Rocket, ShieldCheck } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Code2, ExternalLink, GitBranch, Rocket, ShieldCheck, ChevronLeft, ChevronRight } from "lucide-react";
 import { projectsMeta, profile } from "@/data/portfolio";
 import { FadeIn, Stagger, StaggerItem } from "./FadeIn";
 import { useLanguage } from "./LanguageProvider";
+import { useState, useEffect, useCallback } from "react";
+
+/* ── Slideshow image component ── */
+interface SlideshowProps {
+  images: string[];
+  alt: string;
+  aspectClass?: string;
+}
+
+function ProjectSlideshow({ images, alt, aspectClass = "aspect-[16/9]" }: SlideshowProps) {
+  const [current, setCurrent] = useState(0);
+  const [direction, setDirection] = useState(1);
+
+  const total = images.length;
+
+  const next = useCallback(() => {
+    setDirection(1);
+    setCurrent((c) => (c + 1) % total);
+  }, [total]);
+
+  const prev = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDirection(-1);
+    setCurrent((c) => (c - 1 + total) % total);
+  }, [total]);
+
+  const handleNext = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    next();
+  }, [next]);
+
+  // Auto-cycle every 3 seconds
+  useEffect(() => {
+    if (total <= 1) return;
+    const id = setInterval(next, 3000);
+    return () => clearInterval(id);
+  }, [next, total]);
+
+  const variants = {
+    enter: (dir: number) => ({ x: dir > 0 ? "100%" : "-100%", opacity: 0 }),
+    center: { x: 0, opacity: 1 },
+    exit: (dir: number) => ({ x: dir > 0 ? "-100%" : "100%", opacity: 0 }),
+  };
+
+  return (
+    <div className={`relative overflow-hidden ${aspectClass} w-full`}>
+      <AnimatePresence initial={false} custom={direction}>
+        <motion.div
+          key={current}
+          custom={direction}
+          variants={variants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          transition={{ duration: 0.45, ease: "easeInOut" }}
+          className="absolute inset-0"
+        >
+          <Image
+            src={images[current]}
+            alt={`${alt} — ${current + 1}`}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Prev / Next arrows — only show if multiple images */}
+      {total > 1 && (
+        <>
+          <button
+            onClick={prev}
+            className="absolute left-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/40 p-1 text-white backdrop-blur-sm transition hover:bg-black/60"
+            aria-label="Previous image"
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </button>
+          <button
+            onClick={handleNext}
+            className="absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/40 p-1 text-white backdrop-blur-sm transition hover:bg-black/60"
+            aria-label="Next image"
+          >
+            <ChevronRight className="h-4 w-4" />
+          </button>
+
+          {/* Dot indicators */}
+          <div className="absolute bottom-2 left-1/2 z-10 flex -translate-x-1/2 gap-1.5">
+            {images.map((_, i) => (
+              <button
+                key={i}
+                onClick={(e) => { e.preventDefault(); e.stopPropagation(); setDirection(i > current ? 1 : -1); setCurrent(i); }}
+                className={`h-1.5 rounded-full transition-all duration-300 ${i === current ? "w-4 bg-white" : "w-1.5 bg-white/50"}`}
+                aria-label={`Go to image ${i + 1}`}
+              />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
 
 export function Projects() {
   const { t } = useLanguage();
@@ -45,6 +148,7 @@ export function Projects() {
           </motion.a>
         </div>
       </FadeIn>
+
       {/* Featured project — full-width card */}
       {featured && (
         <FadeIn delay={0.05}>
@@ -54,28 +158,18 @@ export function Projects() {
             className="glow-card card-soft group mb-6 overflow-hidden"
           >
             <div className="flex flex-col md:flex-row">
-              {/* Image */}
-              <a
-                href={featured?.githubUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="relative block overflow-hidden md:w-[52%] shrink-0"
-              >
-                <Image
-                  src={featured?.image}
-                  alt={t(featured?.titleKey)}
-                  width={800}
-                  height={450}
-                  className="aspect-[16/9] w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+              {/* Slideshow */}
+              <div className="relative md:w-[52%] shrink-0">
+                <ProjectSlideshow
+                  images={featured.images ?? [featured.image]}
+                  alt={t(featured.titleKey)}
+                  aspectClass="aspect-[16/9]"
                 />
-                <div className="absolute inset-0 flex items-center justify-center bg-[rgba(8,145,178,0.65)] opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  <ExternalLink className="h-9 w-9 text-white" strokeWidth={1.5} />
-                </div>
                 {/* Featured badge */}
-                <span className="absolute left-3 top-3 rounded-full bg-[var(--teal)] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest text-white shadow">
+                <span className="absolute left-3 top-3 z-20 rounded-full bg-[var(--teal)] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest text-white shadow">
                   Featured
                 </span>
-              </a>
+              </div>
 
               {/* Content */}
               <div className="flex flex-1 flex-col justify-between p-6">
@@ -119,6 +213,7 @@ export function Projects() {
           </motion.article>
         </FadeIn>
       )}
+
       {/* Remaining projects grid */}
       <Stagger className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {rest?.map((project) => (
@@ -128,24 +223,12 @@ export function Projects() {
               transition={{ type: "spring", stiffness: 320, damping: 24 }}
               className="glow-card card-soft group flex h-full flex-col overflow-hidden"
             >
-              {/* Image */}
-              <a
-                href={project?.githubUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="relative block overflow-hidden"
-              >
-                <Image
-                  src={project?.image}
-                  alt={t(project?.titleKey)}
-                  width={640}
-                  height={360}
-                  className="aspect-[16/9] w-full object-cover transition duration-500 group-hover:scale-[1.04]"
-                />
-                <div className="absolute inset-0 flex items-center justify-center bg-[rgba(8,145,178,0.7)] opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  <ExternalLink className="h-8 w-8 text-white" strokeWidth={1.5} />
-                </div>
-              </a>
+              {/* Slideshow */}
+              <ProjectSlideshow
+                images={project.images ?? [project.image]}
+                alt={t(project.titleKey)}
+                aspectClass="aspect-[16/9]"
+              />
 
               {/* Content */}
               <div className="flex flex-1 flex-col p-5">
@@ -187,6 +270,7 @@ export function Projects() {
           </StaggerItem>
         ))}
       </Stagger>
+
       {/* Metrics */}
       <FadeIn delay={0.1}>
         <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
