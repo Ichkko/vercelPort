@@ -14,9 +14,10 @@ import { LanguageToggle } from "./LanguageToggle";
 import { useTheme } from "./ThemeProvider";
 import { useLanguage } from "./LanguageProvider";
 import { SwayingPlant, FloatingLeaf, GrassBlades } from "./PlantDecorations";
+import { Gallery } from "./Gallery";
 
 // Personal section: home, about, hobbies/personal
-const PERSONAL_SECTIONS = ["personal-home", "personal-about", "personal-contact"];
+const PERSONAL_SECTIONS = ["personal-home", "personal-about", "personal-gallery", "personal-contact"];
 // Professional section: skills, projects, experience
 const PROFESSIONAL_SECTIONS = ["pro-skills", "pro-projects", "pro-experience"];
 
@@ -35,6 +36,7 @@ export function PortfolioShell() {
       ? [
           { id: "personal-home", label: "Home" },
           { id: "personal-about", label: "About" },
+          { id: "personal-gallery", label: "Gallery" },
           { id: "personal-contact", label: "Contact" },
         ]
       : [
@@ -271,6 +273,15 @@ export function PortfolioShell() {
               <div className="section-panel px-5 py-12 md:px-10 lg:px-14">
                 <div className="mx-auto max-w-[1040px]">
                   <About />
+                </div>
+              </div>
+            </section>
+
+            {/* Personal Gallery */}
+            <section id="personal-gallery" className="scroll-mt-8">
+              <div className="section-panel px-5 py-12 md:px-10 lg:px-14">
+                <div className="mx-auto max-w-[1040px]">
+                  <Gallery />
                 </div>
               </div>
             </section>
