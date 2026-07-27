@@ -20,6 +20,65 @@ export const techStack = [
   { name: "Docker", icon: "Container" as const },
 ];
 
+export const skillCategories = [
+  {
+    id: "backend",
+    labelKey: "skillCatBackend" as const,
+    color: "#d97706",
+    colorSoft: "rgba(245,158,11,0.1)",
+    icon: "Coffee" as const,
+    skills: [
+      { name: "Java", level: 85, tag: "Core" },
+      { name: "Spring Boot", level: 80, tag: "API" },
+      { name: "MySQL", level: 78, tag: "DB" },
+      { name: "JPA / Hibernate", level: 70, tag: "ORM" },
+      { name: "REST API", level: 82, tag: "Design" },
+      { name: "JWT Auth", level: 72, tag: "Security" },
+    ],
+  },
+  {
+    id: "frontend",
+    labelKey: "skillCatFrontend" as const,
+    color: "#0891b2",
+    colorSoft: "rgba(8,145,178,0.1)",
+    icon: "Component" as const,
+    skills: [
+      { name: "Next.js", level: 80, tag: "Framework" },
+      { name: "React", level: 82, tag: "UI" },
+      { name: "TypeScript", level: 75, tag: "Language" },
+      { name: "Tailwind CSS", level: 88, tag: "Styling" },
+      { name: "HTML / CSS", level: 90, tag: "Core" },
+      { name: "Framer Motion", level: 65, tag: "Animation" },
+    ],
+  },
+  {
+    id: "mobile",
+    labelKey: "skillCatMobile" as const,
+    color: "#7c3aed",
+    colorSoft: "rgba(124,58,237,0.1)",
+    icon: "Hexagon" as const,
+    skills: [
+      { name: "Flutter", level: 68, tag: "Framework" },
+      { name: "Dart", level: 65, tag: "Language" },
+      { name: "Firebase", level: 60, tag: "Backend" },
+    ],
+  },
+  {
+    id: "tools",
+    labelKey: "skillCatTools" as const,
+    color: "#dc2626",
+    colorSoft: "rgba(239,68,68,0.1)",
+    icon: "GitBranch" as const,
+    skills: [
+      { name: "Git / GitHub", level: 85, tag: "VCS" },
+      { name: "Docker", level: 60, tag: "DevOps" },
+      { name: "IntelliJ IDEA", level: 82, tag: "IDE" },
+      { name: "VS Code", level: 88, tag: "IDE" },
+      { name: "Postman", level: 80, tag: "Testing" },
+    ],
+  },
+];
+
 export const projectsMeta = [
   {
     id: "1" as const,
