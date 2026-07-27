@@ -5,7 +5,7 @@ export const profile = {
   github: "https://github.com/Ichkko",
   linkedin: "https://www.linkedin.com/in/ichko",
   instagram: "https://www.instagram.com/iichh.kuu__/",
-  avatar: "/assets/images/ichko-1785159972961.jpg",
+  avatar: "/assets/images/c0ac7376-d408-4ad6-bbb6-3a601a9b6e76-1785171352102.jpg",
 };
 
 export const techStack = [
@@ -23,7 +23,7 @@ export const techStack = [
 export const projectsMeta = [
   {
     id: "1" as const,
-    image: "/kino.png",
+    image: "/assets/images/foodmenu1-1785171287595.png",
     tags: ["Spring Boot", "WebSocket", "MySQL", "Next.js"],
     liveUrl: "https://github.com/Ichkko",
     githubUrl: "https://github.com/Ichkko",

@@ -24,7 +24,7 @@ const galleryItems: GalleryItem[] = [
   },
   {
     id: 2,
-    src: "/icho.jpg",
+    src: "/assets/images/model-1785171098212.png",
     alt: "Personal photo of Ichko outdoors",
     category: "photo",
     labelEn: "Outdoors",
@@ -48,7 +48,7 @@ const galleryItems: GalleryItem[] = [
   },
   {
     id: 5,
-    src: "/ichko-hero.png",
+    src: "/assets/images/411397da-05c0-491e-b154-d17e0c0dbc23-1785171330984.jpg",
     alt: "Hero illustration of Ichko",
     category: "drawing",
     labelEn: "Illustration",
@@ -56,7 +56,7 @@ const galleryItems: GalleryItem[] = [
   },
   {
     id: 6,
-    src: "/assets/images/ichko-1785159972961.jpg",
+    src: "/assets/images/c0ac7376-d408-4ad6-bbb6-3a601a9b6e76-1785171352102.jpg",
     alt: "Creative photo of Ichko in nature",
     category: "photo",
     labelEn: "Nature",
