@@ -45,7 +45,7 @@ export function Sidebar({ active }: { active: string }) {
             aria-hidden
           />
           <Image
-            src='/assets/images/model-1785171098212.png'
+            src='/assets/images/c0ac7376-d408-4ad6-bbb6-3a601a9b6e76-1785171429507.jpg'
             alt={profile.name}
             width={88}
             height={88}

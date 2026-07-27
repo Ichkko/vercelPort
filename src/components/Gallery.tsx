@@ -24,7 +24,7 @@ const galleryItems: GalleryItem[] = [
   },
   {
     id: 2,
-    src: "/assets/images/model-1785171098212.png",
+    src: "/assets/images/c0ac7376-d408-4ad6-bbb6-3a601a9b6e76-1785171429507.jpg",
     alt: "Personal photo of Ichko outdoors",
     category: "photo",
     labelEn: "Outdoors",
@@ -56,7 +56,7 @@ const galleryItems: GalleryItem[] = [
   },
   {
     id: 6,
-    src: "/assets/images/c0ac7376-d408-4ad6-bbb6-3a601a9b6e76-1785171352102.jpg",
+    src: "/assets/images/b6bffd14-e8d3-48a2-8f7a-19700eb0152c-1785171404964.jpg",
     alt: "Creative photo of Ichko in nature",
     category: "photo",
     labelEn: "Nature",
