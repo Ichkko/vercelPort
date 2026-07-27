@@ -108,6 +108,9 @@ export const translations = {
     hobbyOtherDesc: "Discovering new places, trying local food, and collecting memories.",
     favMusicLabel: "Favorite Artists",
     favMovieLabel: "Favorite Movies & Shows",
+    testimonialsEyebrow: "Testimonials",
+    testimonialsTitle: "What colleagues say",
+    testimonialsDesc: "Feedback from teammates, leads, and collaborators I've shipped real products with.",
   },
   mn: {
     role: "Full Stack Developer",
@@ -216,6 +219,9 @@ export const translations = {
     hobbyOtherDesc: "Шинэ газар нутаг нээх, орон нутгийн хоол амсах, дурсамж цуглуулах.",
     favMusicLabel: "Дуртай дуучид",
     favMovieLabel: "Дуртай кино & цуврал",
+    testimonialsEyebrow: "Сэтгэгдлүүд",
+    testimonialsTitle: "Хамтрагчид юу гэж хэлдэг вэ",
+    testimonialsDesc: "Хамтран ажилласан багийн гишүүд, ахлагчид, хамтрагчдын санал хүсэлт.",
   },
 } as const;
 

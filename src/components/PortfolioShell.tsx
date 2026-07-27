@@ -17,11 +17,12 @@ import { SwayingPlant, FloatingLeaf, GrassBlades } from "./PlantDecorations";
 import { Gallery } from "./Gallery";
 import { CurrentlyVibing } from "./CurrentlyVibing";
 import { AmbientPlayer } from "./AmbientPlayer";
+import { Testimonials } from "./Testimonials";
 
 // Personal section: home, about, hobbies/personal
 const PERSONAL_SECTIONS = ["personal-home", "personal-about", "personal-gallery", "personal-vibing", "personal-contact"];
-// Professional section: skills, projects, experience
-const PROFESSIONAL_SECTIONS = ["pro-skills", "pro-projects", "pro-experience"];
+// Professional section: skills, projects, experience, testimonials
+const PROFESSIONAL_SECTIONS = ["pro-skills", "pro-projects", "pro-experience", "pro-testimonials"];
 
 const ALL_SECTIONS = [...PERSONAL_SECTIONS, ...PROFESSIONAL_SECTIONS];
 
@@ -46,6 +47,7 @@ export function PortfolioShell() {
           { id: "pro-skills", label: "Skills" },
           { id: "pro-projects", label: "Projects" },
           { id: "pro-experience", label: "Experience" },
+          { id: "pro-testimonials", label: "Testimonials" },
         ];
 
   useEffect(() => {
@@ -335,6 +337,15 @@ export function PortfolioShell() {
               <div className="section-panel px-5 py-12 md:px-10 lg:px-14">
                 <div className="mx-auto max-w-[1040px]">
                   <Timeline />
+                </div>
+              </div>
+            </section>
+
+            {/* Professional Testimonials */}
+            <section id="pro-testimonials" className="scroll-mt-8">
+              <div className="section-panel px-5 py-12 md:px-10 lg:px-14">
+                <div className="mx-auto max-w-[1040px]">
+                  <Testimonials />
                 </div>
               </div>
             </section>
