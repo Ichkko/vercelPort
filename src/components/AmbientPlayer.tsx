@@ -4,31 +4,30 @@ import { useState } from "react";
 
 export function AmbientPlayer() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
 
-  const playlistUrl = `https://www.youtube.com/embed/b83LryMe7s4?list=RDb83LryMe7s4&autoplay=1&loop=1&mute=${isMuted ? 1 : 0}&controls=1&rel=0&modestbranding=1`;
+  const playlistUrl = `https://www.youtube.com/embed/b83LryMe7s4?list=RDb83LryMe7s4&autoplay=1&loop=1&mute=0&controls=1&rel=0&modestbranding=1&volume=20`;
 
   return (
-    <div className="fixed bottom-6 left-6 z-50 flex flex-col items-start gap-2">
+    <div className="fixed bottom-4 left-4 z-50 flex flex-col items-start gap-1.5">
       {/* Expanded player */}
       {isOpen && (
         <div
-          className="rounded-2xl overflow-hidden shadow-2xl border border-white/10"
+          className="rounded-xl overflow-hidden shadow-xl border border-white/10"
           style={{
-            width: 280,
-            background: "rgba(20,20,20,0.92)",
-            backdropFilter: "blur(12px)",
+            width: 220,
+            background: "rgba(15,15,15,0.90)",
+            backdropFilter: "blur(10px)",
           }}
         >
           {/* Header */}
-          <div className="flex items-center justify-between px-3 py-2">
-            <div className="flex items-center gap-2">
+          <div className="flex items-center justify-between px-2.5 py-1.5">
+            <div className="flex items-center gap-1.5">
               {/* Animated sound bars */}
-              <div className="flex items-end gap-[2px] h-4">
+              <div className="flex items-end gap-[2px] h-3">
                 {[1, 2, 3, 4]?.map((i) => (
                   <span
                     key={i}
-                    className="w-[3px] rounded-full"
+                    className="w-[2px] rounded-full"
                     style={{
                       background: "#4ade80",
                       height: `${[60, 100, 75, 90]?.[i - 1]}%`,
@@ -38,11 +37,11 @@ export function AmbientPlayer() {
                   />
                 ))}
               </div>
-              <span className="text-xs font-medium text-white/80">Lo-fi Ambient</span>
+              <span className="text-[10px] font-medium text-white/70">Lo-fi Ambient</span>
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="text-white/50 hover:text-white/90 transition-colors text-sm leading-none"
+              className="text-white/40 hover:text-white/80 transition-colors text-xs leading-none"
               aria-label="Close player"
             >
               ✕
@@ -52,8 +51,8 @@ export function AmbientPlayer() {
           {/* YouTube iframe */}
           <iframe
             src={playlistUrl}
-            width="280"
-            height="157"
+            width="220"
+            height="124"
             allow="autoplay; encrypted-media"
             allowFullScreen
             title="Lo-fi ambient music player"
@@ -65,24 +64,24 @@ export function AmbientPlayer() {
       {/* Toggle button */}
       <button
         onClick={() => setIsOpen((v) => !v)}
-        className="flex items-center gap-2 px-4 py-2 rounded-full shadow-lg transition-all duration-300 hover:scale-105 active:scale-95"
+        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full shadow-md transition-all duration-300 hover:scale-105 active:scale-95"
         style={{
-          background: isOpen ? "rgba(74,222,128,0.15)" : "rgba(20,20,20,0.85)",
-          border: "1px solid rgba(74,222,128,0.4)",
-          backdropFilter: "blur(10px)",
+          background: isOpen ? "rgba(74,222,128,0.12)" : "rgba(15,15,15,0.80)",
+          border: "1px solid rgba(74,222,128,0.35)",
+          backdropFilter: "blur(8px)",
           color: "#4ade80",
         }}
         aria-label={isOpen ? "Hide music player" : "Play ambient music"}
       >
         {/* Music note icon */}
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z" />
         </svg>
-        <span className="text-xs font-medium whitespace-nowrap">
-          {isOpen ? "Now Playing" : "Ambient Music"}
+        <span className="text-[10px] font-medium whitespace-nowrap">
+          {isOpen ? "Now Playing" : "Ambient"}
         </span>
         {isOpen && (
-          <span className="flex gap-[2px] items-end h-3">
+          <span className="flex gap-[2px] items-end h-2.5">
             {[1, 2, 3]?.map((i) => (
               <span
                 key={i}
