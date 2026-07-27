@@ -9,6 +9,7 @@ const TRACKS = [
 
 export function AmbientPlayer() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isMini, setIsMini] = useState(false); // collapsed "Now Playing" pill
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.25);
   const [trackIndex, setTrackIndex] = useState(0);
@@ -16,6 +17,8 @@ export function AmbientPlayer() {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const playerRef = useRef<HTMLDivElement>(null);
   const volumeRef = useRef<HTMLDivElement>(null);
+  // track whether we need to auto-play after track change
+  const autoPlayNextRef = useRef(false);
 
   const currentTrack = TRACKS[trackIndex];
   const embedUrl = `https://www.youtube.com/embed/${currentTrack.id}?autoplay=0&loop=0&mute=0&controls=0&rel=0&modestbranding=1&enablejsapi=1`;
@@ -33,6 +36,7 @@ export function AmbientPlayer() {
   };
 
   const changeTrack = (dir: 1 | -1) => {
+    autoPlayNextRef.current = isPlaying;
     setIsPlaying(false);
     setTrackIndex((i) => (i + dir + TRACKS.length) % TRACKS.length);
   };
@@ -43,28 +47,42 @@ export function AmbientPlayer() {
     sendCmd("setVolume", [Math.round(val * 100)]);
   };
 
-  // Auto-play when opened or track changes
+  // Auto-play when first opened
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && !isMini) {
       const timer = setTimeout(() => {
         sendCmd("playVideo");
+        sendCmd("setVolume", [Math.round(volume * 100)]);
         setIsPlaying(true);
       }, 900);
       return () => clearTimeout(timer);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen, trackIndex]);
+  }, [isOpen]);
 
-  // Listen for YouTube video end to auto-advance
+  // Auto-play after track index changes (manual skip OR auto-advance)
+  useEffect(() => {
+    if (!isOpen) return;
+    if (!autoPlayNextRef.current) return;
+    const timer = setTimeout(() => {
+      sendCmd("playVideo");
+      sendCmd("setVolume", [Math.round(volume * 100)]);
+      setIsPlaying(true);
+      autoPlayNextRef.current = false;
+    }, 900);
+    return () => clearTimeout(timer);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [trackIndex]);
+
+  // Listen for YouTube video end → seamlessly advance to next track
   useEffect(() => {
     const handleMessage = (e: MessageEvent) => {
       try {
         const data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
-        // YT player state: 0 = ended
         if (data?.event === "onStateChange" && data?.info === 0) {
-          const next = (trackIndex + 1) % TRACKS.length;
+          autoPlayNextRef.current = true;
           setIsPlaying(false);
-          setTrackIndex(next);
+          setTrackIndex((i) => (i + 1) % TRACKS.length);
         }
       } catch {
         // ignore non-JSON messages
@@ -72,7 +90,29 @@ export function AmbientPlayer() {
     };
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
-  }, [trackIndex]);
+  }, []);
+
+  // Collapse to mini pill on scroll
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleScroll = () => {
+      setIsMini(true);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isOpen]);
+
+  // Collapse to mini pill on click outside the player
+  useEffect(() => {
+    if (!isOpen || isMini) return;
+    const handleClick = (e: MouseEvent) => {
+      if (playerRef.current && !playerRef.current.contains(e.target as Node)) {
+        setIsMini(true);
+      }
+    };
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [isOpen, isMini]);
 
   // Collapse volume on outside click
   useEffect(() => {
@@ -85,6 +125,19 @@ export function AmbientPlayer() {
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
   }, [showVolume]);
+
+  const handleToggleButton = () => {
+    if (!isOpen) {
+      setIsOpen(true);
+      setIsMini(false);
+    } else if (isMini) {
+      setIsMini(false);
+    } else {
+      setIsOpen(false);
+      setIsPlaying(false);
+      sendCmd("pauseVideo");
+    }
+  };
 
   return (
     <div ref={playerRef} className="fixed bottom-5 left-5 z-50 flex flex-col items-start gap-2">
@@ -103,7 +156,7 @@ export function AmbientPlayer() {
       />
 
       {/* Expanded audio player panel */}
-      {isOpen && (
+      {isOpen && !isMini && (
         <div
           className="rounded-2xl shadow-2xl border px-4 py-3"
           style={{
@@ -138,7 +191,7 @@ export function AmbientPlayer() {
               </span>
             </div>
             <button
-              onClick={() => setIsOpen(false)}
+              onClick={() => { setIsOpen(false); setIsPlaying(false); sendCmd("pauseVideo"); }}
               className="text-white/30 hover:text-white/70 transition-colors text-xs leading-none ml-1"
               aria-label="Close player"
             >
@@ -201,7 +254,7 @@ export function AmbientPlayer() {
               </svg>
             </button>
 
-            {/* Volume control — icon toggles slider */}
+            {/* Volume control */}
             <div ref={volumeRef} className="relative flex items-center ml-auto">
               <button
                 onClick={() => setShowVolume((v) => !v)}
@@ -243,49 +296,131 @@ export function AmbientPlayer() {
         </div>
       )}
 
-      {/* Toggle pill button */}
-      <button
-        onClick={() => setIsOpen((v) => !v)}
-        className="flex items-center gap-2 px-4 py-2 rounded-full shadow-lg transition-all duration-300 hover:scale-105 active:scale-95"
-        style={{
-          background: isOpen ? "rgba(74,222,128,0.15)" : "rgba(15,15,15,0.88)",
-          border: "1.5px solid rgba(74,222,128,0.55)",
-          backdropFilter: "blur(10px)",
-          color: "#4ade80",
-          boxShadow: isOpen
-            ? "0 0 12px rgba(74,222,128,0.25)"
-            : "0 2px 12px rgba(0,0,0,0.4)",
-        }}
-        aria-label={isOpen ? "Hide music player" : "Play ambient music"}
-      >
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z" />
-        </svg>
-        <span className="text-[11px] font-semibold whitespace-nowrap">
-          {isOpen ? (isPlaying ? "Now Playing" : "Ambient") : "Ambient Music"}
-        </span>
-        {isOpen && isPlaying && (
-          <span className="flex gap-[2px] items-end h-3">
-            {[50, 100, 70].map((h, i) => (
+      {/* Mini "Now Playing" pill — shown when collapsed via scroll/click-outside */}
+      {isOpen && isMini && (
+        <div
+          className="flex items-center gap-2 px-3 py-1.5 rounded-full shadow-lg cursor-pointer transition-all hover:scale-105"
+          style={{
+            background: "rgba(10,10,10,0.90)",
+            border: "1px solid rgba(74,222,128,0.4)",
+            backdropFilter: "blur(10px)",
+          }}
+          onClick={() => setIsMini(false)}
+          title="Expand player"
+        >
+          <div className="flex items-end gap-[2px] h-3">
+            {[60, 100, 70].map((h, i) => (
               <span
                 key={i}
-                className="w-[2px] rounded-full bg-green-400"
+                className="w-[2px] rounded-full"
                 style={{
+                  background: "#4ade80",
                   height: `${h}%`,
-                  animation: `soundBar${i + 1} 0.7s ease-in-out infinite alternate`,
+                  animation: isPlaying
+                    ? `soundBar${i + 1} 0.7s ease-in-out infinite alternate`
+                    : "none",
                   animationDelay: `${i * 0.2}s`,
+                  opacity: isPlaying ? 1 : 0.4,
                 }}
               />
             ))}
+          </div>
+          <span className="text-[10px] font-semibold text-white/70 whitespace-nowrap">
+            Now Playing
           </span>
+          <span className="text-[9px] text-white/40 whitespace-nowrap">
+            {currentTrack.title}
+          </span>
+        </div>
+      )}
+
+      {/* Toggle pill button with animated music note */}
+      <div className="relative">
+        {/* Animated floating music note */}
+        {isPlaying && (
+          <>
+            <span
+              className="absolute pointer-events-none select-none"
+              style={{
+                top: -6,
+                right: -8,
+                fontSize: 11,
+                color: "#4ade80",
+                animation: "floatNote1 2.2s ease-in-out infinite",
+                opacity: 0.85,
+              }}
+            >
+              ♪
+            </span>
+            <span
+              className="absolute pointer-events-none select-none"
+              style={{
+                top: -14,
+                right: 4,
+                fontSize: 9,
+                color: "#86efac",
+                animation: "floatNote2 2.8s ease-in-out infinite 0.6s",
+                opacity: 0.65,
+              }}
+            >
+              ♫
+            </span>
+          </>
         )}
-      </button>
+
+        <button
+          onClick={handleToggleButton}
+          className="flex items-center gap-2 px-4 py-2 rounded-full shadow-lg transition-all duration-300 hover:scale-105 active:scale-95"
+          style={{
+            background: isOpen ? "rgba(74,222,128,0.15)" : "rgba(15,15,15,0.88)",
+            border: "1.5px solid rgba(74,222,128,0.55)",
+            backdropFilter: "blur(10px)",
+            color: "#4ade80",
+            boxShadow: isOpen
+              ? "0 0 12px rgba(74,222,128,0.25)"
+              : "0 2px 12px rgba(0,0,0,0.4)",
+          }}
+          aria-label={isOpen ? "Hide music player" : "Play ambient music"}
+        >
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z" />
+          </svg>
+          <span className="text-[11px] font-semibold whitespace-nowrap">
+            {isOpen && isMini ? "Ambient" : isOpen ? (isPlaying ? "Now Playing" : "Ambient") : "Ambient Music"}
+          </span>
+          {isOpen && isPlaying && !isMini && (
+            <span className="flex gap-[2px] items-end h-3">
+              {[50, 100, 70].map((h, i) => (
+                <span
+                  key={i}
+                  className="w-[2px] rounded-full bg-green-400"
+                  style={{
+                    height: `${h}%`,
+                    animation: `soundBar${i + 1} 0.7s ease-in-out infinite alternate`,
+                    animationDelay: `${i * 0.2}s`,
+                  }}
+                />
+              ))}
+            </span>
+          )}
+        </button>
+      </div>
 
       <style>{`
         @keyframes soundBar1 { from { transform: scaleY(0.4); } to { transform: scaleY(1); } }
         @keyframes soundBar2 { from { transform: scaleY(0.6); } to { transform: scaleY(0.3); } }
         @keyframes soundBar3 { from { transform: scaleY(1); } to { transform: scaleY(0.5); } }
         @keyframes soundBar4 { from { transform: scaleY(0.3); } to { transform: scaleY(0.9); } }
+        @keyframes floatNote1 {
+          0%   { transform: translate(0, 0) rotate(-10deg); opacity: 0.85; }
+          50%  { transform: translate(4px, -10px) rotate(8deg); opacity: 0.5; }
+          100% { transform: translate(-2px, -18px) rotate(-5deg); opacity: 0; }
+        }
+        @keyframes floatNote2 {
+          0%   { transform: translate(0, 0) rotate(5deg); opacity: 0.65; }
+          50%  { transform: translate(-3px, -8px) rotate(-10deg); opacity: 0.35; }
+          100% { transform: translate(2px, -16px) rotate(6deg); opacity: 0; }
+        }
         input[type=range]::-webkit-slider-thumb {
           -webkit-appearance: none;
           width: 9px;
