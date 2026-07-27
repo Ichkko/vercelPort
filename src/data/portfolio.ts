@@ -5,7 +5,7 @@ export const profile = {
   github: "https://github.com/Ichkko",
   linkedin: "https://www.linkedin.com/in/ichko",
   instagram: "https://www.instagram.com/iichh.kuu__/",
-  avatar: "/ichko-hero.png",
+  avatar: "/assets/images/ichko-1785159972961.jpg",
 };
 
 export const techStack = [
