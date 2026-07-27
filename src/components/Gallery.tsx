@@ -56,7 +56,7 @@ const galleryItems: GalleryItem[] = [
   },
   {
     id: 6,
-    src: "/assets/images/b6bffd14-e8d3-48a2-8f7a-19700eb0152c-1785171404964.jpg",
+    src: "/assets/images/model-1785171664466.png",
     alt: "Creative photo of Ichko in nature",
     category: "photo",
     labelEn: "Nature",
