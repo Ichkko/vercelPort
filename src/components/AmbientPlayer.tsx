@@ -186,9 +186,8 @@ export function AmbientPlayer() {
                       background: "#4ade80",
                       height: `${h}%`,
                       animation: isPlaying
-                        ? `soundBar${i + 1} 0.8s ease-in-out infinite alternate`
+                        ? `soundBar${i + 1} 0.8s ${i * 0.15}s ease-in-out infinite alternate`
                         : "none",
-                      animationDelay: `${i * 0.15}s`,
                       opacity: isPlaying ? 1 : 0.35,
                     }}
                   />
@@ -325,9 +324,8 @@ export function AmbientPlayer() {
                   background: "#4ade80",
                   height: `${h}%`,
                   animation: isPlaying
-                    ? `soundBar${i + 1} 0.7s ease-in-out infinite alternate`
+                    ? `soundBar${i + 1} 0.7s ${i * 0.2}s ease-in-out infinite alternate`
                     : "none",
-                  animationDelay: `${i * 0.2}s`,
                   opacity: isPlaying ? 1 : 0.4,
                 }}
               />
@@ -404,8 +402,7 @@ export function AmbientPlayer() {
                   className="w-[2px] rounded-full bg-green-400"
                   style={{
                     height: `${h}%`,
-                    animation: `soundBar${i + 1} 0.7s ease-in-out infinite alternate`,
-                    animationDelay: `${i * 0.2}s`,
+                    animation: `soundBar${i + 1} 0.7s ${i * 0.2}s ease-in-out infinite alternate`,
                   }}
                 />
               ))}
