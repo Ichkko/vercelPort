@@ -2,14 +2,46 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowDown, ArrowRight, Download, Terminal } from "lucide-react";
+import { ArrowDown, ArrowRight, Download, Sparkles, MapPin } from "lucide-react";
 import { profile } from "@/data/portfolio";
 import { FadeIn } from "./FadeIn";
 import { useLanguage } from "./LanguageProvider";
 import { LeafSprout, VineDecoration, SwayingPlant } from "./PlantDecorations";
+import { useState, useEffect } from "react";
+
+const roles = [
+  "Full Stack Developer",
+  "Spring Boot Engineer",
+  "Next.js Developer",
+  "Flutter Builder",
+];
 
 export function Hero() {
   const { t } = useLanguage();
+  const [roleIndex, setRoleIndex] = useState(0);
+  const [displayed, setDisplayed] = useState("");
+  const [typing, setTyping] = useState(true);
+
+  useEffect(() => {
+    const current = roles[roleIndex];
+    let timeout: ReturnType<typeof setTimeout>;
+
+    if (typing) {
+      if (displayed.length < current.length) {
+        timeout = setTimeout(() => setDisplayed(current.slice(0, displayed.length + 1)), 60);
+      } else {
+        timeout = setTimeout(() => setTyping(false), 1800);
+      }
+    } else {
+      if (displayed.length > 0) {
+        timeout = setTimeout(() => setDisplayed(displayed.slice(0, -1)), 35);
+      } else {
+        setRoleIndex((i) => (i + 1) % roles.length);
+        setTyping(true);
+      }
+    }
+    return () => clearTimeout(timeout);
+  }, [displayed, typing, roleIndex]);
 
   const stats = [
     { value: "3+", label: t("statYears") },
@@ -43,43 +75,58 @@ export function Hero() {
           delay={0.4}
         />
       </div>
-      <div className="relative mx-auto grid max-w-[1040px] items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
-        {/* Left content */}
-        <div className="relative z-10 space-y-7">
-          {/* Badge */}
+
+      <div className="relative mx-auto grid max-w-[1040px] items-center gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
+        {/* ── Left content ── */}
+        <div className="relative z-10 space-y-6">
+
+          {/* Location badge */}
           <FadeIn>
-            <motion.div
-              whileHover={{ scale: 1.04 }}
-              className="inline-flex items-center gap-2.5 rounded-full border border-[rgba(8,145,178,0.2)] bg-[rgba(8,145,178,0.06)] px-4 py-2 text-sm font-semibold text-[var(--teal)] backdrop-blur-sm dark:border-[rgba(34,211,238,0.2)] dark:bg-[rgba(34,211,238,0.06)]"
-            >
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--teal)] opacity-60" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--teal)]" />
+            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--bg-elevated)] px-3.5 py-1.5 text-xs font-medium text-[var(--muted)] shadow-sm dark:bg-white/[0.04]">
+              <MapPin className="h-3 w-3 text-[var(--teal)]" strokeWidth={2} />
+              Ulaanbaatar, Mongolia
+              <span className="ml-1 h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
+            </div>
+          </FadeIn>
+
+          {/* Name */}
+          <FadeIn delay={0.06}>
+            <div className="space-y-1">
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--teal)]">
+                Hi, I&apos;m
+              </p>
+              <h1 className="text-4xl font-extrabold leading-[1.08] tracking-tight text-[var(--ink)] sm:text-5xl lg:text-[54px]">
+                Ichko
+                <span className="shimmer-text">.</span>
+              </h1>
+            </div>
+          </FadeIn>
+
+          {/* Animated role */}
+          <FadeIn delay={0.1}>
+            <div className="flex items-center gap-2.5">
+              <Sparkles className="h-4 w-4 flex-shrink-0 text-[var(--teal)] opacity-70" strokeWidth={1.8} />
+              <span className="font-mono text-base font-semibold text-[var(--ink-soft)] sm:text-lg">
+                {displayed}
+                <span className="ml-0.5 inline-block h-[1.1em] w-[2px] translate-y-[2px] animate-pulse bg-[var(--teal)]" />
               </span>
-              <Terminal className="h-3.5 w-3.5" strokeWidth={1.8} />
-              {t("greeting")}
-            </motion.div>
+            </div>
           </FadeIn>
 
-          {/* Headline */}
-          <FadeIn delay={0.07}>
-            <h1 className="max-w-2xl text-4xl font-extrabold leading-[1.12] tracking-tight text-[var(--ink)] sm:text-5xl lg:text-[52px]">
-              {t("heroTitleBefore")}
-              <span className="shimmer-text">{t("heroTitleAccent")}</span>
-              {t("heroTitleAfter")}
-            </h1>
-          </FadeIn>
-
-          {/* Description */}
-          <FadeIn delay={0.12}>
-            <p className="max-w-lg text-[16px] leading-[1.8] text-[var(--muted)]">
-              {t("heroDesc")}
+          {/* Bio */}
+          <FadeIn delay={0.14}>
+            <p className="max-w-[480px] text-[15.5px] leading-[1.85] text-[var(--muted)]">
+              Junior full-stack developer building{" "}
+              <span className="font-semibold text-[var(--ink-soft)]">clean interfaces</span> and{" "}
+              <span className="font-semibold text-[var(--ink-soft)]">reliable backends</span>.
+              I ship practical products with Spring Boot, Next.js, MySQL, and Flutter — focused on
+              code that&apos;s readable, maintainable, and actually useful.
             </p>
           </FadeIn>
 
           {/* CTA buttons */}
-          <FadeIn delay={0.16}>
-            <div className="flex flex-wrap gap-3">
+          <FadeIn delay={0.18}>
+            <div className="flex flex-wrap gap-3 pt-1">
               <motion.a
                 href="#projects"
                 whileHover={{ y: -2, scale: 1.02 }}
@@ -88,7 +135,7 @@ export function Hero() {
                 style={{ backgroundSize: "200% auto" }}
               >
                 {t("ctaProjects")}
-                <ArrowRight className="h-4 w-4" strokeWidth={2} />
+                <ArrowRight className="h-4 w-4" strokeWidth={2.2} />
               </motion.a>
               <motion.a
                 href="/CV.pdf"
@@ -106,7 +153,7 @@ export function Hero() {
           </FadeIn>
 
           {/* Scroll indicator */}
-          <FadeIn delay={0.22}>
+          <FadeIn delay={0.24}>
             <a
               href="#about"
               className="inline-flex items-center gap-2.5 text-xs font-medium text-[var(--muted)] transition hover:text-[var(--teal)]"
@@ -114,27 +161,28 @@ export function Hero() {
               <span className="scroll-indicator flex h-7 w-7 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--bg-elevated)] shadow-sm dark:bg-white/[0.04]">
                 <ArrowDown className="h-3.5 w-3.5 text-[var(--teal)]" strokeWidth={2} />
               </span>
-              Scroll Down
+              Scroll to explore
             </a>
           </FadeIn>
 
-          {/* Vine decoration below scroll indicator */}
-          <FadeIn delay={0.28}>
+          {/* Vine decoration */}
+          <FadeIn delay={0.3}>
             <VineDecoration
-              className="mt-2 opacity-50"
+              className="mt-1 opacity-50"
               color="rgba(34,197,94,0.4)"
               width={160}
             />
           </FadeIn>
         </div>
 
-        {/* Right — image + stats */}
+        {/* ── Right — image + stats ── */}
         <FadeIn delay={0.1} className="relative mx-auto w-full max-w-[360px]">
-          {/* Decorative ring */}
+          {/* Decorative glow */}
           <div
             className="absolute -inset-4 rounded-full opacity-30 blur-3xl dark:opacity-50"
             style={{
-              background: "radial-gradient(circle at 50% 50%, rgba(8,145,178,0.4), rgba(124,58,237,0.2) 60%, transparent 80%)",
+              background:
+                "radial-gradient(circle at 50% 50%, rgba(8,145,178,0.4), rgba(124,58,237,0.2) 60%, transparent 80%)",
             }}
             aria-hidden
           />
@@ -143,7 +191,8 @@ export function Hero() {
           <div
             className="absolute -inset-[3px] rounded-full opacity-40"
             style={{
-              background: "linear-gradient(135deg, rgba(8,145,178,0.6), rgba(124,58,237,0.4), transparent, rgba(8,145,178,0.3))",
+              background:
+                "linear-gradient(135deg, rgba(8,145,178,0.6), rgba(124,58,237,0.4), transparent, rgba(8,145,178,0.3))",
             }}
             aria-hidden
           />
@@ -155,13 +204,12 @@ export function Hero() {
           >
             <Image
               src={profile?.avatar}
-              alt={profile?.name}
+              alt="Ichko — Full Stack Developer"
               width={640}
               height={640}
               className="aspect-square w-full object-cover"
               priority
             />
-            {/* Gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-[rgba(8,145,178,0.12)] via-transparent to-transparent" />
           </motion.div>
 
