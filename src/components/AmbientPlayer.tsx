@@ -1,6 +1,34 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
+
+declare global {
+  interface Window {
+    YT: {
+      Player: new (
+        el: HTMLElement | string,
+        opts: {
+          videoId: string;
+          playerVars?: Record<string, number | string>;
+          events?: {
+            onReady?: (e: { target: YTPlayerInstance }) => void;
+            onStateChange?: (e: { data: number; target: YTPlayerInstance }) => void;
+          };
+        }
+      ) => YTPlayerInstance;
+      PlayerState: { ENDED: number; PLAYING: number; PAUSED: number };
+    };
+    onYouTubeIframeAPIReady?: () => void;
+  }
+}
+
+interface YTPlayerInstance {
+  playVideo(): void;
+  pauseVideo(): void;
+  setVolume(v: number): void;
+  destroy(): void;
+  getPlayerState(): number;
+}
 
 const TRACKS = [
   { id: "b83LryMe7s4", title: "Lo-fi Chill #1" },
@@ -9,108 +37,151 @@ const TRACKS = [
 
 export function AmbientPlayer() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isMini, setIsMini] = useState(false); // collapsed "Now Playing" pill
+  const [isMini, setIsMini] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.25);
   const [trackIndex, setTrackIndex] = useState(0);
   const [showVolume, setShowVolume] = useState(false);
-  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [apiReady, setApiReady] = useState(false);
+
   const playerRef = useRef<HTMLDivElement>(null);
   const volumeRef = useRef<HTMLDivElement>(null);
-  // track whether we need to auto-play after track change
-  const autoPlayNextRef = useRef(false);
+  const ytPlayerRef = useRef<YTPlayerInstance | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const trackIndexRef = useRef(trackIndex);
+  const volumeRef2 = useRef(volume);
+  const isPlayingRef = useRef(isPlaying);
+
+  // Keep refs in sync
+  useEffect(() => { trackIndexRef.current = trackIndex; }, [trackIndex]);
+  useEffect(() => { volumeRef2.current = volume; }, [volume]);
+  useEffect(() => { isPlayingRef.current = isPlaying; }, [isPlaying]);
 
   const currentTrack = TRACKS[trackIndex];
-  const embedUrl = `https://www.youtube.com/embed/${currentTrack.id}?autoplay=0&loop=0&mute=0&controls=0&rel=0&modestbranding=1&enablejsapi=1${trackIndex === 0 ? "&start=3" : ""}`;
 
-  const sendCmd = (func: string, args: unknown[] = []) => {
-    iframeRef.current?.contentWindow?.postMessage(
-      JSON.stringify({ event: "command", func, args }),
-      "*"
-    );
-  };
+  // Load YouTube IFrame API script once
+  useEffect(() => {
+    if (window.YT && window.YT.Player) {
+      setApiReady(true);
+      return;
+    }
+    const existing = document.getElementById("yt-iframe-api");
+    if (!existing) {
+      const script = document.createElement("script");
+      script.id = "yt-iframe-api";
+      script.src = "https://www.youtube.com/iframe_api";
+      document.head.appendChild(script);
+    }
+    const prev = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = () => {
+      prev?.();
+      setApiReady(true);
+    };
+  }, []);
+
+  const destroyPlayer = useCallback(() => {
+    if (ytPlayerRef.current) {
+      try { ytPlayerRef.current.destroy(); } catch { /* ignore */ }
+      ytPlayerRef.current = null;
+    }
+  }, []);
+
+  const createPlayer = useCallback((videoId: string, autoplay: boolean) => {
+    if (!apiReady || !containerRef.current) return;
+    destroyPlayer();
+
+    // Create a fresh div for YT.Player to replace
+    const div = document.createElement("div");
+    containerRef.current.innerHTML = "";
+    containerRef.current.appendChild(div);
+
+    ytPlayerRef.current = new window.YT.Player(div, {
+      videoId,
+      playerVars: {
+        autoplay: autoplay ? 1 : 0,
+        controls: 0,
+        rel: 0,
+        modestbranding: 1,
+        enablejsapi: 1,
+        start: videoId === TRACKS[0].id ? 3 : 0,
+      },
+      events: {
+        onReady: (e) => {
+          e.target.setVolume(Math.round(volumeRef2.current * 100));
+          if (autoplay) {
+            e.target.playVideo();
+            setIsPlaying(true);
+          }
+        },
+        onStateChange: (e) => {
+          const YTState = window.YT?.PlayerState;
+          if (!YTState) return;
+          if (e.data === YTState.PLAYING) {
+            setIsPlaying(true);
+          } else if (e.data === YTState.PAUSED) {
+            setIsPlaying(false);
+          } else if (e.data === YTState.ENDED) {
+            // Auto-advance to next track
+            const nextIndex = (trackIndexRef.current + 1) % TRACKS.length;
+            setIsPlaying(false);
+            setTrackIndex(nextIndex);
+            // Small delay then create next player with autoplay
+            setTimeout(() => {
+              createPlayer(TRACKS[nextIndex].id, true);
+            }, 300);
+          }
+        },
+      },
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [apiReady, destroyPlayer]);
+
+  // When player opens for the first time, create player
+  useEffect(() => {
+    if (isOpen && apiReady) {
+      setTimeout(() => {
+        createPlayer(currentTrack.id, true);
+      }, 400);
+    }
+    if (!isOpen) {
+      destroyPlayer();
+      setIsPlaying(false);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen, apiReady]);
 
   const togglePlay = () => {
-    sendCmd(isPlaying ? "pauseVideo" : "playVideo");
-    setIsPlaying((v) => !v);
+    if (!ytPlayerRef.current) return;
+    if (isPlaying) {
+      ytPlayerRef.current.pauseVideo();
+      setIsPlaying(false);
+    } else {
+      ytPlayerRef.current.playVideo();
+      setIsPlaying(true);
+    }
   };
 
   const changeTrack = (dir: 1 | -1) => {
-    autoPlayNextRef.current = isPlaying;
-    setIsPlaying(false);
-    setTrackIndex((i) => (i + dir + TRACKS.length) % TRACKS.length);
+    const nextIndex = (trackIndex + dir + TRACKS.length) % TRACKS.length;
+    setTrackIndex(nextIndex);
+    createPlayer(TRACKS[nextIndex].id, isPlaying);
   };
 
   const handleVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = parseFloat(e.target.value);
     setVolume(val);
-    sendCmd("setVolume", [Math.round(val * 100)]);
+    ytPlayerRef.current?.setVolume(Math.round(val * 100));
   };
-
-  // Auto-play when first opened
-  useEffect(() => {
-    if (isOpen && !isMini) {
-      const timer = setTimeout(() => {
-        sendCmd("playVideo");
-        sendCmd("setVolume", [Math.round(volume * 100)]);
-        setIsPlaying(true);
-      }, 900);
-      return () => clearTimeout(timer);
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen]);
-
-  // Auto-play after track index changes (manual skip OR auto-advance)
-  useEffect(() => {
-    if (!autoPlayNextRef.current) return;
-    const timer = setTimeout(() => {
-      sendCmd("playVideo");
-      sendCmd("setVolume", [Math.round(volume * 100)]);
-      setIsPlaying(true);
-      autoPlayNextRef.current = false;
-    }, 1500);
-    return () => clearTimeout(timer);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [trackIndex]);
-
-  // Listen for YouTube video end → seamlessly advance to next track
-  useEffect(() => {
-    const handleMessage = (e: MessageEvent) => {
-      try {
-        const data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
-        if (data?.event === "onStateChange") {
-          if (data?.info === 1) {
-            // Playing
-            setIsPlaying(true);
-          } else if (data?.info === 2) {
-            // Paused
-            setIsPlaying(false);
-          } else if (data?.info === 0) {
-            // Ended → advance to next track
-            autoPlayNextRef.current = true;
-            setIsPlaying(false);
-            setTrackIndex((i) => (i + 1) % TRACKS.length);
-          }
-        }
-      } catch {
-        // ignore non-JSON messages
-      }
-    };
-    window.addEventListener("message", handleMessage);
-    return () => window.removeEventListener("message", handleMessage);
-  }, []);
 
   // Collapse to mini pill on scroll
   useEffect(() => {
     if (!isOpen) return;
-    const handleScroll = () => {
-      setIsMini(true);
-    };
+    const handleScroll = () => setIsMini(true);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isOpen]);
 
-  // Collapse to mini pill on click outside the player
+  // Collapse to mini pill on click outside
   useEffect(() => {
     if (!isOpen || isMini) return;
     const handleClick = (e: MouseEvent) => {
@@ -143,23 +214,16 @@ export function AmbientPlayer() {
     } else {
       setIsOpen(false);
       setIsPlaying(false);
-      sendCmd("pauseVideo");
+      destroyPlayer();
     }
   };
 
   return (
     <div ref={playerRef} className="fixed bottom-5 left-5 z-50 flex flex-col items-start gap-2">
-      {/* Hidden YouTube iframe — audio source only */}
-      <iframe
-        key={currentTrack.id}
-        ref={iframeRef}
-        src={embedUrl}
-        width="1"
-        height="1"
-        allow="autoplay; encrypted-media"
-        title="Lo-fi ambient audio"
-        style={{ position: "absolute", opacity: 0, pointerEvents: "none", border: "none" }}
-        tabIndex={-1}
+      {/* Hidden YT.Player container */}
+      <div
+        ref={containerRef}
+        style={{ position: "absolute", width: 1, height: 1, opacity: 0, pointerEvents: "none", overflow: "hidden" }}
         aria-hidden="true"
       />
 
@@ -198,7 +262,7 @@ export function AmbientPlayer() {
               </span>
             </div>
             <button
-              onClick={() => { setIsOpen(false); setIsPlaying(false); sendCmd("pauseVideo"); }}
+              onClick={() => { setIsOpen(false); setIsPlaying(false); destroyPlayer(); }}
               className="text-white/30 hover:text-white/70 transition-colors text-xs leading-none ml-1"
               aria-label="Close player"
             >
@@ -303,7 +367,7 @@ export function AmbientPlayer() {
         </div>
       )}
 
-      {/* Mini "Now Playing" pill — shown when collapsed via scroll/click-outside */}
+      {/* Mini "Now Playing" pill */}
       {isOpen && isMini && (
         <div
           className="flex items-center gap-2 px-3 py-1.5 rounded-full shadow-lg cursor-pointer transition-all hover:scale-105"
@@ -340,37 +404,24 @@ export function AmbientPlayer() {
         </div>
       )}
 
-      {/* Toggle pill button with animated music note */}
+      {/* Toggle pill button */}
       <div className="relative">
-        {/* Animated floating music note */}
         {isOpen && isPlaying && (
           <>
             <span
               className="absolute pointer-events-none select-none"
               style={{
-                top: -6,
-                right: -8,
-                fontSize: 11,
-                color: "#4ade80",
-                animation: "floatNote1 2.2s ease-in-out infinite",
-                opacity: 0.85,
+                top: -6, right: -8, fontSize: 11, color: "#4ade80",
+                animation: "floatNote1 2.2s ease-in-out infinite", opacity: 0.85,
               }}
-            >
-              ♪
-            </span>
+            >♪</span>
             <span
               className="absolute pointer-events-none select-none"
               style={{
-                top: -14,
-                right: 4,
-                fontSize: 9,
-                color: "#86efac",
-                animation: "floatNote2 2.8s ease-in-out infinite 0.6s",
-                opacity: 0.65,
+                top: -14, right: 4, fontSize: 9, color: "#86efac",
+                animation: "floatNote2 2.8s ease-in-out infinite 0.6s", opacity: 0.65,
               }}
-            >
-              ♫
-            </span>
+            >♫</span>
           </>
         )}
 
@@ -382,9 +433,7 @@ export function AmbientPlayer() {
             border: "1.5px solid rgba(74,222,128,0.55)",
             backdropFilter: "blur(10px)",
             color: "#4ade80",
-            boxShadow: isOpen
-              ? "0 0 12px rgba(74,222,128,0.25)"
-              : "0 2px 12px rgba(0,0,0,0.4)",
+            boxShadow: isOpen ? "0 0 12px rgba(74,222,128,0.25)" : "0 2px 12px rgba(0,0,0,0.4)",
           }}
           aria-label={isOpen ? "Hide music player" : "Play ambient music"}
         >
@@ -428,24 +477,19 @@ export function AmbientPlayer() {
         }
         input[type=range]::-webkit-slider-thumb {
           -webkit-appearance: none;
-          width: 9px;
-          height: 9px;
+          width: 9px; height: 9px;
           border-radius: 50%;
           background: #4ade80;
           cursor: pointer;
         }
         input[type=range]::-moz-range-thumb {
-          width: 9px;
-          height: 9px;
+          width: 9px; height: 9px;
           border-radius: 50%;
           background: #4ade80;
           border: none;
           cursor: pointer;
         }
-        input[type=range] {
-          -webkit-appearance: none;
-          background: transparent;
-        }
+        input[type=range] { -webkit-appearance: none; background: transparent; }
         input[type=range]::-webkit-slider-runnable-track {
           background: rgba(255,255,255,0.12);
           border-radius: 4px;
