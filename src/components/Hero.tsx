@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowDown, ArrowRight, Download, Sparkles, MapPin } from "lucide-react";
+import { ArrowDown, ArrowRight, Download, Sparkles, MapPin, User } from "lucide-react";
 import { profile } from "@/data/portfolio";
 import { FadeIn } from "./FadeIn";
 import { useLanguage } from "./LanguageProvider";
@@ -149,6 +150,15 @@ export function Hero() {
                 {t("ctaCv")}
                 <Download className="h-4 w-4" strokeWidth={1.8} />
               </motion.a>
+              <motion.div whileHover={{ y: -2, scale: 1.02 }} whileTap={{ scale: 0.97 }}>
+                <Link
+                  href="/about"
+                  className="inline-flex items-center gap-2.5 rounded-full border border-[var(--teal)]/30 bg-[var(--teal-soft)] px-6 py-3.5 text-sm font-bold text-[var(--teal)] shadow-sm transition-all hover:border-[var(--teal)]/60 hover:shadow-[0_4px_16px_rgba(8,145,178,0.2)]"
+                >
+                  About me
+                  <User className="h-4 w-4" strokeWidth={1.8} />
+                </Link>
+              </motion.div>
             </div>
           </FadeIn>
 
