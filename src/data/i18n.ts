@@ -1,7 +1,5 @@
 export type Lang = "en" | "mn";
 
-export type TranslationKey = keyof typeof translations.en;
-
 export const translations = {
   en: {
     role: "Full Stack Developer",
@@ -40,6 +38,13 @@ export const translations = {
     skillsEyebrow: "Skills",
     skillsTitle: "Tech Stack",
     skillsDesc: "Tools I use to ship web, backend, and mobile products.",
+    skillCatBackend: "Backend",
+    skillCatFrontend: "Frontend",
+    skillCatMobile: "Mobile",
+    skillCatTools: "Tools & DevOps",
+    skillLevelBeginner: "Learning",
+    skillLevelIntermediate: "Comfortable",
+    skillLevelAdvanced: "Proficient",
     workEyebrow: "Work",
     projectsTitle: "Featured Projects",
     projectsDesc: "Selected work across backend, frontend, and product flows.",
@@ -55,6 +60,9 @@ export const translations = {
     project3Title: "Hotel Booking System",
     project3Desc:
       "Hotel booking, room management, payments, and role-based access in one web platform.",
+    project4Title: "Mobile App — Flutter",
+    project4Desc:
+      "Cross-platform mobile app built with Flutter and Firebase for real-time data sync and smooth UX.",
     metricProjects: "Projects completed",
     metricCommits: "Git commits",
     metricYears: "Years learning",
@@ -84,6 +92,25 @@ export const translations = {
     contactCta: "Contact",
     themeLight: "Light",
     themeDark: "Dark",
+    hobbiesEyebrow: "Interests",
+    hobbiesTitle: "Hobbies & Passions",
+    hobbyArtTitle: "Drawing & Illustration",
+    hobbyArtDesc: "I love sketching characters, landscapes, and abstract art by hand — it's my way of unwinding.",
+    hobbyCraftTitle: "Handmade Crafts",
+    hobbyCraftDesc: "From paper crafts to DIY accessories — I enjoy making things with my hands.",
+    hobbyMusicTitle: "Music",
+    hobbyMusicDesc: "K-pop, indie, and pop keep me going. Music is always on while I code or create.",
+    hobbyMovieTitle: "Movies & Anime",
+    hobbyMovieDesc: "Thriller, sci-fi, and anime are my favorites. I love stories that make you think.",
+    hobbyPhotoTitle: "Photography",
+    hobbyPhotoDesc: "Capturing everyday moments, nature, and city life through a lens.",
+    hobbyOtherTitle: "Travel & Explore",
+    hobbyOtherDesc: "Discovering new places, trying local food, and collecting memories.",
+    favMusicLabel: "Favorite Artists",
+    favMovieLabel: "Favorite Movies & Shows",
+    testimonialsEyebrow: "Testimonials",
+    testimonialsTitle: "What colleagues say",
+    testimonialsDesc: "Feedback from teammates, leads, and collaborators I've shipped real products with.",
   },
   mn: {
     role: "Full Stack Developer",
@@ -122,6 +149,13 @@ export const translations = {
     skillsEyebrow: "Ур чадвар",
     skillsTitle: "Технологийн стек",
     skillsDesc: "Web, backend, mobile бүтээгдэхүүн хөгжүүлэхэд ашигладаг гол технологиуд.",
+    skillCatBackend: "Backend",
+    skillCatFrontend: "Frontend",
+    skillCatMobile: "Mobile",
+    skillCatTools: "Хэрэгсэл & DevOps",
+    skillLevelBeginner: "Суралцаж байна",
+    skillLevelIntermediate: "Тохиромжтой",
+    skillLevelAdvanced: "Чадварлаг",
     workEyebrow: "Ажил",
     projectsTitle: "Онцлох төслүүд",
     projectsDesc: "Backend, frontend, бүтээгдэхүүний урсгал дээрх сонгосон ажлууд.",
@@ -137,6 +171,9 @@ export const translations = {
     project3Title: "Hotel Booking System",
     project3Desc:
       "Зочид буудлын захиалга, өрөөний менежмент, төлбөр, эрхээр ялгах web систем.",
+    project4Title: "Mobile App — Flutter",
+    project4Desc:
+      "Flutter болон Firebase ашиглан хийсэн cross-platform mobile апп — realtime өгөгдөл синк, зөөлөн UX.",
     metricProjects: "Дууссан төсөл",
     metricCommits: "Git commit",
     metricYears: "Жил суралцсан",
@@ -166,8 +203,29 @@ export const translations = {
     contactCta: "Холбогдох",
     themeLight: "Гэрэл",
     themeDark: "Харанхуй",
+    hobbiesEyebrow: "Сонирхол",
+    hobbiesTitle: "Хобби & Дуртай зүйлс",
+    hobbyArtTitle: "Зураг зурах",
+    hobbyArtDesc: "Гараар дүр, байгаль, абстракт зураг зурах дуртай — тайвшрах арга минь.",
+    hobbyCraftTitle: "Гар урлал",
+    hobbyCraftDesc: "Цаасан урлал, DIY гоёл чимэглэл — гараараа юм хийх дуртай.",
+    hobbyMusicTitle: "Хөгжим",
+    hobbyMusicDesc: "K-pop, indie, pop дуу сонсдог. Код бичих, бүтээх үедээ хөгжим заавал байна.",
+    hobbyMovieTitle: "Кино & Аниме",
+    hobbyMovieDesc: "Thriller, sci-fi, аниме хамгийн дуртай. Бодоход хүргэдэг түүхийг хайрладаг.",
+    hobbyPhotoTitle: "Гэрэл зураг",
+    hobbyPhotoDesc: "Өдөр тутмын мөч, байгаль, хотын амьдралыг дуранд баридаг.",
+    hobbyOtherTitle: "Аялал & Судалгаа",
+    hobbyOtherDesc: "Шинэ газар нутаг нээх, орон нутгийн хоол амсах, дурсамж цуглуулах.",
+    favMusicLabel: "Дуртай дуучид",
+    favMovieLabel: "Дуртай кино & цуврал",
+    testimonialsEyebrow: "Сэтгэгдлүүд",
+    testimonialsTitle: "Хамтрагчид юу гэж хэлдэг вэ",
+    testimonialsDesc: "Хамтран ажилласан багийн гишүүд, ахлагчид, хамтрагчдын санал хүсэлт.",
   },
 } as const;
+
+export type TranslationKey = keyof typeof translations.en;
 
 export const navKeys = [
   { href: "#home", key: "navHome" as const, icon: "Home" },

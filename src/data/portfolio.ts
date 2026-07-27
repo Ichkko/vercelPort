@@ -5,7 +5,7 @@ export const profile = {
   github: "https://github.com/Ichkko",
   linkedin: "https://www.linkedin.com/in/ichko",
   instagram: "https://www.instagram.com/iichh.kuu__/",
-  avatar: "/ichko-hero.png",
+  avatar: "/assets/images/ichkkkko-1785171948972.jpg",
 };
 
 export const techStack = [
@@ -20,10 +20,74 @@ export const techStack = [
   { name: "Docker", icon: "Container" as const },
 ];
 
+export const skillCategories = [
+  {
+    id: "backend",
+    labelKey: "skillCatBackend" as const,
+    color: "#d97706",
+    colorSoft: "rgba(245,158,11,0.1)",
+    icon: "Coffee" as const,
+    skills: [
+      { name: "Java", level: 85, tag: "Core" },
+      { name: "Spring Boot", level: 80, tag: "API" },
+      { name: "MySQL", level: 78, tag: "DB" },
+      { name: "JPA / Hibernate", level: 70, tag: "ORM" },
+      { name: "REST API", level: 82, tag: "Design" },
+      { name: "JWT Auth", level: 72, tag: "Security" },
+    ],
+  },
+  {
+    id: "frontend",
+    labelKey: "skillCatFrontend" as const,
+    color: "#0891b2",
+    colorSoft: "rgba(8,145,178,0.1)",
+    icon: "Component" as const,
+    skills: [
+      { name: "Next.js", level: 80, tag: "Framework" },
+      { name: "React", level: 82, tag: "UI" },
+      { name: "TypeScript", level: 75, tag: "Language" },
+      { name: "Tailwind CSS", level: 88, tag: "Styling" },
+      { name: "HTML / CSS", level: 90, tag: "Core" },
+      { name: "Framer Motion", level: 65, tag: "Animation" },
+    ],
+  },
+  {
+    id: "mobile",
+    labelKey: "skillCatMobile" as const,
+    color: "#7c3aed",
+    colorSoft: "rgba(124,58,237,0.1)",
+    icon: "Hexagon" as const,
+    skills: [
+      { name: "Flutter", level: 68, tag: "Framework" },
+      { name: "Dart", level: 65, tag: "Language" },
+      { name: "Firebase", level: 60, tag: "Backend" },
+    ],
+  },
+  {
+    id: "tools",
+    labelKey: "skillCatTools" as const,
+    color: "#dc2626",
+    colorSoft: "rgba(239,68,68,0.1)",
+    icon: "GitBranch" as const,
+    skills: [
+      { name: "Git / GitHub", level: 85, tag: "VCS" },
+      { name: "Docker", level: 60, tag: "DevOps" },
+      { name: "IntelliJ IDEA", level: 82, tag: "IDE" },
+      { name: "VS Code", level: 88, tag: "IDE" },
+      { name: "Postman", level: 80, tag: "Testing" },
+    ],
+  },
+];
+
 export const projectsMeta = [
   {
     id: "1" as const,
-    image: "/kino.png",
+    image: "/assets/images/foodmenu1-1785171287595.png",
+    images: [
+      "/assets/images/foodmenu1-1785171287595.png",
+      "/assets/images/foodmenu2-1785173306419.png",
+      "/assets/images/411397da-05c0-491e-b154-d17e0c0dbc23-1785171330984.jpg",
+    ],
     tags: ["Spring Boot", "WebSocket", "MySQL", "Next.js"],
     liveUrl: "https://github.com/Ichkko",
     githubUrl: "https://github.com/Ichkko",
@@ -33,6 +97,11 @@ export const projectsMeta = [
   {
     id: "2" as const,
     image: "/travel.png",
+    images: [
+      "/travel.png",
+      "/assets/images/foodmenu3-1785173330944.png",
+      "/assets/images/c0ac7376-d408-4ad6-bbb6-3a601a9b6e76-1785171429507.jpg",
+    ],
     tags: ["Next.js", "Tailwind", "API"],
     liveUrl: "https://github.com/Ichkko/travelguide",
     githubUrl: "https://github.com/Ichkko/travelguide",
@@ -42,19 +111,29 @@ export const projectsMeta = [
   {
     id: "3" as const,
     image: "/1.png",
+    images: [
+      "/1.png",
+      "/assets/images/03b1f65f-a430-4d79-a3bd-d4cc83297d7e-1785171826292.jpg",
+      "/assets/images/b6bffd14-e8d3-48a2-8f7a-19700eb0152c-1785172311996.jpg",
+    ],
     tags: ["Java", "Spring Boot", "MySQL", "JWT"],
-    liveUrl: "https://github.com/Ichkko/travelguide",
-    githubUrl: "https://github.com/Ichkko/travelguide",
+    liveUrl: "https://github.com/Ichkko",
+    githubUrl: "https://github.com/Ichkko",
     titleKey: "project3Title" as const,
     descKey: "project3Desc" as const,
   },
   {
     id: "4" as const,
-    image: "/1.png",
-    tags: ["Java", "Spring Boot", "MySQL", "JWT"],
-    liveUrl: "https://github.com/Ichkko/travelguide",
-    githubUrl: "https://github.com/Ichkko/travelguide",
-    titleKey: "project3Title" as const,
-    descKey: "project3Desc" as const,
+    image: "/assets/images/411397da-05c0-491e-b154-d17e0c0dbc23-1785171330984.jpg",
+    images: [
+      "/assets/images/411397da-05c0-491e-b154-d17e0c0dbc23-1785171330984.jpg",
+      "/assets/images/foodmenu4-1785173342054.png",
+      "/assets/images/foodmenu5-1785173355844.png",
+    ],
+    tags: ["Flutter", "Dart", "Firebase"],
+    liveUrl: "https://github.com/Ichkko",
+    githubUrl: "https://github.com/Ichkko",
+    titleKey: "project4Title" as const,
+    descKey: "project4Desc" as const,
   },
 ];

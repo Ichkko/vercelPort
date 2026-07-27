@@ -33,24 +33,34 @@ export function Sidebar({ active }: { active: string }) {
   const { t } = useLanguage();
 
   return (
-    <aside className="fixed inset-y-0 left-0 z-30 hidden w-[290px] shrink-0 flex-col border-r border-[var(--line)] bg-white/72 px-7 py-12 shadow-[10px_0_36px_rgba(19,26,49,0.045)] backdrop-blur-xl lg:flex dark:bg-[rgba(8,17,20,0.82)] dark:shadow-[12px_0_42px_rgba(0,0,0,0.26)]">
+    <aside
+      className="fixed inset-y-0 left-0 z-30 hidden w-[290px] shrink-0 flex-col border-r border-[var(--line)] bg-[var(--bg-panel)] px-7 py-10 backdrop-blur-2xl lg:flex dark:bg-[rgba(6,11,16,0.88)]"
+      style={{ boxShadow: "1px 0 0 var(--line), 8px 0 40px rgba(8,145,178,0.04)" }}
+    >
       <div className="flex flex-col items-center text-center">
-        <Image
-          src='/icho.jpg'
-          alt={profile.name}
-          width={96}
-          height={96}
-          className="h-24 w-24 rounded-full object-cover shadow-[0_12px_32px_rgba(19,26,49,0.12)] ring-4 ring-white dark:ring-[rgba(53,217,200,0.16)]"
-          priority
-        />
-        <h2 className="mt-2 text-xl font-extrabold tracking-tight text-[#11172c] dark:text-stone-50">
+        <div className="relative">
+          <div
+            className="absolute -inset-1 rounded-full opacity-50 blur-md"
+            style={{ background: "linear-gradient(135deg, rgba(8,145,178,0.5), rgba(124,58,237,0.3))" }}
+            aria-hidden
+          />
+          <Image
+            src='/assets/images/c0ac7376-d408-4ad6-bbb6-3a601a9b6e76-1785171429507.jpg'
+            alt={profile.name}
+            width={88}
+            height={88}
+            className="relative h-22 w-22 rounded-full object-cover ring-2 ring-[var(--teal)]/30"
+            priority
+          />
+        </div>
+        <h2 className="mt-3 text-lg font-extrabold tracking-tight text-[var(--ink)]">
           {profile.name}
         </h2>
-        <p className="mt-1 text-sm text-[var(--muted)]">{t("role")}</p>
+        <p className="mt-1 font-mono text-xs font-medium text-[var(--teal)]">{t("role")}</p>
       </div>
 
-      <nav className="mt-5 flex-1">
-        <ul className="space-y-3">
+      <nav className="mt-6 flex-1">
+        <ul className="space-y-1">
           {navKeys.map((link) => {
             const id = link.href.slice(1);
             const isActive = active === id;
@@ -59,23 +69,27 @@ export function Sidebar({ active }: { active: string }) {
               <li key={link.href}>
                 <a
                   href={link.href}
-                  className={`relative flex items-center gap-2 rounded-[8px] px-2 py-3 text-sm font-semibold transition ${
+                  className={`relative flex items-center gap-3 rounded-[10px] px-3 py-2.5 text-sm font-medium transition-all ${
                     isActive
                       ? "text-[var(--teal)]"
-                      : "text-[var(--ink-soft)] hover:bg-[#eef9f7] hover:text-[var(--teal)] dark:hover:bg-white/[0.055] dark:hover:text-[var(--ink)]"
+                      : "text-[var(--muted)] hover:bg-[var(--teal-soft)] hover:text-[var(--ink)]"
                   }`}
                 >
                   {isActive && (
                     <motion.span
                       layoutId="nav-pill"
-                      className="absolute inset-0 rounded-[8px] bg-[#e9f8f6] shadow-sm dark:bg-[var(--teal-soft)] dark:shadow-[0_0_0_1px_rgba(53,217,200,0.12)]"
+                      className="absolute inset-0 rounded-[10px] bg-[var(--teal-soft)]"
+                      style={{ boxShadow: "inset 0 0 0 1px rgba(8,145,178,0.15)" }}
                       transition={{ type: "spring", stiffness: 380, damping: 32 }}
                     />
                   )}
                   <span className="relative z-10 flex items-center gap-3">
-                    {Icon && <Icon className="h-4 w-4" strokeWidth={1.5} />}
+                    {Icon && <Icon className="h-4 w-4" strokeWidth={1.6} />}
                     {t(link.key)}
                   </span>
+                  {isActive && (
+                    <span className="relative z-10 ml-auto h-1.5 w-1.5 rounded-full bg-[var(--teal)]" />
+                  )}
                 </a>
               </li>
             );
@@ -84,12 +98,12 @@ export function Sidebar({ active }: { active: string }) {
       </nav>
 
       <div className="mt-auto space-y-4 border-t border-[var(--line)] pt-5">
-        <div className="flex items-center justify-center gap-3">
+        <div className="flex items-center justify-center gap-2">
           <a
             href={profile.github}
             target="_blank"
             rel="noreferrer"
-            className="rounded-xl p-2 text-[var(--muted)] transition hover:bg-stone-100 hover:text-stone-900 dark:hover:bg-white/[0.055] dark:hover:text-[var(--ink)]"
+            className="rounded-[8px] p-2 text-[var(--muted)] transition hover:bg-[var(--teal-soft)] hover:text-[var(--teal)]"
             aria-label="GitHub"
           >
             <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
@@ -98,7 +112,7 @@ export function Sidebar({ active }: { active: string }) {
           </a>
           <a
             href={`mailto:${profile.email}`}
-            className="rounded-xl p-2 text-[var(--muted)] transition hover:bg-stone-100 hover:text-stone-900 dark:hover:bg-white/[0.055] dark:hover:text-[var(--ink)]"
+            className="rounded-[8px] p-2 text-[var(--muted)] transition hover:bg-[var(--teal-soft)] hover:text-[var(--teal)]"
             aria-label="Email"
           >
             <Mail className="h-4 w-4" strokeWidth={1.5} />
@@ -107,15 +121,15 @@ export function Sidebar({ active }: { active: string }) {
             href={profile.instagram}
             target="_blank"
             rel="noreferrer"
-            className="rounded-xl p-2 text-[var(--muted)] transition hover:bg-stone-100 hover:text-stone-900 dark:hover:bg-white/[0.055] dark:hover:text-[var(--ink)]"
+            className="rounded-[8px] p-2 text-[var(--muted)] transition hover:bg-[var(--teal-soft)] hover:text-[var(--teal)]"
             aria-label="Instagram"
           >
             <Camera className="h-4 w-4" strokeWidth={1.5} />
           </a>
           <a
-            href="/gg.png"
+            href="/CV.pdf"
             download
-            className="rounded-xl p-2 text-[var(--muted)] transition hover:bg-stone-100 hover:text-stone-900 dark:hover:bg-white/[0.055] dark:hover:text-[var(--ink)]"
+            className="rounded-[8px] p-2 text-[var(--muted)] transition hover:bg-[var(--teal-soft)] hover:text-[var(--teal)]"
             aria-label="CV"
           >
             <FileText className="h-4 w-4" strokeWidth={1.5} />
@@ -127,15 +141,15 @@ export function Sidebar({ active }: { active: string }) {
         <button
           type="button"
           onClick={toggleTheme}
-          className="flex w-full items-center justify-between rounded-xl border border-[var(--line)] bg-stone-50 px-3 py-2.5 text-xs font-semibold dark:bg-white/[0.045] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.035)]"
+          className="flex w-full items-center justify-between rounded-[10px] border border-[var(--line)] bg-[var(--bg-elevated)] px-3 py-2.5 text-xs font-semibold transition hover:border-[var(--teal)]/30 dark:bg-white/[0.03]"
           aria-label="Toggle theme"
         >
-          <span className="text-stone-500">
+          <span className="text-[var(--muted)]">
             {theme === "dark" ? t("themeDark") : t("themeLight")}
           </span>
-          <span className="relative h-6 w-11 rounded-full bg-[var(--teal)]/20 p-0.5">
+          <span className="relative h-5 w-10 rounded-full bg-[var(--teal-soft)] p-0.5">
             <motion.span
-              className="block h-5 w-5 rounded-full bg-[var(--teal)] shadow"
+              className="block h-4 w-4 rounded-full bg-[var(--teal)] shadow-sm"
               animate={{ x: theme === "dark" ? 18 : 0 }}
               transition={{ type: "spring", stiffness: 420, damping: 28 }}
             />

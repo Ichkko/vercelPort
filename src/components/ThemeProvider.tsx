@@ -12,14 +12,14 @@ type ThemeContextValue = {
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window === "undefined") return "light";
+  // Always start with "dark" so server and client render the same HTML
+  const [theme, setTheme] = useState<Theme>("dark");
+
+  // After hydration, read the real preference from localStorage (ignore OS preference — default is dark)
+  useEffect(() => {
     const stored = window.localStorage.getItem("portfolio-theme") as Theme | null;
-    return (
-      stored ??
-      (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
-    );
-  });
+    setTheme(stored ?? "dark");
+  }, []);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
