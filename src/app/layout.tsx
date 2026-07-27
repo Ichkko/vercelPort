@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     title: "G. Ichko | Full Stack Developer",
     description:
       "Junior full stack developer building clean interfaces and reliable backends.",
-    images: ["/gg.png"],
+    images: ["/assets/images/03b1f65f-a430-4d79-a3bd-d4cc83297d7e-1785171826292.jpg"],
   },
 };
 

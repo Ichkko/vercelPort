@@ -40,7 +40,7 @@ const galleryItems: GalleryItem[] = [
   },
   {
     id: 4,
-    src: "/gg.png",
+    src: "/assets/images/03b1f65f-a430-4d79-a3bd-d4cc83297d7e-1785171826292.jpg",
     alt: "Artwork or creative work by Ichko",
     category: "drawing",
     labelEn: "Artwork",
