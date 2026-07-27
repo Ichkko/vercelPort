@@ -13,6 +13,7 @@ import { FloatingDotNav } from "./FloatingDotNav";
 import { LanguageToggle } from "./LanguageToggle";
 import { useTheme } from "./ThemeProvider";
 import { useLanguage } from "./LanguageProvider";
+import { SwayingPlant, FloatingLeaf, GrassBlades } from "./PlantDecorations";
 
 // Personal section: home, about, hobbies/personal
 const PERSONAL_SECTIONS = ["personal-home", "personal-about", "personal-contact"];
@@ -97,6 +98,95 @@ export function PortfolioShell() {
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[var(--bg)] opacity-60" />
+
+        {/* ── Plant corner decorations ── */}
+        {/* Bottom-left tall plant */}
+        <SwayingPlant
+          className="absolute bottom-0 left-0"
+          color="rgba(34,197,94,0.28)"
+          size={110}
+          swayAmount={7}
+          duration={4.2}
+          delay={0}
+        />
+        {/* Bottom-right plant (flipped) */}
+        <SwayingPlant
+          className="absolute bottom-0 right-0"
+          color="rgba(34,197,94,0.22)"
+          size={90}
+          swayAmount={5}
+          duration={3.8}
+          delay={0.6}
+          flip
+        />
+        {/* Mid-left smaller plant */}
+        <SwayingPlant
+          className="absolute bottom-[30%] left-0"
+          color="rgba(74,222,128,0.18)"
+          size={65}
+          swayAmount={9}
+          duration={3.2}
+          delay={1.1}
+        />
+        {/* Mid-right smaller plant */}
+        <SwayingPlant
+          className="absolute bottom-[55%] right-0"
+          color="rgba(74,222,128,0.15)"
+          size={55}
+          swayAmount={8}
+          duration={4.6}
+          delay={0.3}
+          flip
+        />
+
+        {/* Grass blades bottom */}
+        <GrassBlades
+          className="absolute bottom-0 left-[10%] w-32 h-16"
+          color="rgba(34,197,94,0.3)"
+          count={6}
+        />
+        <GrassBlades
+          className="absolute bottom-0 right-[15%] w-24 h-12"
+          color="rgba(74,222,128,0.25)"
+          count={5}
+        />
+        <GrassBlades
+          className="absolute bottom-0 left-[45%] w-20 h-10"
+          color="rgba(34,197,94,0.2)"
+          count={4}
+        />
+
+        {/* Floating leaf particles */}
+        <FloatingLeaf
+          className="absolute top-[20%] left-[8%]"
+          color="rgba(34,197,94,0.35)"
+          size={18}
+          delay={0}
+        />
+        <FloatingLeaf
+          className="absolute top-[40%] right-[10%]"
+          color="rgba(74,222,128,0.3)"
+          size={14}
+          delay={1.5}
+        />
+        <FloatingLeaf
+          className="absolute top-[65%] left-[15%]"
+          color="rgba(34,197,94,0.25)"
+          size={16}
+          delay={0.8}
+        />
+        <FloatingLeaf
+          className="absolute top-[75%] right-[20%]"
+          color="rgba(134,239,172,0.3)"
+          size={12}
+          delay={2.2}
+        />
+        <FloatingLeaf
+          className="absolute top-[10%] right-[25%]"
+          color="rgba(34,197,94,0.2)"
+          size={10}
+          delay={3.0}
+        />
       </div>
 
       {/* Floating top-left controls */}

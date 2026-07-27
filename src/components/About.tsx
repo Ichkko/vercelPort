@@ -6,6 +6,7 @@ import { SlideIn, ScaleIn } from "./FadeIn";
 import { useLanguage } from "./LanguageProvider";
 import { motion } from "framer-motion";
 import { MapPin, Mail, GraduationCap, Globe, User, Music, Film, Palette, Scissors, Camera, Heart } from "lucide-react";
+import { LeafSprout, VineDecoration, GrassBlades } from "./PlantDecorations";
 
 export function About() {
   const { t } = useLanguage();
@@ -70,7 +71,26 @@ export function About() {
   ] as const;
 
   return (
-    <section id="about" className="scroll-mt-8 space-y-14">
+    <section id="about" className="relative scroll-mt-8 space-y-14">
+      {/* ── Plant decorations ── */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+        <LeafSprout
+          className="absolute top-0 right-0 w-14 h-24 opacity-60"
+          color="rgba(34,197,94,0.45)"
+          delay={0.3}
+        />
+        <LeafSprout
+          className="absolute top-[40%] left-0 w-10 h-18 opacity-50"
+          color="rgba(74,222,128,0.4)"
+          delay={0.6}
+        />
+        <GrassBlades
+          className="absolute bottom-0 left-[30%] w-28 h-12 opacity-70"
+          color="rgba(34,197,94,0.3)"
+          count={5}
+        />
+      </div>
+
       {/* ── Top: Profile image + info card ── */}
       <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-start">
         {/* Left — profile image + bio */}
@@ -83,6 +103,11 @@ export function About() {
               {t("aboutTitle")}
             </h2>
             <div className="mt-3 h-[3px] w-10 rounded-full accent-line" />
+            <VineDecoration
+              className="mt-3 opacity-50"
+              color="rgba(34,197,94,0.4)"
+              width={140}
+            />
           </div>
 
           {/* Profile image */}

@@ -6,6 +6,7 @@ import { ArrowDown, ArrowRight, Download, Terminal } from "lucide-react";
 import { profile } from "@/data/portfolio";
 import { FadeIn } from "./FadeIn";
 import { useLanguage } from "./LanguageProvider";
+import { LeafSprout, VineDecoration, SwayingPlant } from "./PlantDecorations";
 
 export function Hero() {
   const { t } = useLanguage();
@@ -21,6 +22,27 @@ export function Hero() {
       id="home"
       className="relative scroll-mt-6 overflow-visible px-5 py-12 md:px-10 md:py-20 lg:px-14 lg:py-24"
     >
+      {/* ── Sprouting plants in hero corners ── */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+        <LeafSprout
+          className="absolute bottom-0 right-4 w-16 h-28 opacity-70"
+          color="rgba(34,197,94,0.5)"
+          delay={0.8}
+        />
+        <LeafSprout
+          className="absolute bottom-0 left-4 w-12 h-20 opacity-60"
+          color="rgba(74,222,128,0.45)"
+          delay={1.2}
+        />
+        <SwayingPlant
+          className="absolute -bottom-2 right-[12%] opacity-50"
+          color="rgba(34,197,94,0.45)"
+          size={70}
+          swayAmount={8}
+          duration={3.5}
+          delay={0.4}
+        />
+      </div>
       <div className="relative mx-auto grid max-w-[1040px] items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
         {/* Left content */}
         <div className="relative z-10 space-y-7">
@@ -94,6 +116,15 @@ export function Hero() {
               </span>
               Scroll Down
             </a>
+          </FadeIn>
+
+          {/* Vine decoration below scroll indicator */}
+          <FadeIn delay={0.28}>
+            <VineDecoration
+              className="mt-2 opacity-50"
+              color="rgba(34,197,94,0.4)"
+              width={160}
+            />
           </FadeIn>
         </div>
 

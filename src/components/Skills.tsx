@@ -16,6 +16,7 @@ import {
 import { techStack } from "@/data/portfolio";
 import { ScaleIn, Stagger, StaggerItem } from "./FadeIn";
 import { useLanguage } from "./LanguageProvider";
+import { LeafSprout, VineDecoration } from "./PlantDecorations";
 
 const iconMap: Record<string, LucideIcon> = {
   Coffee,
@@ -45,7 +46,16 @@ export function Skills() {
   const { t } = useLanguage();
 
   return (
-    <section id="skills" className="scroll-mt-8">
+    <section id="skills" className="relative scroll-mt-8">
+      {/* Plant decoration */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+        <LeafSprout
+          className="absolute top-0 right-2 w-12 h-20 opacity-55"
+          color="rgba(34,197,94,0.45)"
+          delay={0.2}
+        />
+      </div>
+
       <ScaleIn>
         <div className="mb-8">
           <span className="font-mono text-xs font-semibold uppercase tracking-[0.15em] text-[var(--teal)]">
@@ -55,6 +65,11 @@ export function Skills() {
             {t("skillsTitle")}
           </h2>
           <div className="mt-3 h-[3px] w-10 rounded-full accent-line" />
+          <VineDecoration
+            className="mt-3 opacity-45"
+            color="rgba(34,197,94,0.38)"
+            width={120}
+          />
         </div>
       </ScaleIn>
 

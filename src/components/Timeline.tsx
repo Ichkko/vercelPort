@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { FadeIn, ScaleIn } from "./FadeIn";
 import { useLanguage } from "./LanguageProvider";
+import { GrassBlades, LeafSprout } from "./PlantDecorations";
 
 export function Timeline() {
   const { t } = useLanguage();
@@ -31,7 +32,20 @@ export function Timeline() {
   ];
 
   return (
-    <section id="experience" className="scroll-mt-8">
+    <section id="experience" className="relative scroll-mt-8">
+      {/* Plant decoration */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+        <GrassBlades
+          className="absolute bottom-0 right-[20%] w-24 h-10 opacity-60"
+          color="rgba(34,197,94,0.3)"
+          count={4}
+        />
+        <LeafSprout
+          className="absolute top-0 left-0 w-10 h-16 opacity-50"
+          color="rgba(74,222,128,0.4)"
+          delay={0.4}
+        />
+      </div>
       <FadeIn>
         <h2 className="text-xl font-extrabold leading-tight text-[#151b31] dark:text-stone-50">
           {t("timelineTitle")}

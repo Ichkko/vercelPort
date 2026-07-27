@@ -338,3 +338,45 @@ body {
 .dark .stat-card:hover {
   box-shadow: 0 12px 32px rgba(34,211,238,0.14);
 }
+
+/* ── Plant animations ── */
+@keyframes plant-sway {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(4deg); }
+  75% { transform: rotate(-3deg); }
+}
+
+@keyframes plant-sway-slow {
+  0%, 100% { transform: rotate(0deg); }
+  30% { transform: rotate(6deg); }
+  70% { transform: rotate(-4deg); }
+}
+
+@keyframes leaf-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
+  50% { transform: translateY(-14px) rotate(12deg); opacity: 1; }
+}
+
+@keyframes sprout-up {
+  from { transform: scaleY(0); opacity: 0; }
+  to { transform: scaleY(1); opacity: 1; }
+}
+
+.plant-sway {
+  animation: plant-sway 3.5s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+.plant-sway-slow {
+  animation: plant-sway-slow 5s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+.leaf-float {
+  animation: leaf-float 4s ease-in-out infinite;
+}
+
+.sprout-up {
+  animation: sprout-up 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+  transform-origin: bottom center;
+}
