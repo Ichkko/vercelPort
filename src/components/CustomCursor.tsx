@@ -73,31 +73,31 @@ export function CustomCursor() {
 
   const spawnParticle = useCallback((x: number, y: number) => {
     const now = Date.now();
-    if (now - lastSpawnRef.current < 60) return; // throttle: max ~16 particles/sec
+    if (now - lastSpawnRef.current < 120) return; // throttle: max ~8 particles/sec
     const dx = x - lastPosRef.current.x;
     const dy = y - lastPosRef.current.y;
     const dist = Math.sqrt(dx * dx + dy * dy);
-    if (dist < 8) return; // only spawn when moving enough
+    if (dist < 18) return; // only spawn when moving enough
 
     lastSpawnRef.current = now;
     lastPosRef.current = { x, y };
 
     const particle: TrailParticle = {
       id: particleId++,
-      x: x + (Math.random() - 0.5) * 12,
-      y: y + (Math.random() - 0.5) * 12,
+      x: x + (Math.random() - 0.5) * 6,
+      y: y + (Math.random() - 0.5) * 6,
       rotation: Math.random() * 360,
-      scale: 0.5 + Math.random() * 0.7,
+      scale: 0.3 + Math.random() * 0.4,
       type: Math.floor(Math.random() * 3),
       opacity: 1,
     };
 
-    setTrail((prev) => [...prev.slice(-18), particle]);
+    setTrail((prev) => [...prev.slice(-8), particle]);
 
     // Remove particle after animation
     setTimeout(() => {
       setTrail((prev) => prev.filter((p) => p.id !== particle.id));
-    }, 900);
+    }, 600);
   }, []);
 
   useEffect(() => {
@@ -184,7 +184,7 @@ export function CustomCursor() {
       <div className="pointer-events-none fixed inset-0 z-[9997] hidden md:block" aria-hidden>
         {trail.map((p) => {
           const color = COLORS[(p.id + p.type) % COLORS.length];
-          const size = 14 + p.scale * 10;
+          const size = 8 + p.scale * 8;
           const LeafSvg = LEAF_SVGS[p.type];
           return (
             <div
@@ -196,8 +196,9 @@ export function CustomCursor() {
                 width: size,
                 height: size,
                 transform: `translate(-50%, -50%) rotate(${p.rotation}deg)`,
-                animation: `leafTrailFade 0.9s ease-out forwards`,
+                animation: `leafTrailFade 0.6s ease-out forwards`,
                 animationDelay: "0ms",
+                opacity: 0.55,
               }}
             >
               {LeafSvg(color)}
