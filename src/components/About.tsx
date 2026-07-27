@@ -6,7 +6,7 @@ import { SlideIn, ScaleIn } from "./FadeIn";
 import { useLanguage } from "./LanguageProvider";
 import { motion } from "framer-motion";
 import { MapPin, Mail, GraduationCap, Globe, User, Music, Film, Palette, Scissors, Camera, Heart } from "lucide-react";
-import { LeafSprout, VineDecoration, GrassBlades } from "./PlantDecorations";
+import { VineDecoration } from "./PlantDecorations";
 
 export function About() {
   const { t } = useLanguage();
@@ -72,20 +72,6 @@ export function About() {
 
   return (
     <section id="about" className="relative scroll-mt-8 space-y-14">
-      {/* ── Plant decorations ── */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
-        <LeafSprout
-          className="absolute top-[40%] left-0 w-10 h-18 opacity-50"
-          color="rgba(74,222,128,0.4)"
-          delay={0.6}
-        />
-        <GrassBlades
-          className="absolute bottom-0 left-[30%] w-28 h-12 opacity-70"
-          color="rgba(34,197,94,0.3)"
-          count={5}
-        />
-      </div>
-
       {/* ── Top: Profile image + info card ── */}
       <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-start">
         {/* Left — profile image + bio */}
@@ -107,7 +93,7 @@ export function About() {
 
           {/* Profile image */}
           <ScaleIn delay={0.08}>
-            <div className="relative mx-auto w-fit">
+            <div className="relative mx-auto w-fit -mt-4">
               {/* Glow ring */}
               <div
                 className="absolute -inset-3 rounded-[20px] opacity-40 blur-2xl"
@@ -129,7 +115,7 @@ export function About() {
                   alt="Гомбосүрэн Ичинхорлоо — хувийн зураг"
                   width={480}
                   height={320}
-                  className="w-[340px] sm:w-[410px] object-cover"
+                  className="w-[380px] sm:w-[450px] object-cover"
                   style={{ aspectRatio: "3/2" }}
                   priority
                 />
