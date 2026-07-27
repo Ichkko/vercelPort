@@ -132,7 +132,7 @@ export function Hero() {
         <FadeIn delay={0.1} className="relative mx-auto w-full max-w-[360px]">
           {/* Decorative ring */}
           <div
-            className="absolute -inset-4 rounded-[24px] opacity-30 blur-3xl dark:opacity-50"
+            className="absolute -inset-4 rounded-full opacity-30 blur-3xl dark:opacity-50"
             style={{
               background: "radial-gradient(circle at 50% 50%, rgba(8,145,178,0.4), rgba(124,58,237,0.2) 60%, transparent 80%)",
             }}
@@ -141,7 +141,7 @@ export function Hero() {
 
           {/* Spinning border accent */}
           <div
-            className="absolute -inset-[3px] rounded-[22px] opacity-40"
+            className="absolute -inset-[3px] rounded-full opacity-40"
             style={{
               background: "linear-gradient(135deg, rgba(8,145,178,0.6), rgba(124,58,237,0.4), transparent, rgba(8,145,178,0.3))",
             }}
@@ -151,7 +151,7 @@ export function Hero() {
           <motion.div
             whileHover={{ scale: 1.015 }}
             transition={{ type: "spring", stiffness: 280, damping: 22 }}
-            className="relative overflow-hidden rounded-[20px] shadow-[0_24px_64px_rgba(8,145,178,0.2),0_8px_24px_rgba(0,0,0,0.12)]"
+            className="relative overflow-hidden rounded-full shadow-[0_24px_64px_rgba(8,145,178,0.2),0_8px_24px_rgba(0,0,0,0.12)]"
           >
             <Image
               src={profile?.avatar}

@@ -132,9 +132,10 @@ export function About() {
                 <Image
                   src="/assets/images/model-1785171963986.png"
                   alt="Гомбосүрэн Ичинхорлоо — хувийн зураг"
-                  width={320}
+                  width={480}
                   height={320}
-                  className="aspect-square w-[220px] object-cover sm:w-[260px]"
+                  className="w-[300px] sm:w-[360px] object-cover"
+                  style={{ aspectRatio: "3/2" }}
                   priority
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[rgba(8,145,178,0.15)] via-transparent to-transparent" />
