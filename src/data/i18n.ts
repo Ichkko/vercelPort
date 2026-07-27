@@ -1,7 +1,5 @@
 export type Lang = "en" | "mn";
 
-export type TranslationKey = keyof typeof translations.en;
-
 export const translations = {
   en: {
     role: "Full Stack Developer",
@@ -84,6 +82,22 @@ export const translations = {
     contactCta: "Contact",
     themeLight: "Light",
     themeDark: "Dark",
+    hobbiesEyebrow: "Interests",
+    hobbiesTitle: "Hobbies & Passions",
+    hobbyArtTitle: "Drawing & Illustration",
+    hobbyArtDesc: "I love sketching characters, landscapes, and abstract art by hand — it's my way of unwinding.",
+    hobbyCraftTitle: "Handmade Crafts",
+    hobbyCraftDesc: "From paper crafts to DIY accessories — I enjoy making things with my hands.",
+    hobbyMusicTitle: "Music",
+    hobbyMusicDesc: "K-pop, indie, and pop keep me going. Music is always on while I code or create.",
+    hobbyMovieTitle: "Movies & Anime",
+    hobbyMovieDesc: "Thriller, sci-fi, and anime are my favorites. I love stories that make you think.",
+    hobbyPhotoTitle: "Photography",
+    hobbyPhotoDesc: "Capturing everyday moments, nature, and city life through a lens.",
+    hobbyOtherTitle: "Travel & Explore",
+    hobbyOtherDesc: "Discovering new places, trying local food, and collecting memories.",
+    favMusicLabel: "Favorite Artists",
+    favMovieLabel: "Favorite Movies & Shows",
   },
   mn: {
     role: "Full Stack Developer",
@@ -166,8 +180,26 @@ export const translations = {
     contactCta: "Холбогдох",
     themeLight: "Гэрэл",
     themeDark: "Харанхуй",
+    hobbiesEyebrow: "Сонирхол",
+    hobbiesTitle: "Хобби & Дуртай зүйлс",
+    hobbyArtTitle: "Зураг зурах",
+    hobbyArtDesc: "Гараар дүр, байгаль, абстракт зураг зурах дуртай — тайвшрах арга минь.",
+    hobbyCraftTitle: "Гар урлал",
+    hobbyCraftDesc: "Цаасан урлал, DIY гоёл чимэглэл — гараараа юм хийх дуртай.",
+    hobbyMusicTitle: "Хөгжим",
+    hobbyMusicDesc: "K-pop, indie, pop дуу сонсдог. Код бичих, бүтээх үедээ хөгжим заавал байна.",
+    hobbyMovieTitle: "Кино & Аниме",
+    hobbyMovieDesc: "Thriller, sci-fi, аниме хамгийн дуртай. Бодоход хүргэдэг түүхийг хайрладаг.",
+    hobbyPhotoTitle: "Гэрэл зураг",
+    hobbyPhotoDesc: "Өдөр тутмын мөч, байгаль, хотын амьдралыг дуранд баридаг.",
+    hobbyOtherTitle: "Аялал & Судалгаа",
+    hobbyOtherDesc: "Шинэ газар нутаг нээх, орон нутгийн хоол амсах, дурсамж цуглуулах.",
+    favMusicLabel: "Дуртай дуучид",
+    favMovieLabel: "Дуртай кино & цуврал",
   },
 } as const;
+
+export type TranslationKey = keyof typeof translations.en;
 
 export const navKeys = [
   { href: "#home", key: "navHome" as const, icon: "Home" },
