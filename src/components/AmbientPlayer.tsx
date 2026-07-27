@@ -79,10 +79,19 @@ export function AmbientPlayer() {
     const handleMessage = (e: MessageEvent) => {
       try {
         const data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
-        if (data?.event === "onStateChange" && data?.info === 0) {
-          autoPlayNextRef.current = true;
-          setIsPlaying(false);
-          setTrackIndex((i) => (i + 1) % TRACKS.length);
+        if (data?.event === "onStateChange") {
+          if (data?.info === 1) {
+            // Playing
+            setIsPlaying(true);
+          } else if (data?.info === 2) {
+            // Paused
+            setIsPlaying(false);
+          } else if (data?.info === 0) {
+            // Ended → advance to next track
+            autoPlayNextRef.current = true;
+            setIsPlaying(false);
+            setTrackIndex((i) => (i + 1) % TRACKS.length);
+          }
         }
       } catch {
         // ignore non-JSON messages
@@ -337,7 +346,7 @@ export function AmbientPlayer() {
       {/* Toggle pill button with animated music note */}
       <div className="relative">
         {/* Animated floating music note */}
-        {isPlaying && (
+        {isOpen && isPlaying && (
           <>
             <span
               className="absolute pointer-events-none select-none"
