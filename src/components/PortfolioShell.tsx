@@ -16,6 +16,7 @@ import { useLanguage } from "./LanguageProvider";
 import { SwayingPlant, FloatingLeaf, GrassBlades } from "./PlantDecorations";
 import { Gallery } from "./Gallery";
 import { CurrentlyVibing } from "./CurrentlyVibing";
+import { AmbientPlayer } from "./AmbientPlayer";
 
 // Personal section: home, about, hobbies/personal
 const PERSONAL_SECTIONS = ["personal-home", "personal-about", "personal-gallery", "personal-vibing", "personal-contact"];
@@ -76,6 +77,7 @@ export function PortfolioShell() {
   return (
     <div className="relative min-h-screen" style={{ background: "var(--bg)" }}>
       <CustomCursor />
+      <AmbientPlayer />
 
       {/* Background layers */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden" aria-hidden>
