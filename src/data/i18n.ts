@@ -53,6 +53,9 @@ export const translations = {
     project3Title: "Hotel Booking System",
     project3Desc:
       "Hotel booking, room management, payments, and role-based access in one web platform.",
+    project4Title: "Mobile App — Flutter",
+    project4Desc:
+      "Cross-platform mobile app built with Flutter and Firebase for real-time data sync and smooth UX.",
     metricProjects: "Projects completed",
     metricCommits: "Git commits",
     metricYears: "Years learning",
@@ -151,6 +154,9 @@ export const translations = {
     project3Title: "Hotel Booking System",
     project3Desc:
       "Зочид буудлын захиалга, өрөөний менежмент, төлбөр, эрхээр ялгах web систем.",
+    project4Title: "Mobile App — Flutter",
+    project4Desc:
+      "Flutter болон Firebase ашиглан хийсэн cross-platform mobile апп — realtime өгөгдөл синк, зөөлөн UX.",
     metricProjects: "Дууссан төсөл",
     metricCommits: "Git commit",
     metricYears: "Жил суралцсан",
