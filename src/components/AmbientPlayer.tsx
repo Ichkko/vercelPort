@@ -3,10 +3,8 @@
 import { useState, useRef, useEffect } from "react";
 
 const TRACKS = [
-  { id: "uLF1lW3Ffrg", title: "Lo-fi Chill #1" },
-  { id: "YubZBxQ4Gwk", title: "Lo-fi Chill #2" },
-  { id: "b83LryMe7s4", title: "Lo-fi Chill #3" },
-  { id: "a2GujJZfXpg", title: "Lo-fi Chill #4" },
+  { id: "b83LryMe7s4", title: "Lo-fi Chill #1" },
+  { id: "uLF1lW3Ffrg", title: "Lo-fi Chill #2" },
 ];
 
 export function AmbientPlayer() {
@@ -14,10 +12,13 @@ export function AmbientPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.25);
   const [trackIndex, setTrackIndex] = useState(0);
+  const [showVolume, setShowVolume] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const playerRef = useRef<HTMLDivElement>(null);
+  const volumeRef = useRef<HTMLDivElement>(null);
 
   const currentTrack = TRACKS[trackIndex];
-  const playlistUrl = `https://www.youtube.com/embed/${currentTrack.id}?autoplay=0&loop=1&mute=0&controls=0&rel=0&modestbranding=1&enablejsapi=1`;
+  const embedUrl = `https://www.youtube.com/embed/${currentTrack.id}?autoplay=0&loop=0&mute=0&controls=0&rel=0&modestbranding=1&enablejsapi=1`;
 
   const sendCmd = (func: string, args: unknown[] = []) => {
     iframeRef.current?.contentWindow?.postMessage(
@@ -51,15 +52,47 @@ export function AmbientPlayer() {
       }, 900);
       return () => clearTimeout(timer);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, trackIndex]);
 
+  // Listen for YouTube video end to auto-advance
+  useEffect(() => {
+    const handleMessage = (e: MessageEvent) => {
+      try {
+        const data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
+        // YT player state: 0 = ended
+        if (data?.event === "onStateChange" && data?.info === 0) {
+          const next = (trackIndex + 1) % TRACKS.length;
+          setIsPlaying(false);
+          setTrackIndex(next);
+        }
+      } catch {
+        // ignore non-JSON messages
+      }
+    };
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, [trackIndex]);
+
+  // Collapse volume on outside click
+  useEffect(() => {
+    if (!showVolume) return;
+    const handleClick = (e: MouseEvent) => {
+      if (volumeRef.current && !volumeRef.current.contains(e.target as Node)) {
+        setShowVolume(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [showVolume]);
+
   return (
-    <div className="fixed bottom-5 left-5 z-50 flex flex-col items-start gap-2">
+    <div ref={playerRef} className="fixed bottom-5 left-5 z-50 flex flex-col items-start gap-2">
       {/* Hidden YouTube iframe — audio source only */}
       <iframe
         key={currentTrack.id}
         ref={iframeRef}
-        src={playlistUrl}
+        src={embedUrl}
         width="1"
         height="1"
         allow="autoplay; encrypted-media"
@@ -168,31 +201,49 @@ export function AmbientPlayer() {
               </svg>
             </button>
 
-            {/* Volume icon */}
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="rgba(74,222,128,0.6)" className="flex-shrink-0 ml-1">
-              <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
-            </svg>
+            {/* Volume control — icon toggles slider */}
+            <div ref={volumeRef} className="relative flex items-center ml-auto">
+              <button
+                onClick={() => setShowVolume((v) => !v)}
+                className="flex items-center justify-center w-6 h-6 rounded-full transition-all hover:scale-110 flex-shrink-0"
+                style={{ color: showVolume ? "#4ade80" : "rgba(74,222,128,0.55)" }}
+                aria-label="Toggle volume"
+              >
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
+                </svg>
+              </button>
 
-            {/* Volume slider */}
-            <input
-              type="range"
-              min="0"
-              max="1"
-              step="0.05"
-              value={volume}
-              onChange={handleVolume}
-              className="flex-1 h-1 rounded-full appearance-none cursor-pointer"
-              style={{
-                background: `linear-gradient(to right, #4ade80 ${volume * 100}%, rgba(255,255,255,0.15) ${volume * 100}%)`,
-                accentColor: "#4ade80",
-              }}
-              aria-label="Volume"
-            />
+              {showVolume && (
+                <div
+                  className="absolute bottom-8 left-1/2 -translate-x-1/2 rounded-xl px-3 py-2 flex flex-col items-center gap-1.5 shadow-xl"
+                  style={{
+                    background: "rgba(10,10,10,0.96)",
+                    border: "1px solid rgba(74,222,128,0.25)",
+                    backdropFilter: "blur(12px)",
+                    width: 36,
+                  }}
+                >
+                  <span className="text-[9px] text-white/40">{Math.round(volume * 100)}</span>
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.05"
+                    value={volume}
+                    onChange={handleVolume}
+                    className="volume-slider-vertical cursor-pointer"
+                    style={{ writingMode: "vertical-lr", direction: "rtl", width: 4, height: 60, accentColor: "#4ade80" }}
+                    aria-label="Volume"
+                  />
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}
 
-      {/* Toggle pill button — slightly more noticeable */}
+      {/* Toggle pill button */}
       <button
         onClick={() => setIsOpen((v) => !v)}
         className="flex items-center gap-2 px-4 py-2 rounded-full shadow-lg transition-all duration-300 hover:scale-105 active:scale-95"
@@ -248,8 +299,16 @@ export function AmbientPlayer() {
           height: 9px;
           border-radius: 50%;
           background: #4ade80;
-          cursor: pointer;
           border: none;
+          cursor: pointer;
+        }
+        input[type=range] {
+          -webkit-appearance: none;
+          background: transparent;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+          background: rgba(255,255,255,0.12);
+          border-radius: 4px;
         }
       `}</style>
     </div>
