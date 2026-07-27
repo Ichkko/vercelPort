@@ -21,7 +21,7 @@ export function AmbientPlayer() {
   const autoPlayNextRef = useRef(false);
 
   const currentTrack = TRACKS[trackIndex];
-  const embedUrl = `https://www.youtube.com/embed/${currentTrack.id}?autoplay=0&loop=0&mute=0&controls=0&rel=0&modestbranding=1&enablejsapi=1`;
+  const embedUrl = `https://www.youtube.com/embed/${currentTrack.id}?autoplay=0&loop=0&mute=0&controls=0&rel=0&modestbranding=1&enablejsapi=1${trackIndex === 0 ? "&start=3" : ""}`;
 
   const sendCmd = (func: string, args: unknown[] = []) => {
     iframeRef.current?.contentWindow?.postMessage(
