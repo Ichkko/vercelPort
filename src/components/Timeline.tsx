@@ -62,7 +62,55 @@ export function Timeline() {
         <div className="mt-2 h-0.5 w-8 bg-[var(--teal)]" />
       </FadeIn>
       <ScaleIn delay={0.1}>
-        <div className="mt-7 overflow-x-auto pb-2">
+        {/* Mobile: vertical stacked layout */}
+        <div className="mt-7 md:hidden">
+          <div className="relative pl-6">
+            {/* Vertical line */}
+            <div className="absolute left-2 top-0 bottom-0 w-px bg-stone-200 dark:bg-[var(--line)]" />
+            <motion.div
+              className="absolute left-2 top-0 w-px bg-gradient-to-b from-[var(--teal)] via-cyan-400 to-[var(--teal)] opacity-80"
+              initial={{ height: 0 }}
+              whileInView={{ height: "100%" }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
+            />
+            <div className="space-y-6">
+              {timeline?.map((item, i) => (
+                <motion.div
+                  key={item?.year}
+                  initial={{ opacity: 0, x: -16, filter: "blur(4px)" }}
+                  whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                  viewport={{ once: true, margin: "-30px" }}
+                  transition={{ delay: i * 0.1, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                  className="relative"
+                >
+                  {/* Dot */}
+                  <motion.div
+                    className="absolute -left-[22px] top-1"
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1 + 0.15, type: "spring", stiffness: 400, damping: 18 }}
+                  >
+                    <div className="h-3 w-3 rounded-full border-2 border-[var(--teal)] bg-white shadow-[0_0_0_3px_var(--teal-soft)] dark:bg-[var(--bg-elevated)]" />
+                  </motion.div>
+                  <p className="text-xs font-bold text-[var(--teal)]">{item?.year}</p>
+                  <h3 className="mt-1 text-sm font-semibold text-stone-900 dark:text-stone-100">
+                    {item?.title}
+                  </h3>
+                  <ul className="mt-2 space-y-1 text-xs leading-relaxed text-stone-500 dark:text-[var(--muted)]">
+                    {item?.items?.map((line) => (
+                      <li key={line}>{line}</li>
+                    ))}
+                  </ul>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop: horizontal grid layout */}
+        <div className="mt-7 hidden md:block overflow-x-auto pb-2">
           <div ref={lineRef} className="relative min-w-[680px]">
             {/* Static base line */}
             <div className="absolute left-[8%] right-[8%] top-3 h-px bg-stone-200 dark:bg-[var(--line)]" />

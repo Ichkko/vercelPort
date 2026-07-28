@@ -9,6 +9,7 @@ import { profile } from "@/data/portfolio";
 import { useLanguage } from "./LanguageProvider";
 import { LanguageToggle } from "./LanguageToggle";
 import { useTheme } from "./ThemeProvider";
+import { FolderKanban, Moon, Sun, X, Menu } from "lucide-react";
 
 export function MobileHeader({ active }: { active: string }) {
   const [open, setOpen] = useState(false);
@@ -17,43 +18,40 @@ export function MobileHeader({ active }: { active: string }) {
 
   return (
     <>
-      <header className="glass sticky top-0 z-40 flex items-center justify-between rounded-none border-x-0 border-t-0 px-4 py-3 lg:hidden">
-        <div className="flex items-center gap-3">
-          <Image
-            src="/icho.jpg"
-            alt=""
-            width={44}
-            height={44}
-            className="h-11 w-11 rounded-full object-cover shadow-md"
-          />
+      <header className="sticky top-0 z-40 flex items-center justify-between border-b border-[var(--line)] bg-[var(--bg-panel)] px-4 py-3 backdrop-blur-2xl lg:hidden">
+        <div className="flex items-center gap-2.5">
+          <div className="relative">
+            <Image
+              src="/icho.jpg"
+              alt="Ichko profile photo"
+              width={38}
+              height={38}
+              className="h-[38px] w-[38px] rounded-full object-cover ring-2 ring-[var(--teal)]/20"
+            />
+            <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full border-2 border-[var(--bg-panel)] bg-emerald-400" />
+          </div>
           <div>
-            <p className="text-sm font-bold">{profile.name}</p>
-            <p className="text-[11px] text-[var(--muted)]">{t("role")}</p>
+            <p className="text-[13px] font-bold leading-tight text-[var(--ink)]">{profile.name}</p>
+            <p className="text-[10px] font-mono text-[var(--teal)]">{t("role")}</p>
           </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           <LanguageToggle compact />
           <button
             type="button"
             onClick={toggleTheme}
-            className="rounded-xl border border-[var(--line)] bg-white/45 p-2 text-[var(--muted)] transition hover:text-[var(--ink)] dark:bg-white/[0.045]"
+            className="flex h-8 w-8 items-center justify-center rounded-[8px] border border-[var(--line)] bg-[var(--bg-elevated)] text-[var(--muted)] transition hover:text-[var(--ink)] dark:bg-white/[0.04]"
             aria-label="Toggle theme"
           >
-            {theme === "dark" ? "☾" : "☀"}
+            {theme === "dark" ? <Moon className="h-3.5 w-3.5" strokeWidth={1.8} /> : <Sun className="h-3.5 w-3.5" strokeWidth={1.8} />}
           </button>
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
-            className="rounded-xl border border-[var(--line)] bg-white/45 p-2 transition hover:text-[var(--teal)] dark:bg-white/[0.045]"
+            className="flex h-8 w-8 items-center justify-center rounded-[8px] border border-[var(--line)] bg-[var(--bg-elevated)] text-[var(--muted)] transition hover:text-[var(--teal)] dark:bg-white/[0.04]"
             aria-label="Menu"
           >
-            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-              {open ? (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 7h16M4 12h16M4 17h16" />
-              )}
-            </svg>
+            {open ? <X className="h-4 w-4" strokeWidth={2} /> : <Menu className="h-4 w-4" strokeWidth={2} />}
           </button>
         </div>
       </header>
@@ -61,35 +59,39 @@ export function MobileHeader({ active }: { active: string }) {
       <AnimatePresence>
         {open && (
           <motion.nav
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            className="glass fixed inset-x-3 top-[68px] z-40 rounded-[20px] p-3 lg:hidden"
+            initial={{ opacity: 0, y: -6, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -6, scale: 0.98 }}
+            transition={{ duration: 0.18, ease: "easeOut" }}
+            className="fixed inset-x-3 top-[62px] z-40 overflow-hidden rounded-[16px] border border-[var(--line)] bg-[var(--bg-panel)] p-2 shadow-xl backdrop-blur-2xl lg:hidden dark:bg-[rgba(5,10,18,0.95)]"
           >
             {navKeys.map((link) => {
               const id = link.href.slice(1);
+              const isActive = active === id;
               return (
                 <a
                   key={link.href}
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className={`block rounded-xl px-4 py-3 text-sm font-medium ${
-                    active === id
+                  className={`flex items-center rounded-[10px] px-4 py-2.5 text-[13px] font-medium transition-all ${
+                    isActive
                       ? "bg-[var(--teal)] text-white"
-                      : "text-[var(--muted)] hover:bg-black/[0.03] hover:text-[var(--ink)] dark:hover:bg-white/[0.055]"
+                      : "text-[var(--muted)] hover:bg-[var(--teal-soft)] hover:text-[var(--ink)]"
                   }`}
                 >
                   {t(link.key)}
                 </a>
               );
             })}
-            {/* Portfolio page link */}
             <Link
               href="/portfolio"
               onClick={() => setOpen(false)}
-              className="flex items-center justify-between rounded-xl px-4 py-3 text-sm font-medium text-[var(--muted)] hover:bg-black/[0.03] hover:text-[var(--ink)] dark:hover:bg-white/[0.055]"
+              className="flex items-center justify-between rounded-[10px] px-4 py-2.5 text-[13px] font-medium text-[var(--muted)] transition-all hover:bg-[var(--teal-soft)] hover:text-[var(--ink)]"
             >
-              Portfolio
+              <span className="flex items-center gap-2">
+                <FolderKanban className="h-3.5 w-3.5" strokeWidth={1.8} />
+                Portfolio
+              </span>
               <span className="rounded-full bg-[var(--teal)] px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white">
                 New
               </span>

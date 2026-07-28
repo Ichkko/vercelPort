@@ -17,10 +17,11 @@ import { SwayingPlant, FloatingLeaf, GrassBlades } from "./PlantDecorations";
 import { Gallery } from "./Gallery";
 import { CurrentlyVibing } from "./CurrentlyVibing";
 import { AmbientPlayer } from "./AmbientPlayer";
+import { HandcraftedArt } from "./HandcraftedArt";
 
 
 // Personal section: home, about, hobbies/personal
-const PERSONAL_SECTIONS = ["personal-home", "personal-about", "personal-gallery", "personal-vibing", "personal-contact"];
+const PERSONAL_SECTIONS = ["personal-home", "personal-about", "personal-gallery", "personal-handcraft", "personal-vibing", "personal-contact"];
 // Professional section: skills, projects, experience, testimonials
 const PROFESSIONAL_SECTIONS = ["pro-skills", "pro-projects", "pro-experience", "pro-testimonials"];
 
@@ -40,6 +41,7 @@ export function PortfolioShell() {
           { id: "personal-home", label: "Home" },
           { id: "personal-about", label: "About" },
           { id: "personal-gallery", label: "Gallery" },
+          { id: "personal-handcraft", label: "Art" },
           { id: "personal-vibing", label: "Vibing" },
           { id: "personal-contact", label: "Contact" },
         ]
@@ -83,35 +85,35 @@ export function PortfolioShell() {
 
       {/* Background layers */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden" aria-hidden>
-        <div className="dot-grid absolute inset-0 opacity-60 dark:opacity-40" />
+        <div className="dot-grid absolute inset-0 opacity-50 dark:opacity-30" />
         <div
-          className="orb-1 absolute -right-40 -top-40 h-[700px] w-[700px] rounded-full"
+          className="orb-1 absolute -right-40 -top-40 h-[650px] w-[650px] rounded-full"
           style={{
-            background: "radial-gradient(circle, rgba(8,145,178,0.22) 0%, rgba(6,182,212,0.1) 40%, transparent 70%)",
-            filter: "blur(80px)",
-          }}
-        />
-        <div
-          className="orb-2 absolute -bottom-48 -left-32 h-[600px] w-[600px] rounded-full"
-          style={{
-            background: "radial-gradient(circle, rgba(124,58,237,0.18) 0%, rgba(167,139,250,0.08) 50%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(2,132,199,0.18) 0%, rgba(14,165,233,0.08) 40%, transparent 70%)",
             filter: "blur(90px)",
           }}
         />
         <div
-          className="orb-3 absolute left-1/2 top-1/3 h-[500px] w-[500px] -translate-x-1/2 rounded-full"
+          className="orb-2 absolute -bottom-48 -left-32 h-[550px] w-[550px] rounded-full"
           style={{
-            background: "radial-gradient(circle, rgba(8,145,178,0.08) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(109,40,217,0.14) 0%, rgba(167,139,250,0.06) 50%, transparent 70%)",
             filter: "blur(100px)",
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[var(--bg)] opacity-60" />
+        <div
+          className="orb-3 absolute left-1/2 top-1/3 h-[450px] w-[450px] -translate-x-1/2 rounded-full"
+          style={{
+            background: "radial-gradient(circle, rgba(2,132,199,0.06) 0%, transparent 70%)",
+            filter: "blur(110px)",
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[var(--bg)] opacity-50" />
 
         {/* ── Plant corner decorations ── */}
         {/* Bottom-left tall plant */}
         <SwayingPlant
           className="absolute bottom-0 left-0"
-          color="rgba(34,197,94,0.28)"
+          color="rgba(34,197,94,0.22)"
           size={110}
           swayAmount={7}
           duration={4.2}
@@ -120,7 +122,7 @@ export function PortfolioShell() {
         {/* Bottom-right plant (flipped) */}
         <SwayingPlant
           className="absolute bottom-0 right-0"
-          color="rgba(34,197,94,0.22)"
+          color="rgba(34,197,94,0.18)"
           size={90}
           swayAmount={5}
           duration={3.8}
@@ -130,7 +132,7 @@ export function PortfolioShell() {
         {/* Mid-left smaller plant */}
         <SwayingPlant
           className="absolute bottom-[30%] left-0"
-          color="rgba(74,222,128,0.18)"
+          color="rgba(74,222,128,0.14)"
           size={65}
           swayAmount={9}
           duration={3.2}
@@ -139,7 +141,7 @@ export function PortfolioShell() {
         {/* Mid-right smaller plant */}
         <SwayingPlant
           className="absolute bottom-[55%] right-0"
-          color="rgba(74,222,128,0.15)"
+          color="rgba(74,222,128,0.12)"
           size={55}
           swayAmount={8}
           duration={4.6}
@@ -150,73 +152,73 @@ export function PortfolioShell() {
         {/* Grass blades bottom */}
         <GrassBlades
           className="absolute bottom-0 left-[10%] w-32 h-16"
-          color="rgba(34,197,94,0.3)"
+          color="rgba(34,197,94,0.25)"
           count={6}
         />
         <GrassBlades
           className="absolute bottom-0 right-[15%] w-24 h-12"
-          color="rgba(74,222,128,0.25)"
+          color="rgba(74,222,128,0.2)"
           count={5}
         />
         <GrassBlades
           className="absolute bottom-0 left-[45%] w-20 h-10"
-          color="rgba(34,197,94,0.2)"
+          color="rgba(34,197,94,0.16)"
           count={4}
         />
 
         {/* Floating leaf particles */}
         <FloatingLeaf
           className="absolute top-[20%] left-[8%]"
-          color="rgba(34,197,94,0.35)"
+          color="rgba(34,197,94,0.28)"
           size={18}
           delay={0}
         />
         <FloatingLeaf
           className="absolute top-[40%] right-[10%]"
-          color="rgba(74,222,128,0.3)"
+          color="rgba(74,222,128,0.24)"
           size={14}
           delay={1.5}
         />
         <FloatingLeaf
           className="absolute top-[65%] left-[15%]"
-          color="rgba(34,197,94,0.25)"
+          color="rgba(34,197,94,0.2)"
           size={16}
           delay={0.8}
         />
         <FloatingLeaf
           className="absolute top-[75%] right-[20%]"
-          color="rgba(134,239,172,0.3)"
+          color="rgba(134,239,172,0.24)"
           size={12}
           delay={2.2}
         />
         <FloatingLeaf
           className="absolute top-[10%] right-[25%]"
-          color="rgba(34,197,94,0.2)"
+          color="rgba(34,197,94,0.16)"
           size={10}
           delay={3.0}
         />
       </div>
 
       {/* Floating top-left controls */}
-      <div className="fixed left-6 top-6 z-50 flex items-center gap-2">
+      <div className="fixed left-3 top-3 z-50 flex items-center gap-1.5 sm:left-5 sm:top-5">
         <LanguageToggle compact />
         <button
           type="button"
           onClick={toggleTheme}
-          className="rounded-xl border border-[var(--line)] bg-[var(--bg-elevated)]/90 px-3 py-2 text-xs font-semibold text-[var(--muted)] backdrop-blur-xl transition hover:border-[var(--teal)]/40 hover:text-[var(--ink)]"
+          className="flex h-8 w-8 items-center justify-center rounded-[9px] border border-[var(--line)] bg-[var(--bg-elevated)]/90 text-[var(--muted)] backdrop-blur-xl transition hover:border-[var(--teal)]/30 hover:text-[var(--ink)]"
           aria-label="Toggle theme"
         >
-          {theme === "dark" ? "☾" : "☀"}
+          <span className="text-sm">{theme === "dark" ? "☾" : "☀"}</span>
         </button>
       </div>
 
       {/* Floating tab switcher — centered top */}
-      <div className="fixed left-1/2 top-6 z-50 -translate-x-1/2">
-        <div className="flex items-center gap-1 rounded-full border border-[var(--line)] bg-[var(--bg-elevated)]/90 p-1 shadow-lg backdrop-blur-xl">
+      <div className="fixed left-1/2 top-3 z-50 -translate-x-1/2 sm:top-5">
+        <div className="flex items-center gap-0.5 rounded-full border border-[var(--line)] bg-[var(--bg-elevated)]/92 p-1 shadow-lg backdrop-blur-xl">
           <button
             type="button"
             onClick={() => handleTabSwitch("personal")}
-            className="relative rounded-full px-5 py-2 text-sm font-semibold transition-colors"
+            className="relative rounded-full px-3.5 py-1.5 text-[12px] font-semibold transition-colors sm:px-5 sm:py-2 sm:text-[13px]"
           >
             {tab === "personal" && (
               <motion.span
@@ -236,7 +238,7 @@ export function PortfolioShell() {
           <button
             type="button"
             onClick={() => handleTabSwitch("professional")}
-            className="relative rounded-full px-5 py-2 text-sm font-semibold transition-colors"
+            className="relative rounded-full px-3.5 py-1.5 text-[12px] font-semibold transition-colors sm:px-5 sm:py-2 sm:text-[13px]"
           >
             {tab === "professional" && (
               <motion.span
@@ -250,7 +252,7 @@ export function PortfolioShell() {
                 tab === "professional" ? "text-white" : "text-[var(--muted)] hover:text-[var(--ink)]"
               }`}
             >
-              Professional
+              Pro
             </span>
           </button>
         </div>
@@ -276,7 +278,7 @@ export function PortfolioShell() {
 
             {/* Personal About */}
             <section id="personal-about" className="scroll-mt-8">
-              <div className="section-panel px-5 py-12 md:px-10 lg:px-14">
+              <div className="section-panel px-4 py-10 sm:px-5 md:px-10 lg:px-14 sm:py-12">
                 <div className="mx-auto max-w-[1040px]">
                   <About />
                 </div>
@@ -285,16 +287,25 @@ export function PortfolioShell() {
 
             {/* Personal Gallery */}
             <section id="personal-gallery" className="scroll-mt-8">
-              <div className="section-panel px-5 py-12 md:px-10 lg:px-14">
+              <div className="section-panel px-4 py-10 sm:px-5 md:px-10 lg:px-14 sm:py-12">
                 <div className="mx-auto max-w-[1040px]">
                   <Gallery />
                 </div>
               </div>
             </section>
 
+            {/* Handcrafted Art */}
+            <section id="personal-handcraft" className="scroll-mt-8">
+              <div className="section-panel px-4 py-10 sm:px-5 md:px-10 lg:px-14 sm:py-12">
+                <div className="mx-auto max-w-[1040px]">
+                  <HandcraftedArt />
+                </div>
+              </div>
+            </section>
+
             {/* Currently Vibing */}
             <section id="personal-vibing" className="scroll-mt-8">
-              <div className="section-panel px-5 py-12 md:px-10 lg:px-14">
+              <div className="section-panel px-4 py-10 sm:px-5 md:px-10 lg:px-14 sm:py-12">
                 <div className="mx-auto max-w-[1040px]">
                   <CurrentlyVibing />
                 </div>
@@ -316,7 +327,7 @@ export function PortfolioShell() {
           >
             {/* Professional Skills */}
             <section id="pro-skills" className="scroll-mt-0">
-              <div className="section-panel px-5 pt-24 pb-12 md:px-10 lg:px-14">
+              <div className="section-panel px-4 pt-20 pb-10 sm:px-5 sm:pt-24 sm:pb-12 md:px-10 lg:px-14">
                 <div className="mx-auto max-w-[1040px]">
                   <Skills />
                 </div>
@@ -325,7 +336,7 @@ export function PortfolioShell() {
 
             {/* Professional Projects */}
             <section id="pro-projects" className="scroll-mt-8">
-              <div className="section-panel px-5 py-12 md:px-10 lg:px-14">
+              <div className="section-panel px-4 py-10 sm:px-5 md:px-10 lg:px-14 sm:py-12">
                 <div className="mx-auto max-w-[1040px]">
                   <Projects />
                 </div>
@@ -334,7 +345,7 @@ export function PortfolioShell() {
 
             {/* Professional Experience / Timeline */}
             <section id="pro-experience" className="scroll-mt-8">
-              <div className="section-panel px-5 py-12 md:px-10 lg:px-14">
+              <div className="section-panel px-4 py-10 sm:px-5 md:px-10 lg:px-14 sm:py-12">
                 <div className="mx-auto max-w-[1040px]">
                   <Timeline />
                 </div>
@@ -343,7 +354,7 @@ export function PortfolioShell() {
 
             {/* Professional Testimonials */}
             <section id="pro-testimonials" className="scroll-mt-8">
-              <div className="section-panel px-5 py-12 md:px-10 lg:px-14">
+              <div className="section-panel px-4 py-10 sm:px-5 md:px-10 lg:px-14 sm:py-12">
                 <div className="mx-auto max-w-[1040px]">
  
                 </div>

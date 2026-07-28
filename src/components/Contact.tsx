@@ -53,22 +53,36 @@ export function Contact() {
 
   return (
     <section id="contact" className="scroll-mt-8 lg:ml-[0px]">
-      <div className="relative overflow-hidden bg-[#1b2540] px-6 py-10 text-white sm:px-10 sm:py-12 lg:px-14 dark:bg-[#071012] dark:shadow-[inset_0_1px_0_rgba(214,245,237,0.08)]">
+      <div className="relative overflow-hidden px-5 py-10 sm:px-6 sm:py-12 md:px-10 md:py-14 lg:px-14"
+        style={{ background: "linear-gradient(160deg, #0f1e35 0%, #0a1628 50%, #071020 100%)" }}
+      >
+        {/* Subtle background orbs */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+          <div className="absolute -top-20 right-0 h-[350px] w-[350px] rounded-full opacity-[0.08] blur-3xl" style={{ background: "radial-gradient(circle, #0284c7, transparent 70%)" }} />
+          <div className="absolute bottom-0 left-0 h-[250px] w-[250px] rounded-full opacity-[0.06] blur-3xl" style={{ background: "radial-gradient(circle, #6d28d9, transparent 70%)" }} />
+          <div className="dot-grid absolute inset-0 opacity-[0.15]" />
+        </div>
+
         <div className="relative mx-auto grid max-w-[1040px] gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-start">
 
           {/* Left — Contact Form */}
           <SlideIn direction="left">
-            <h2 className="text-2xl font-extrabold leading-tight sm:text-4xl">
-              {t("contactTitle")}
-            </h2>
-            <p className="mt-3 max-w-md text-sm leading-relaxed text-stone-400 dark:text-[var(--muted)]">
-              {t("contactDesc")}
-            </p>
+            <div className="mb-6">
+              <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--teal)]">
+                Get in touch
+              </p>
+              <h2 className="mt-2 text-2xl font-extrabold leading-tight tracking-tight text-white sm:text-3xl md:text-[36px]">
+                {t("contactTitle")}
+              </h2>
+              <p className="mt-3 max-w-md text-[14px] leading-relaxed text-white/50">
+                {t("contactDesc")}
+              </p>
+            </div>
 
-            <form onSubmit={handleSubmit} className="mt-7 space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
               {/* Name */}
               <div>
-                <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-stone-400">
+                <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-white/40">
                   Name
                 </label>
                 <input
@@ -78,13 +92,13 @@ export function Contact() {
                   onChange={handleChange}
                   required
                   placeholder="Your name"
-                  className="w-full rounded-xl border border-white/10 bg-white/[0.06] px-4 py-2.5 text-sm text-white placeholder-stone-500 outline-none transition focus:border-teal-500/60 focus:bg-white/[0.09] focus:ring-1 focus:ring-teal-500/40"
+                  className="w-full rounded-[12px] border border-white/[0.08] bg-white/[0.05] px-4 py-2.5 text-[13px] text-white placeholder-white/25 outline-none transition focus:border-[var(--teal)]/50 focus:bg-white/[0.08] focus:ring-1 focus:ring-[var(--teal)]/30"
                 />
               </div>
 
               {/* Email */}
               <div>
-                <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-stone-400">
+                <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-white/40">
                   Email
                 </label>
                 <input
@@ -94,13 +108,13 @@ export function Contact() {
                   onChange={handleChange}
                   required
                   placeholder="your@email.com"
-                  className="w-full rounded-xl border border-white/10 bg-white/[0.06] px-4 py-2.5 text-sm text-white placeholder-stone-500 outline-none transition focus:border-teal-500/60 focus:bg-white/[0.09] focus:ring-1 focus:ring-teal-500/40"
+                  className="w-full rounded-[12px] border border-white/[0.08] bg-white/[0.05] px-4 py-2.5 text-[13px] text-white placeholder-white/25 outline-none transition focus:border-[var(--teal)]/50 focus:bg-white/[0.08] focus:ring-1 focus:ring-[var(--teal)]/30"
                 />
               </div>
 
               {/* Message */}
               <div>
-                <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-stone-400">
+                <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-white/40">
                   Message
                 </label>
                 <textarea
@@ -110,7 +124,7 @@ export function Contact() {
                   required
                   rows={4}
                   placeholder="Tell me about your project or just say hi..."
-                  className="w-full resize-none rounded-xl border border-white/10 bg-white/[0.06] px-4 py-2.5 text-sm text-white placeholder-stone-500 outline-none transition focus:border-teal-500/60 focus:bg-white/[0.09] focus:ring-1 focus:ring-teal-500/40"
+                  className="w-full resize-none rounded-[12px] border border-white/[0.08] bg-white/[0.05] px-4 py-2.5 text-[13px] text-white placeholder-white/25 outline-none transition focus:border-[var(--teal)]/50 focus:bg-white/[0.08] focus:ring-1 focus:ring-[var(--teal)]/30"
                 />
               </div>
 
@@ -119,7 +133,7 @@ export function Contact() {
                 <motion.div
                   initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="flex items-center gap-2 rounded-xl border border-teal-500/30 bg-teal-500/10 px-4 py-3 text-sm text-teal-300"
+                  className="flex items-center gap-2 rounded-[12px] border border-teal-500/30 bg-teal-500/10 px-4 py-3 text-[13px] text-teal-300"
                 >
                   <CheckCircle className="h-4 w-4 shrink-0" strokeWidth={1.5} />
                   Message sent! I'll get back to you soon.
@@ -130,7 +144,7 @@ export function Contact() {
                 <motion.div
                   initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="flex items-center gap-2 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300"
+                  className="flex items-center gap-2 rounded-[12px] border border-red-500/30 bg-red-500/10 px-4 py-3 text-[13px] text-red-300"
                 >
                   <AlertCircle className="h-4 w-4 shrink-0" strokeWidth={1.5} />
                   {errorMsg}
@@ -143,7 +157,7 @@ export function Contact() {
                 disabled={status === "loading"}
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.97 }}
-                className="inline-flex items-center gap-2 rounded-full bg-[var(--teal)] px-7 py-3 text-sm font-bold text-white shadow-lg shadow-teal-500/25 transition disabled:opacity-60"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[var(--teal)] px-7 py-3 text-[13px] font-bold text-white shadow-lg shadow-teal-500/25 transition disabled:opacity-60 sm:w-auto"
               >
                 {status === "loading" ? (
                   <>
@@ -162,10 +176,10 @@ export function Contact() {
 
           {/* Right — Contact links */}
           <ScaleIn delay={0.15}>
-            <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-stone-500">
+            <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-white/40">
               Or reach me directly
             </p>
-            <div className="space-y-3 text-sm">
+            <div className="grid grid-cols-1 gap-2 text-sm sm:grid-cols-3 lg:grid-cols-1">
               {links?.map((item, i) => (
                 <motion.a
                   key={item?.label}
@@ -178,12 +192,12 @@ export function Contact() {
                   transition={{ delay: i * 0.08, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                   className="flex items-center gap-3 rounded-[8px] px-4 py-2.5 transition hover:bg-white/[0.055] hover:text-teal-200"
                 >
-                  <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-teal-500/15 text-teal-300">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-teal-500/15 text-teal-300">
                     <item.Icon className="h-4 w-4" strokeWidth={1.5} />
                   </span>
-                  <div>
-                    <p className="text-xs text-stone-400 dark:text-[var(--muted)]">{item?.label}</p>
-                    <p className="font-medium text-white">{item?.value}</p>
+                  <div className="min-w-0">
+                    <p className="text-xs text-white/50 dark:text-[var(--muted)]">{item?.label}</p>
+                    <p className="truncate font-medium text-white">{item?.value}</p>
                   </div>
                 </motion.a>
               ))}
