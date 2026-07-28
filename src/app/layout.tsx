@@ -9,6 +9,9 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: "G. Ichko | Full Stack Developer",
+  icons: {
+    icon: "/v.svg",
+  },
   description:
     "Junior full-stack developer building clean interfaces and reliable backends with Next.js, Spring Boot, MySQL, and Flutter.",
   authors: [{ name: "G. Ichko" }],

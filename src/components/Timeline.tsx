@@ -13,25 +13,31 @@ export function Timeline() {
 
   const timeline = [
     {
-      year: "2022",
+      year: "2022-2023",
       title: t("year2022Title"),
       items: [t("year2022Item1"), t("year2022Item2"), t("year2022Item3")],
     },
     {
-      year: "2023",
+      year: "2023-2024",
       title: t("year2023Title"),
       items: [t("year2023Item1"), t("year2023Item2"), t("year2023Item3")],
     },
     {
-      year: "2024",
+      year: "2024-2025",
       title: t("year2024Title"),
       items: [t("year2024Item1"), t("year2024Item2"), t("year2024Item3")],
     },
     {
-      year: "2025–Now",
+      year: "2025-2026",
       title: t("year2025Title"),
       items: [t("year2025Item1"), t("year2025Item2"), t("year2025Item3")],
     },
+    {
+      year: "now",
+      title: t("year2026Title"),
+      items: [t("year2026Item1"), t("year2026Item2"), t("year2026Item3")],
+    },
+
   ];
 
   return (
@@ -67,7 +73,7 @@ export function Timeline() {
               animate={isInView ? { width: "84%" } : { width: 0 }}
               transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
             />
-            <div className="grid grid-cols-4 gap-4">
+            <div className="grid grid-cols-5 gap-4">
               {timeline?.map((item, i) => (
                 <motion.div
                   key={item?.year}

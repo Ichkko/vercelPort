@@ -17,7 +17,7 @@ import { SwayingPlant, FloatingLeaf, GrassBlades } from "./PlantDecorations";
 import { Gallery } from "./Gallery";
 import { CurrentlyVibing } from "./CurrentlyVibing";
 import { AmbientPlayer } from "./AmbientPlayer";
-import { Testimonials } from "./Testimonials";
+
 
 // Personal section: home, about, hobbies/personal
 const PERSONAL_SECTIONS = ["personal-home", "personal-about", "personal-gallery", "personal-vibing", "personal-contact"];
@@ -345,7 +345,7 @@ export function PortfolioShell() {
             <section id="pro-testimonials" className="scroll-mt-8">
               <div className="section-panel px-5 py-12 md:px-10 lg:px-14">
                 <div className="mx-auto max-w-[1040px]">
-                  <Testimonials />
+ 
                 </div>
               </div>
             </section>

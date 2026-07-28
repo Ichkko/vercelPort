@@ -14,7 +14,7 @@ export const translations = {
     heroTitleAccent: "web solutions",
     heroTitleAfter: ".",
     heroDesc:
-      "Junior full-stack developer shipping practical products with Astro, Spring Boot, MySQL, Flutter, and modern Next.js interfaces.",
+      "Junior full-stack developer shipping practical products with Astro, Spring Boot, MySQL,  and modern Next.js interfaces.",
     ctaProjects: "My Projects",
     ctaCv: "Download CV",
     ctaLinkedin: "LinkedIn",
@@ -54,15 +54,15 @@ export const translations = {
     project1Title: "FoodMenu — Digital Menu & POS",
     project1Desc:
       "QR ordering, kitchen display, cashier POS, and receipt printing in one realtime system.",
-    project2Title: "Travel Guide",
+    project2Title: "Hotel Booking System",
     project2Desc:
-      "Travel discovery with destination browsing, trip planning flow, and a polished UI.",
-    project3Title: "Hotel Booking System",
+      "A web system for hotel reservations, room management, payments, and role-based access.",
+    project3Title: "West.mn",
     project3Desc:
-      "Hotel booking, room management, payments, and role-based access in one web platform.",
-    project4Title: "Mobile App — Flutter",
+      "A digital platform for connecting students with educational institutions in the western regions.",
+    project4Title: "Student Dormitory Management System",
     project4Desc:
-      "Cross-platform mobile app built with Flutter and Firebase for real-time data sync and smooth UX.",
+      "A comprehensive system for managing student housing, including room assignments, maintenance requests, and payment processing.",
     metricProjects: "Projects completed",
     metricCommits: "Git commits",
     metricYears: "Years learning",
@@ -86,6 +86,10 @@ export const translations = {
     year2025Item1: "Astro & Next portfolios",
     year2025Item2: "Flutter mobile",
     year2025Item3: "Production-ready UX",
+    year2026Title: "Future Focus",
+    year2026Item1: "Advanced React patterns",
+    year2026Item2: "Cloud deployment",
+    year2026Item3: "Performance optimization",
     contactTitle: "Let's work together?",
     contactDesc:
       "Open to internships, junior roles, and freelance web work. Reach out anytime.",
@@ -135,9 +139,10 @@ export const translations = {
     aboutEyebrow: "Тухай",
     aboutTitle: "Товчхон миний тухай",
     aboutP1:
-      "Би програм хангамжийн инженерчлэлийн оюутан, junior full-stack хөгжүүлэгч. Санааг цэвэр интерфейс, найдвартай backend систем болгон хэрэгжүүлэхийг чухалчилдаг.",
+       "Би програм хангамжийн инженер бөгөөд орчин үеийн веб технологи ашиглан үр ашигтай, хэрэглэгч төвтэй систем хөгжүүлэх сонирхолтой full-stack хөгжүүлэгч.",
+
     aboutP2:
-      "Одоо Spring Boot API, MySQL өгөгдлийн загварчлал, Next.js/React/Tailwind frontend, мөн Flutter mobile чиглэлээр төвлөрөн ажиллаж байна.",
+      "Одоо Spring Boot API, MySQL өгөгдлийн загварчлал, Next.js/React/Tailwind frontend чиглэлээр төвлөрөн ажиллаж байна.",
     infoName: "Нэр",
     infoLocation: "Байршил",
     infoEmail: "И-мэйл",
@@ -165,15 +170,17 @@ export const translations = {
     project1Title: "FoodMenu — Дижитал цэс & POS",
     project1Desc:
       "QR захиалга, гал тогооны дэлгэц, кассын систем, баримт хэвлэх урсгалтай realtime POS.",
-    project2Title: "Travel Guide",
+   
+    project2Title: "Hotel Booking System",
     project2Desc:
-      "Аяллын газар хайх, төлөвлөх, цэвэр интерфейстэй travel discovery туршлага.",
-    project3Title: "Hotel Booking System",
-    project3Desc:
       "Зочид буудлын захиалга, өрөөний менежмент, төлбөр, эрхээр ялгах web систем.",
-    project4Title: "Mobile App — Flutter",
-    project4Desc:
-      "Flutter болон Firebase ашиглан хийсэн cross-platform mobile апп — realtime өгөгдөл синк, зөөлөн UX.",
+
+      
+    project3Title: "West.mn",
+    project3Desc:"Баруун бүсийн аймгуудын сургалтын байгууллагуудыг нэгтгэсэн цахим платформ.",
+    project4Title: "Оюутны дотуур байрны систем",
+    project4Desc:"Full-stack hackathon-2026 тэмцээнд Оюутны дотуур байрны систем сэдвээр багаа ахлан оролцож тэрүүн байр эзэлж байж билээ.",
+
     metricProjects: "Дууссан төсөл",
     metricCommits: "Git commit",
     metricYears: "Жил суралцсан",
@@ -197,6 +204,10 @@ export const translations = {
     year2025Item1: "Astro & Next портфолио",
     year2025Item2: "Flutter mobile",
     year2025Item3: "Production-ready UX",
+    year2026Title: "Future Focus",
+    year2026Item1: "Advanced React patterns",
+    year2026Item2: "Cloud deployment",
+    year2026Item3: "Performance optimization",
     contactTitle: "Хамтран ажиллах уу?",
     contactDesc:
       "Дадлага, junior ажлын байр, freelance web ажилд нээлттэй. Холбоо бариарай.",

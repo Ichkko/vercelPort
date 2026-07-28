@@ -14,7 +14,7 @@ const roles = [
   "Full Stack Developer",
   "Spring Boot Engineer",
   "Next.js Developer",
-  "Flutter Builder",
+
 ];
 
 export function Hero() {
@@ -54,8 +54,8 @@ export function Hero() {
   }, [displayed, typing, roleIndex]);
 
   const stats = [
-    { value: "3+", label: t("statYears") },
-    { value: "20+", label: t("statProjects") },
+    { value: "4+", label: t("statYears") },
+    { value: "6+", label: t("statProjects") },
     { value: "100%", label: t("statOwnership") },
   ];
 

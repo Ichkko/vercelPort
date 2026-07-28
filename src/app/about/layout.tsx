@@ -5,6 +5,9 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: "About G. Ichko | Full Stack Developer",
+  icons: {
+    icon: "/ic.png",
+  },
   description:
     "Learn about G. Ichko's journey in software engineering, skills in full-stack development, and passion for building user-friendly web solutions.",
   openGraph: {

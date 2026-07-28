@@ -96,21 +96,9 @@ export const projectsMeta = [
     titleKey: "project1Title" as const,
     descKey: "project1Desc" as const,
   },
+  
   {
     id: "2" as const,
-    image: "/assets/images/tungalag.png",
-    images: [
-      "/assets/images/tungalag.png",
-     "/assets/images/tungalag1.png",
-    ],
-    tags: ["Next.js", "Tailwind", "API"],
-    liveUrl: "https://github.com/Ichkko/travelguide",
-    githubUrl: "https://github.com/Ichkko/travelguide",
-    titleKey: "project2Title" as const,
-    descKey: "project2Desc" as const,
-  },
-  {
-    id: "3" as const,
     image: "/assets/images/hotel1.png",
     images: [
      "/assets/images/hotel1.png",
@@ -124,40 +112,27 @@ export const projectsMeta = [
     tags: ["Java", "Spring Boot", "MySQL", "JWT"],
     liveUrl: "https://github.com/Ichkko",
     githubUrl: "https://github.com/Ichkko",
-    titleKey: "project3Title" as const,
-    descKey: "project3Desc" as const,
+    titleKey: "project2Title" as const,
+    descKey: "project2Desc" as const,
   },
+  
   {
-    id: "4" as const,
-    image: "/assets/images/flu.png",
-    images: [
-      "/assets/images/flu.png",
-      "/assets/images/flutter.png",
-
-    ],
-    tags: ["Flutter", "Dart", "Firebase"],
-    liveUrl: "https://github.com/Ichkko",
-    githubUrl: "https://github.com/Ichkko",
-    titleKey: "project4Title" as const,
-    descKey: "project4Desc" as const,
-  },
-  {
-    id: "5" as const,
-    image: "/assets/images/411397da-05c0-491e-b154-d17e0c0dbc23-1785171330984.jpg",
+    id: "3" as const,
+    image: "/assets/images/west.png",
     images: [
       "/assets/images/west.png",
        "/assets/images/west1.png",
        "/assets/images/west2.png",
-        "/assets/images/west3.png",
+        "/assets/images/west4.png",
     ],
     tags: ["Flutter", "Dart", "Firebase"],
     liveUrl: "https://github.com/Ichkko",
     githubUrl: "https://github.com/Ichkko",
-    titleKey: "project4Title" as const,
-    descKey: "project4Desc" as const,
+    titleKey: "project3Title" as const,
+    descKey: "project3Desc" as const,
   },
    {
-    id: "6" as const,
+    id: "4" as const,
     image: "/assets/images/oyu.png",
     images: [
       "/assets/images/oyu.png",
@@ -172,4 +147,5 @@ export const projectsMeta = [
     titleKey: "project4Title" as const,
     descKey: "project4Desc" as const,
   },
+  
 ];
