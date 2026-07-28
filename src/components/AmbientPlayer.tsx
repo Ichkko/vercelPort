@@ -103,7 +103,8 @@ export function AmbientPlayer() {
         rel: 0,
         modestbranding: 1,
         enablejsapi: 1,
-        start: videoId === TRACKS[0].id ? 3 : 0,
+        start: videoId === TRACKS[0].id ? 6 : 2,
+        
       },
       events: {
         onReady: (e) => {
