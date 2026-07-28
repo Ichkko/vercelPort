@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import {
   ExternalLink,
   ChevronLeft,
@@ -20,6 +20,75 @@ import { FadeIn, Stagger, StaggerItem } from "@/components/FadeIn";
 import { useLanguage } from "@/components/LanguageProvider";
 import { useTheme } from "@/components/ThemeProvider";
 import { LanguageToggle } from "@/components/LanguageToggle";
+
+/* ── Animated Counter Hook ── */
+function useAnimatedCounter(target: number, duration: number = 1800) {
+  const [count, setCount] = useState(0);
+  const [hasStarted, setHasStarted] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-60px" });
+
+  useEffect(() => {
+    if (!isInView || hasStarted) return;
+    setHasStarted(true);
+    let startTime: number | null = null;
+    const step = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.floor(eased * target));
+      if (progress < 1) requestAnimationFrame(step);
+      else setCount(target);
+    };
+    requestAnimationFrame(step);
+  }, [isInView, hasStarted, target, duration]);
+
+  return { count, ref };
+}
+
+/* ── Metric Card ── */
+interface MetricCardProps {
+  numericValue: number;
+  suffix: string;
+  label: string;
+  Icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+  delay?: number;
+}
+
+function MetricCard({ numericValue, suffix, label, Icon: IconComponent, delay = 0 }: MetricCardProps) {
+  const { count, ref } = useAnimatedCounter(numericValue, 1600);
+  const isInView = useInView(ref as React.RefObject<Element>, { once: true, margin: "-60px" });
+
+  return (
+    <motion.div
+      ref={ref}
+      whileHover={{ y: -4, scale: 1.03 }}
+      transition={{ type: "spring", stiffness: 400, damping: 20 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      style={{ transitionDelay: `${delay}s` }}
+      className="stat-card relative flex flex-col items-center gap-2 overflow-hidden px-4 py-5 text-center"
+    >
+      {/* Glow pulse on enter */}
+      <motion.div
+        className="pointer-events-none absolute inset-0 rounded-[inherit]"
+        initial={{ opacity: 0 }}
+        animate={isInView ? { opacity: [0, 0.35, 0] } : {}}
+        transition={{ duration: 1.2, delay: delay + 0.2, ease: "easeOut" }}
+        style={{ boxShadow: "inset 0 0 28px 6px var(--teal)" }}
+      />
+      <div className="flex h-9 w-9 items-center justify-center rounded-[8px] bg-[var(--teal-soft)]">
+        <IconComponent className="h-4 w-4 text-[var(--teal)]" strokeWidth={1.6} />
+      </div>
+      <div>
+        <p className="text-2xl font-extrabold gradient-text tabular-nums">
+          {count}{suffix}
+        </p>
+        <p className="mt-0.5 text-[11px] leading-snug text-[var(--muted)]">{label}</p>
+      </div>
+    </motion.div>
+  );
+}
 
 /* ─── Slideshow ─── */
 interface SlideshowProps {
@@ -143,10 +212,10 @@ export default function PortfolioPage() {
       : projectsMeta.filter((p) => p.tags.includes(activeTag));
 
   const metrics = [
-    { value: "20+", label: t("metricProjects"), Icon: Code2 },
-    { value: "500+", label: t("metricCommits"), Icon: GitBranch },
-    { value: "3+", label: t("metricYears"), Icon: Rocket },
-    { value: "100%", label: t("metricResponsibility"), Icon: ShieldCheck },
+    { value: "20+", numericValue: 20, suffix: "+", label: t("metricProjects"), Icon: Code2 },
+    { value: "500+", numericValue: 500, suffix: "+", label: t("metricCommits"), Icon: GitBranch },
+    { value: "3+", numericValue: 3, suffix: "+", label: t("metricYears"), Icon: Rocket },
+    { value: "100%", numericValue: 100, suffix: "%", label: t("metricResponsibility"), Icon: ShieldCheck },
   ];
 
   return (
@@ -205,21 +274,15 @@ export default function PortfolioPage() {
         {/* Metrics strip */}
         <FadeIn delay={0.05}>
           <div className="mb-12 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {metrics.map((m) => (
-              <motion.div
+            {metrics.map((m, i) => (
+              <MetricCard
                 key={m.label}
-                whileHover={{ y: -3 }}
-                transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                className="stat-card flex flex-col items-center gap-2 px-4 py-5 text-center"
-              >
-                <div className="flex h-9 w-9 items-center justify-center rounded-[8px] bg-[var(--teal-soft)]">
-                  <m.Icon className="h-4 w-4 text-[var(--teal)]" strokeWidth={1.6} />
-                </div>
-                <div>
-                  <p className="text-2xl font-extrabold gradient-text">{m.value}</p>
-                  <p className="mt-0.5 text-[11px] leading-snug text-[var(--muted)]">{m.label}</p>
-                </div>
-              </motion.div>
+                numericValue={m.numericValue}
+                suffix={m.suffix}
+                label={m.label}
+                Icon={m.Icon}
+                delay={i * 0.08}
+              />
             ))}
           </div>
         </FadeIn>
