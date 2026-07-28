@@ -122,14 +122,20 @@ export function Gallery() {
         className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-3"
       >
         <AnimatePresence mode="popLayout">
-          {filtered.map((item) => (
+          {filtered.map((item, idx) => (
             <motion.div
               key={item.id}
               layout
-              initial={{ opacity: 0, scale: 0.88 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.88 }}
-              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              initial={{ opacity: 0, scale: 0.85, filter: "blur(8px)" }}
+              animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+              exit={{ opacity: 0, scale: 0.85, filter: "blur(4px)" }}
+              transition={{
+                duration: 0.45,
+                ease: [0.16, 1, 0.3, 1],
+                delay: idx * 0.04,
+                filter: { duration: 0.35 },
+              }}
+              whileHover={{ scale: 1.03, zIndex: 10 }}
               className="group relative cursor-pointer overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--bg-elevated)]"
               style={{ aspectRatio: "1 / 1" }}
               onClick={() => setLightbox(item)}
@@ -144,7 +150,12 @@ export function Gallery() {
               />
 
               {/* Overlay */}
-              <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <motion.div
+                className="absolute inset-0 flex items-end bg-gradient-to-t from-black/60 via-transparent to-transparent"
+                initial={{ opacity: 0 }}
+                whileHover={{ opacity: 1 }}
+                transition={{ duration: 0.25 }}
+              >
                 <div className="p-3">
                   <span className="rounded-full bg-[var(--teal)]/90 px-2.5 py-1 text-[10px] font-semibold text-white">
                     {item.category === "drawing"
@@ -154,14 +165,19 @@ export function Gallery() {
                       : lang === "mn" ? "Гэрэл зураг" : "Photo"}
                   </span>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Zoom icon */}
-              <div className="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full bg-black/40 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100">
+              <motion.div
+                className="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full bg-black/40 backdrop-blur-sm"
+                initial={{ opacity: 0, scale: 0.7 }}
+                whileHover={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.2 }}
+              >
                 <svg className="h-3.5 w-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
                 </svg>
-              </div>
+              </motion.div>
             </motion.div>
           ))}
         </AnimatePresence>
@@ -174,15 +190,15 @@ export function Gallery() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/80 p-4 backdrop-blur-md"
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/85 p-4 backdrop-blur-md"
             onClick={() => setLightbox(null)}
           >
             <motion.div
-              initial={{ scale: 0.85, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.85, opacity: 0 }}
-              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              initial={{ scale: 0.8, opacity: 0, filter: "blur(12px)" }}
+              animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
+              exit={{ scale: 0.8, opacity: 0, filter: "blur(8px)" }}
+              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
               className="relative max-h-[85vh] max-w-[90vw] overflow-hidden rounded-2xl shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
@@ -192,22 +208,29 @@ export function Gallery() {
                 className="max-h-[85vh] max-w-[90vw] object-contain"
               />
               {/* Close button */}
-              <button
+              <motion.button
                 type="button"
                 onClick={() => setLightbox(null)}
-                className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-sm transition hover:bg-black/80"
+                className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-sm"
                 aria-label="Close"
+                whileHover={{ scale: 1.1, backgroundColor: "rgba(0,0,0,0.85)" }}
+                whileTap={{ scale: 0.9 }}
               >
                 <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
-              </button>
+              </motion.button>
               {/* Label */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+              <motion.div
+                className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4"
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.2, duration: 0.4 }}
+              >
                 <p className="text-sm font-semibold text-white">
                   {lang === "mn" ? lightbox.labelMn : lightbox.labelEn}
                 </p>
-              </div>
+              </motion.div>
             </motion.div>
           </motion.div>
         )}

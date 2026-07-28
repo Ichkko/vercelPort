@@ -54,16 +54,17 @@ const testimonials: Testimonial[] = [
 const containerVariants = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.12 },
+    transition: { staggerChildren: 0.14, delayChildren: 0.05 },
   },
 };
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 28 },
+  hidden: { opacity: 0, y: 36, scale: 0.97 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.55, ease: "easeOut" as const },
+    scale: 1,
+    transition: { duration: 0.7, ease: "easeOut" as const },
   },
 };
 
@@ -73,7 +74,13 @@ export function Testimonials() {
   return (
     <section>
       {/* Header */}
-      <div className="mb-10">
+      <motion.div
+        className="mb-10"
+        initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
+        whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+      >
         <span
           className="mb-2 inline-block rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-widest"
           style={{
@@ -94,7 +101,7 @@ export function Testimonials() {
           {t("testimonialsDesc" as never) ||
             "Feedback from teammates, leads, and collaborators I've shipped real products with."}
         </p>
-      </div>
+      </motion.div>
 
       {/* Bento grid — asymmetric layout */}
       <motion.div
@@ -107,6 +114,8 @@ export function Testimonials() {
         {/* Card 0 — spans 2 cols on lg */}
         <motion.div
           variants={cardVariants}
+          whileHover={{ y: -5, boxShadow: `0 20px 48px rgba(8,145,178,0.12)` }}
+          transition={{ type: "spring", stiffness: 300, damping: 22 }}
           className="group relative overflow-hidden rounded-2xl p-6 lg:col-span-2"
           style={{
             background: "var(--bg-elevated)",
@@ -131,19 +140,23 @@ export function Testimonials() {
               </p>
             </div>
           </div>
-          {/* Subtle accent glow */}
-          <div
-            className="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          <motion.div
+            className="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full"
             style={{
               background: `radial-gradient(circle, ${testimonials[0].accent}22 0%, transparent 70%)`,
               filter: "blur(20px)",
             }}
+            initial={{ opacity: 0 }}
+            whileHover={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
           />
         </motion.div>
 
         {/* Card 1 */}
         <motion.div
           variants={cardVariants}
+          whileHover={{ y: -5, boxShadow: `0 20px 48px rgba(124,58,237,0.12)` }}
+          transition={{ type: "spring", stiffness: 300, damping: 22 }}
           className="group relative overflow-hidden rounded-2xl p-6"
           style={{
             background: "var(--bg-elevated)",
@@ -168,18 +181,23 @@ export function Testimonials() {
               </p>
             </div>
           </div>
-          <div
-            className="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          <motion.div
+            className="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full"
             style={{
               background: `radial-gradient(circle, ${testimonials[1].accent}22 0%, transparent 70%)`,
               filter: "blur(20px)",
             }}
+            initial={{ opacity: 0 }}
+            whileHover={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
           />
         </motion.div>
 
         {/* Card 2 */}
         <motion.div
           variants={cardVariants}
+          whileHover={{ y: -5, boxShadow: `0 20px 48px rgba(217,119,6,0.12)` }}
+          transition={{ type: "spring", stiffness: 300, damping: 22 }}
           className="group relative overflow-hidden rounded-2xl p-6"
           style={{
             background: "var(--bg-elevated)",
@@ -204,18 +222,23 @@ export function Testimonials() {
               </p>
             </div>
           </div>
-          <div
-            className="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          <motion.div
+            className="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full"
             style={{
               background: `radial-gradient(circle, ${testimonials[2].accent}22 0%, transparent 70%)`,
               filter: "blur(20px)",
             }}
+            initial={{ opacity: 0 }}
+            whileHover={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
           />
         </motion.div>
 
         {/* Card 3 — spans 2 cols on lg */}
         <motion.div
           variants={cardVariants}
+          whileHover={{ y: -5, boxShadow: `0 20px 48px rgba(5,150,105,0.12)` }}
+          transition={{ type: "spring", stiffness: 300, damping: 22 }}
           className="group relative overflow-hidden rounded-2xl p-6 lg:col-span-2"
           style={{
             background: "var(--bg-elevated)",
@@ -240,12 +263,15 @@ export function Testimonials() {
               </p>
             </div>
           </div>
-          <div
-            className="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          <motion.div
+            className="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full"
             style={{
               background: `radial-gradient(circle, ${testimonials[3].accent}22 0%, transparent 70%)`,
               filter: "blur(20px)",
             }}
+            initial={{ opacity: 0 }}
+            whileHover={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
           />
         </motion.div>
       </motion.div>
@@ -255,30 +281,36 @@ export function Testimonials() {
 
 function QuoteIcon({ color }: { color: string }) {
   return (
-    <svg
+    <motion.svg
       width="28"
       height="22"
       viewBox="0 0 28 22"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden
+      initial={{ opacity: 0, scale: 0.5 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      transition={{ type: "spring", stiffness: 300, damping: 18, delay: 0.1 }}
     >
       <path
         d="M0 22V13.2C0 9.73333 0.933333 6.86667 2.8 4.6C4.66667 2.33333 7.26667 0.8 10.6 0L12 3.2C9.86667 3.86667 8.2 4.93333 7 6.4C5.8 7.86667 5.2 9.46667 5.2 11.2H10.4V22H0ZM17.6 22V13.2C17.6 9.73333 18.5333 6.86667 20.4 4.6C22.2667 2.33333 24.8667 0.8 28.2 0L29.6 3.2C27.4667 3.86667 25.8 4.93333 24.6 6.4C23.4 7.86667 22.8 9.46667 22.8 11.2H28V22H17.6Z"
         fill={color}
         fillOpacity="0.35"
       />
-    </svg>
+    </motion.svg>
   );
 }
 
 function Avatar({ initials, accent }: { initials: string; accent: string }) {
   return (
-    <div
+    <motion.div
       className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-xs font-bold text-white"
       style={{ background: accent }}
+      whileHover={{ scale: 1.12, rotate: 5 }}
+      transition={{ type: "spring", stiffness: 400, damping: 18 }}
     >
       {initials}
-    </div>
+    </motion.div>
   );
 }

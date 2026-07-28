@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { navKeys } from "@/data/i18n";
@@ -82,6 +83,17 @@ export function MobileHeader({ active }: { active: string }) {
                 </a>
               );
             })}
+            {/* Portfolio page link */}
+            <Link
+              href="/portfolio"
+              onClick={() => setOpen(false)}
+              className="flex items-center justify-between rounded-xl px-4 py-3 text-sm font-medium text-[var(--muted)] hover:bg-black/[0.03] hover:text-[var(--ink)] dark:hover:bg-white/[0.055]"
+            >
+              Portfolio
+              <span className="rounded-full bg-[var(--teal)] px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white">
+                New
+              </span>
+            </Link>
           </motion.nav>
         )}
       </AnimatePresence>
