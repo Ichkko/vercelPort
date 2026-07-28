@@ -13,6 +13,7 @@ import {
   User,
   type LucideIcon,
 } from "lucide-react";
+import Link from "next/link";
 import { navKeys } from "@/data/i18n";
 import { profile } from "@/data/portfolio";
 import { useLanguage } from "./LanguageProvider";
@@ -94,6 +95,21 @@ export function Sidebar({ active }: { active: string }) {
               </li>
             );
           })}
+          {/* Dedicated portfolio page link */}
+          <li>
+            <Link
+              href="/portfolio"
+              className="relative flex items-center gap-3 rounded-[10px] px-3 py-2.5 text-sm font-medium text-[var(--muted)] transition-all hover:bg-[var(--teal-soft)] hover:text-[var(--ink)]"
+            >
+              <span className="flex items-center gap-3">
+                <FolderKanban className="h-4 w-4" strokeWidth={1.6} />
+                Portfolio
+              </span>
+              <span className="ml-auto rounded-full bg-[var(--teal)] px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white">
+                New
+              </span>
+            </Link>
+          </li>
         </ul>
       </nav>
 
