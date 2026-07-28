@@ -79,7 +79,7 @@ export function Hero() {
     <section
       ref={sectionRef}
       id="home"
-      className="relative scroll-mt-6 overflow-visible px-5 py-12 md:px-10 md:py-20 lg:px-14 lg:py-24"
+      className="relative scroll-mt-6 overflow-visible px-4 py-10 sm:px-5 md:px-10 md:py-20 lg:px-14 lg:py-24"
     >
       {/* ── Sprouting plants in hero corners ── */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
@@ -105,7 +105,7 @@ export function Hero() {
 
       <motion.div
         style={{ opacity }}
-        className="relative mx-auto grid max-w-[1040px] items-center gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16"
+        className="relative mx-auto grid max-w-[1040px] items-center gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16"
       >
         {/* ── Left content ── */}
         <motion.div
@@ -143,7 +143,7 @@ export function Hero() {
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--teal)]">
               Hi, I&apos;m
             </p>
-            <h1 className="text-4xl font-extrabold leading-[1.08] tracking-tight text-[var(--ink)] sm:text-5xl lg:text-[54px]">
+            <h1 className="text-3xl font-extrabold leading-[1.08] tracking-tight text-[var(--ink)] sm:text-5xl lg:text-[54px]">
               Ichko
               <span className="shimmer-text">.</span>
             </h1>
@@ -158,7 +158,7 @@ export function Hero() {
               >
                 <Sparkles className="h-4 w-4 flex-shrink-0 text-[var(--teal)] opacity-70" strokeWidth={1.8} />
               </motion.div>
-              <span className="font-mono text-base font-semibold text-[var(--ink-soft)] sm:text-lg">
+              <span className="font-mono text-sm font-semibold text-[var(--ink-soft)] sm:text-lg">
                 {displayed}
                 <span className="ml-0.5 inline-block h-[1.1em] w-[2px] translate-y-[2px] animate-pulse bg-[var(--teal)]" />
               </span>
@@ -167,7 +167,7 @@ export function Hero() {
 
           {/* Bio */}
           <motion.div variants={itemVariants}>
-            <p className="max-w-[480px] text-[15.5px] leading-[1.85] text-[var(--muted)]">
+            <p className="max-w-[480px] text-sm leading-[1.85] text-[var(--muted)] sm:text-[15.5px]">
               Junior full-stack developer building{" "}
               <span className="font-semibold text-[var(--ink-soft)]">clean interfaces</span> and{" "}
               <span className="font-semibold text-[var(--ink-soft)]">reliable backends</span>.
@@ -178,13 +178,13 @@ export function Hero() {
 
           {/* CTA buttons */}
           <motion.div variants={itemVariants}>
-            <div className="flex flex-wrap gap-3 pt-1">
+            <div className="flex flex-col gap-3 pt-1 xs:flex-row xs:flex-wrap sm:flex-row sm:flex-wrap">
               <motion.a
                 href="#projects"
                 whileHover={{ y: -3, scale: 1.04, boxShadow: "0 12px 32px rgba(8,145,178,0.4)" }}
                 whileTap={{ scale: 0.96 }}
                 transition={{ type: "spring", stiffness: 400, damping: 18 }}
-                className="inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#0891b2] via-[#06b6d4] to-[#0891b2] bg-[length:200%_auto] px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-cyan-500/25 transition-all hover:bg-right hover:shadow-cyan-500/40"
+                className="inline-flex items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-[#0891b2] via-[#06b6d4] to-[#0891b2] bg-[length:200%_auto] px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-cyan-500/25 transition-all hover:bg-right hover:shadow-cyan-500/40"
                 style={{ backgroundSize: "200% auto" }}
               >
                 {t("ctaProjects")}
@@ -203,7 +203,7 @@ export function Hero() {
                 whileHover={{ y: -3, scale: 1.04 }}
                 whileTap={{ scale: 0.96 }}
                 transition={{ type: "spring", stiffness: 400, damping: 18 }}
-                className="inline-flex items-center gap-2.5 rounded-full border border-[var(--line)] bg-[var(--bg-elevated)] px-6 py-3.5 text-sm font-bold text-[var(--ink-soft)] shadow-sm transition-all hover:border-[var(--teal)] hover:text-[var(--teal)] dark:bg-white/[0.04] dark:hover:bg-[var(--teal-soft)]"
+                className="inline-flex items-center justify-center gap-2.5 rounded-full border border-[var(--line)] bg-[var(--bg-elevated)] px-6 py-3.5 text-sm font-bold text-[var(--ink-soft)] shadow-sm transition-all hover:border-[var(--teal)] hover:text-[var(--teal)] dark:bg-white/[0.04] dark:hover:bg-[var(--teal-soft)]"
               >
                 {t("ctaCv")}
                 <Download className="h-4 w-4" strokeWidth={1.8} />
@@ -215,7 +215,7 @@ export function Hero() {
               >
                 <Link
                   href="/about"
-                  className="inline-flex items-center gap-2.5 rounded-full border border-[var(--teal)]/30 bg-[var(--teal-soft)] px-6 py-3.5 text-sm font-bold text-[var(--teal)] shadow-sm transition-all hover:border-[var(--teal)]/60 hover:shadow-[0_4px_16px_rgba(8,145,178,0.2)]"
+                  className="inline-flex w-full items-center justify-center gap-2.5 rounded-full border border-[var(--teal)]/30 bg-[var(--teal-soft)] px-6 py-3.5 text-sm font-bold text-[var(--teal)] shadow-sm transition-all hover:border-[var(--teal)]/60 hover:shadow-[0_4px_16px_rgba(8,145,178,0.2)] sm:w-auto"
                 >
                   About me
                   <User className="h-4 w-4" strokeWidth={1.8} />
@@ -256,7 +256,7 @@ export function Hero() {
         {/* ── Right — image + stats ── */}
         <motion.div
           style={{ y: imageY }}
-          className="relative mx-auto w-full max-w-[360px]"
+          className="relative mx-auto w-full max-w-[280px] sm:max-w-[360px]"
           initial={{ opacity: 0, scale: 0.9, filter: "blur(10px)" }}
           animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
@@ -309,13 +309,13 @@ export function Hero() {
             initial={{ opacity: 0, y: 24, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ delay: 0.5, duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute -bottom-6 left-1/2 z-10 w-[108%] max-w-[420px] -translate-x-1/2 rounded-[14px] border border-[var(--line)] bg-[var(--bg-elevated)]/95 px-5 py-4 shadow-[0_20px_50px_rgba(15,23,42,0.14)] backdrop-blur-xl dark:bg-[var(--bg-elevated)]/90 dark:shadow-[0_20px_50px_rgba(0,0,0,0.4)]"
+            className="relative z-10 mt-4 w-full rounded-[14px] border border-[var(--line)] bg-[var(--bg-elevated)]/95 px-3 py-3 shadow-[0_20px_50px_rgba(15,23,42,0.14)] backdrop-blur-xl dark:bg-[var(--bg-elevated)]/90 dark:shadow-[0_20px_50px_rgba(0,0,0,0.4)] sm:absolute sm:-bottom-6 sm:left-1/2 sm:mt-0 sm:w-[108%] sm:max-w-[420px] sm:-translate-x-1/2 sm:px-5 sm:py-4"
           >
             <div className="grid grid-cols-3 divide-x divide-[var(--line)]">
               {stats?.map((stat, i) => (
                 <motion.div
                   key={stat?.label}
-                  className="px-3 text-center"
+                  className="px-2 text-center sm:px-3"
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{
@@ -327,8 +327,8 @@ export function Hero() {
                   }}
                   whileHover={{ scale: 1.08 }}
                 >
-                  <p className="text-xl font-extrabold gradient-text">{stat?.value}</p>
-                  <p className="mt-0.5 text-[11px] leading-snug text-[var(--muted)]">{stat?.label}</p>
+                  <p className="text-lg font-extrabold gradient-text sm:text-xl">{stat?.value}</p>
+                  <p className="mt-0.5 text-[10px] leading-snug text-[var(--muted)] sm:text-[11px]">{stat?.label}</p>
                 </motion.div>
               ))}
             </div>

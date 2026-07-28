@@ -77,10 +77,10 @@ export function Skills() {
 
       {/* Category filter tabs */}
       <FadeIn>
-        <div className="mb-6 flex flex-wrap gap-2">
+        <div className="mb-6 flex flex-wrap gap-2 overflow-x-auto pb-1">
           <button
             onClick={() => setActiveCategory(null)}
-            className="px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200"
+            className="shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200"
             style={{
               background: activeCategory === null ? "var(--teal)" : "var(--teal-soft)",
               color: activeCategory === null ? "#fff" : "var(--teal)",
@@ -97,7 +97,7 @@ export function Skills() {
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(isActive ? null : cat.id)}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200"
+                className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200"
                 style={{
                   background: isActive ? cat.color : cat.colorSoft,
                   color: isActive ? "#fff" : cat.color,

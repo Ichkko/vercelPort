@@ -157,9 +157,9 @@ export function Projects() {
             transition={{ type: "spring", stiffness: 300, damping: 24 }}
             className="glow-card card-soft group mb-6 overflow-hidden"
           >
-            <div className="flex flex-col md:flex-row">
+            <div className="flex flex-col sm:flex-row">
               {/* Slideshow */}
-              <div className="relative md:w-[52%] shrink-0">
+              <div className="relative sm:w-[52%] shrink-0">
                 <ProjectSlideshow
                   images={featured.images ?? [featured.image]}
                   alt={t(featured.titleKey)}
@@ -172,15 +172,15 @@ export function Projects() {
               </div>
 
               {/* Content */}
-              <div className="flex flex-1 flex-col justify-between p-6">
+              <div className="flex flex-1 flex-col justify-between p-4 sm:p-6">
                 <div>
-                  <h3 className="text-xl font-extrabold leading-snug tracking-tight text-[var(--ink)]">
+                  <h3 className="text-lg font-extrabold leading-snug tracking-tight text-[var(--ink)] sm:text-xl">
                     {t(featured?.titleKey)}
                   </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
+                  <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
                     {t(featured?.descKey)}
                   </p>
-                  <div className="mt-4 flex flex-wrap gap-1.5">
+                  <div className="mt-3 flex flex-wrap gap-1.5">
                     {featured?.tags?.map((tag) => (
                       <span key={tag} className="tag-pill">
                         {tag}
@@ -188,7 +188,7 @@ export function Projects() {
                     ))}
                   </div>
                 </div>
-                <div className="mt-6 flex items-center gap-4 border-t border-[var(--line)] pt-4">
+                <div className="mt-4 flex items-center gap-3 border-t border-[var(--line)] pt-4">
                   <a
                     href={featured?.liveUrl}
                     target="_blank"
@@ -215,7 +215,7 @@ export function Projects() {
       )}
 
       {/* Remaining projects grid */}
-      <Stagger className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <Stagger className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {rest?.map((project) => (
           <StaggerItem key={project?.id}>
             <motion.article

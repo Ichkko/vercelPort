@@ -198,12 +198,12 @@ export function PortfolioShell() {
       </div>
 
       {/* Floating top-left controls */}
-      <div className="fixed left-6 top-6 z-50 flex items-center gap-2">
+      <div className="fixed left-3 top-3 z-50 flex items-center gap-2 sm:left-6 sm:top-6">
         <LanguageToggle compact />
         <button
           type="button"
           onClick={toggleTheme}
-          className="rounded-xl border border-[var(--line)] bg-[var(--bg-elevated)]/90 px-3 py-2 text-xs font-semibold text-[var(--muted)] backdrop-blur-xl transition hover:border-[var(--teal)]/40 hover:text-[var(--ink)]"
+          className="rounded-xl border border-[var(--line)] bg-[var(--bg-elevated)]/90 px-2.5 py-1.5 text-xs font-semibold text-[var(--muted)] backdrop-blur-xl transition hover:border-[var(--teal)]/40 hover:text-[var(--ink)] sm:px-3 sm:py-2"
           aria-label="Toggle theme"
         >
           {theme === "dark" ? "☾" : "☀"}
@@ -211,12 +211,12 @@ export function PortfolioShell() {
       </div>
 
       {/* Floating tab switcher — centered top */}
-      <div className="fixed left-1/2 top-6 z-50 -translate-x-1/2">
+      <div className="fixed left-1/2 top-3 z-50 -translate-x-1/2 sm:top-6">
         <div className="flex items-center gap-1 rounded-full border border-[var(--line)] bg-[var(--bg-elevated)]/90 p-1 shadow-lg backdrop-blur-xl">
           <button
             type="button"
             onClick={() => handleTabSwitch("personal")}
-            className="relative rounded-full px-5 py-2 text-sm font-semibold transition-colors"
+            className="relative rounded-full px-3 py-1.5 text-xs font-semibold transition-colors sm:px-5 sm:py-2 sm:text-sm"
           >
             {tab === "personal" && (
               <motion.span
@@ -236,7 +236,7 @@ export function PortfolioShell() {
           <button
             type="button"
             onClick={() => handleTabSwitch("professional")}
-            className="relative rounded-full px-5 py-2 text-sm font-semibold transition-colors"
+            className="relative rounded-full px-3 py-1.5 text-xs font-semibold transition-colors sm:px-5 sm:py-2 sm:text-sm"
           >
             {tab === "professional" && (
               <motion.span
@@ -250,7 +250,7 @@ export function PortfolioShell() {
                 tab === "professional" ? "text-white" : "text-[var(--muted)] hover:text-[var(--ink)]"
               }`}
             >
-              Professional
+              Pro
             </span>
           </button>
         </div>
@@ -276,7 +276,7 @@ export function PortfolioShell() {
 
             {/* Personal About */}
             <section id="personal-about" className="scroll-mt-8">
-              <div className="section-panel px-5 py-12 md:px-10 lg:px-14">
+              <div className="section-panel px-4 py-10 sm:px-5 md:px-10 lg:px-14 sm:py-12">
                 <div className="mx-auto max-w-[1040px]">
                   <About />
                 </div>
@@ -285,7 +285,7 @@ export function PortfolioShell() {
 
             {/* Personal Gallery */}
             <section id="personal-gallery" className="scroll-mt-8">
-              <div className="section-panel px-5 py-12 md:px-10 lg:px-14">
+              <div className="section-panel px-4 py-10 sm:px-5 md:px-10 lg:px-14 sm:py-12">
                 <div className="mx-auto max-w-[1040px]">
                   <Gallery />
                 </div>
@@ -294,7 +294,7 @@ export function PortfolioShell() {
 
             {/* Currently Vibing */}
             <section id="personal-vibing" className="scroll-mt-8">
-              <div className="section-panel px-5 py-12 md:px-10 lg:px-14">
+              <div className="section-panel px-4 py-10 sm:px-5 md:px-10 lg:px-14 sm:py-12">
                 <div className="mx-auto max-w-[1040px]">
                   <CurrentlyVibing />
                 </div>
@@ -316,7 +316,7 @@ export function PortfolioShell() {
           >
             {/* Professional Skills */}
             <section id="pro-skills" className="scroll-mt-0">
-              <div className="section-panel px-5 pt-24 pb-12 md:px-10 lg:px-14">
+              <div className="section-panel px-4 pt-20 pb-10 sm:px-5 sm:pt-24 sm:pb-12 md:px-10 lg:px-14">
                 <div className="mx-auto max-w-[1040px]">
                   <Skills />
                 </div>
@@ -325,7 +325,7 @@ export function PortfolioShell() {
 
             {/* Professional Projects */}
             <section id="pro-projects" className="scroll-mt-8">
-              <div className="section-panel px-5 py-12 md:px-10 lg:px-14">
+              <div className="section-panel px-4 py-10 sm:px-5 md:px-10 lg:px-14 sm:py-12">
                 <div className="mx-auto max-w-[1040px]">
                   <Projects />
                 </div>
@@ -334,7 +334,7 @@ export function PortfolioShell() {
 
             {/* Professional Experience / Timeline */}
             <section id="pro-experience" className="scroll-mt-8">
-              <div className="section-panel px-5 py-12 md:px-10 lg:px-14">
+              <div className="section-panel px-4 py-10 sm:px-5 md:px-10 lg:px-14 sm:py-12">
                 <div className="mx-auto max-w-[1040px]">
                   <Timeline />
                 </div>
@@ -343,7 +343,7 @@ export function PortfolioShell() {
 
             {/* Professional Testimonials */}
             <section id="pro-testimonials" className="scroll-mt-8">
-              <div className="section-panel px-5 py-12 md:px-10 lg:px-14">
+              <div className="section-panel px-4 py-10 sm:px-5 md:px-10 lg:px-14 sm:py-12">
                 <div className="mx-auto max-w-[1040px]">
  
                 </div>
