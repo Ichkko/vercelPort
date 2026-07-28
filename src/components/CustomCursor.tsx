@@ -9,40 +9,25 @@ interface TrailParticle {
   y: number;
   rotation: number;
   scale: number;
-  type: number; // 0=leaf, 1=petal, 2=small leaf
+  type: number;
   opacity: number;
 }
 
 const LEAF_SVGS: Array<(color: string) => React.ReactElement> = [
-  // Leaf shape
   (color: string) => (
     <svg viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M10 22C10 22 2 16 2 9C2 5 5.5 2 10 2C14.5 2 18 5 18 9C18 16 10 22 10 22Z"
-        fill={color}
-        opacity="0.85"
-      />
+      <path d="M10 22C10 22 2 16 2 9C2 5 5.5 2 10 2C14.5 2 18 5 18 9C18 16 10 22 10 22Z" fill={color} opacity="0.85" />
       <path d="M10 22L10 6" stroke="rgba(255,255,255,0.4)" strokeWidth="0.8" strokeLinecap="round" />
     </svg>
   ),
-  // Petal shape
   (color: string) => (
     <svg viewBox="0 0 18 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M9 20C9 20 1 13 3 7C5 2 9 1 9 1C9 1 13 2 15 7C17 13 9 20 9 20Z"
-        fill={color}
-        opacity="0.8"
-      />
+      <path d="M9 20C9 20 1 13 3 7C5 2 9 1 9 1C9 1 13 2 15 7C17 13 9 20 9 20Z" fill={color} opacity="0.8" />
     </svg>
   ),
-  // Small round leaf
   (color: string) => (
     <svg viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M8 16C8 16 1 11 2 6C3 2 8 1 8 1C8 1 13 2 14 6C15 11 8 16 8 16Z"
-        fill={color}
-        opacity="0.9"
-      />
+      <path d="M8 16C8 16 1 11 2 6C3 2 8 1 8 1C8 1 13 2 14 6C15 11 8 16 8 16Z" fill={color} opacity="0.9" />
       <path d="M8 16L8 5" stroke="rgba(255,255,255,0.35)" strokeWidth="0.7" strokeLinecap="round" />
     </svg>
   ),
@@ -54,8 +39,8 @@ const COLORS = [
   "rgba(134,239,172,0.65)",
   "rgba(16,185,129,0.7)",
   "rgba(167,243,208,0.6)",
-  "rgba(248,187,208,0.7)", // soft pink petal
-  "rgba(253,224,71,0.6)",  // soft yellow petal
+  "rgba(248,187,208,0.7)",
+  "rgba(253,224,71,0.6)",
 ];
 
 let particleId = 0;
@@ -63,21 +48,23 @@ let particleId = 0;
 export function CustomCursor() {
   const cursorDotRef = useRef<HTMLDivElement>(null);
   const cursorRingRef = useRef<HTMLDivElement>(null);
+  const magnifierRef = useRef<HTMLDivElement>(null);
   const visibleRef = useRef(false);
   const hoveringRef = useRef(false);
   const clickingRef = useRef(false);
-  const [state, setState] = useState({ visible: false, hovering: false, clicking: false });
+  const imageHoverRef = useRef(false);
+  const [state, setState] = useState({ visible: false, hovering: false, clicking: false, imageHover: false });
   const [trail, setTrail] = useState<TrailParticle[]>([]);
   const lastSpawnRef = useRef(0);
   const lastPosRef = useRef({ x: 0, y: 0 });
 
   const spawnParticle = useCallback((x: number, y: number) => {
     const now = Date.now();
-    if (now - lastSpawnRef.current < 120) return; // throttle: max ~8 particles/sec
+    if (now - lastSpawnRef.current < 120) return;
     const dx = x - lastPosRef.current.x;
     const dy = y - lastPosRef.current.y;
     const dist = Math.sqrt(dx * dx + dy * dy);
-    if (dist < 18) return; // only spawn when moving enough
+    if (dist < 18) return;
 
     lastSpawnRef.current = now;
     lastPosRef.current = { x, y };
@@ -93,8 +80,6 @@ export function CustomCursor() {
     };
 
     setTrail((prev) => [...prev.slice(-8), particle]);
-
-    // Remove particle after animation
     setTimeout(() => {
       setTrail((prev) => prev.filter((p) => p.id !== particle.id));
     }, 600);
@@ -103,37 +88,40 @@ export function CustomCursor() {
   useEffect(() => {
     const dot = cursorDotRef.current;
     const ring = cursorRingRef.current;
-    if (!dot || !ring) return;
+    const magnifier = magnifierRef.current;
+    if (!dot || !ring || !magnifier) return;
 
     let mouseX = 0;
     let mouseY = 0;
     let ringX = 0;
     let ringY = 0;
+    let magX = 0;
+    let magY = 0;
     let animId: number;
 
     const onMove = (e: MouseEvent) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
       dot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
+      magnifier.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
 
       spawnParticle(mouseX, mouseY);
 
       const target = e.target as HTMLElement;
-      const isHover =
-        !!target.closest("a") ||
-        !!target.closest("button") ||
-        !!target.closest("[data-cursor-hover]");
+      const isHover = !!target.closest("a") || !!target.closest("button") || !!target.closest("[data-cursor-hover]");
+      const isImageHover = !!target.closest("[data-cursor-image]");
 
-      if (!visibleRef.current || hoveringRef.current !== isHover) {
+      if (!visibleRef.current || hoveringRef.current !== isHover || imageHoverRef.current !== isImageHover) {
         visibleRef.current = true;
         hoveringRef.current = isHover;
-        setState((s) => ({ ...s, visible: true, hovering: isHover }));
+        imageHoverRef.current = isImageHover;
+        setState((s) => ({ ...s, visible: true, hovering: isHover, imageHover: isImageHover }));
       }
     };
 
     const onLeave = () => {
       visibleRef.current = false;
-      setState((s) => ({ ...s, visible: false }));
+      setState((s) => ({ ...s, visible: false, imageHover: false }));
     };
 
     const onEnter = () => {
@@ -155,6 +143,8 @@ export function CustomCursor() {
       const ease = 0.1;
       ringX += (mouseX - ringX) * ease;
       ringY += (mouseY - ringY) * ease;
+      magX += (mouseX - magX) * 0.12;
+      magY += (mouseY - magY) * 0.12;
       ring.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
       animId = requestAnimationFrame(animate);
     };
@@ -176,7 +166,7 @@ export function CustomCursor() {
     };
   }, [spawnParticle]);
 
-  const { visible, hovering, clicking } = state;
+  const { visible, hovering, clicking, imageHover } = state;
 
   return (
     <>
@@ -197,7 +187,6 @@ export function CustomCursor() {
                 height: size,
                 transform: `translate(-50%, -50%) rotate(${p.rotation}deg)`,
                 animation: `leafTrailFade 0.6s ease-out forwards`,
-                animationDelay: "0ms",
                 opacity: 0.55,
               }}
             >
@@ -207,34 +196,64 @@ export function CustomCursor() {
         })}
       </div>
 
+      {/* Magnifier — shown on image hover */}
+      <div
+        ref={magnifierRef}
+        className="pointer-events-none fixed left-0 top-0 z-[9999] hidden md:flex items-center justify-center"
+        style={{
+          width: "64px",
+          height: "64px",
+          borderRadius: "50%",
+          border: `2px solid ${imageHover ? "rgba(255,255,255,0.7)" : "transparent"}`,
+          background: imageHover ? "rgba(255,255,255,0.08)" : "transparent",
+          backdropFilter: imageHover ? "blur(0px)" : "none",
+          boxShadow: imageHover ? "0 0 0 1px rgba(255,255,255,0.15), inset 0 0 20px rgba(255,255,255,0.05)" : "none",
+          opacity: imageHover && visible ? 1 : 0,
+          transition: "opacity 0.25s, border-color 0.2s, background 0.2s, box-shadow 0.2s, width 0.3s cubic-bezier(0.22,1,0.36,1), height 0.3s cubic-bezier(0.22,1,0.36,1)",
+          willChange: "transform",
+        }}
+      >
+        {/* Crosshair lines */}
+        {imageHover && (
+          <>
+            <div style={{ position: "absolute", top: "50%", left: "8px", right: "8px", height: "1px", background: "rgba(255,255,255,0.4)", transform: "translateY(-50%)" }} />
+            <div style={{ position: "absolute", left: "50%", top: "8px", bottom: "8px", width: "1px", background: "rgba(255,255,255,0.4)", transform: "translateX(-50%)" }} />
+            {/* Zoom icon */}
+            <svg style={{ position: "absolute", bottom: "10px", right: "10px", width: "10px", height: "10px", opacity: 0.6 }} fill="none" viewBox="0 0 24 24" stroke="white">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+            </svg>
+          </>
+        )}
+      </div>
+
       {/* Dot */}
       <div
         ref={cursorDotRef}
         className="pointer-events-none fixed left-0 top-0 z-[9999] hidden md:block"
         style={{
-          width: clicking ? "5px" : "9px",
-          height: clicking ? "5px" : "9px",
+          width: clicking ? "5px" : imageHover ? "6px" : "9px",
+          height: clicking ? "5px" : imageHover ? "6px" : "9px",
           borderRadius: "50%",
-          background: "var(--teal)",
+          background: imageHover ? "rgba(255,255,255,0.9)" : "var(--teal)",
           opacity: visible ? 1 : 0,
-          transition: "opacity 0.25s, width 0.15s cubic-bezier(0.22,1,0.36,1), height 0.15s cubic-bezier(0.22,1,0.36,1)",
+          transition: "opacity 0.25s, width 0.15s cubic-bezier(0.22,1,0.36,1), height 0.15s cubic-bezier(0.22,1,0.36,1), background 0.2s",
           willChange: "transform",
-          boxShadow: "0 0 12px var(--glow), 0 0 24px var(--glow)",
+          boxShadow: imageHover ? "0 0 8px rgba(255,255,255,0.6)" : "0 0 12px var(--glow), 0 0 24px var(--glow)",
         }}
       />
-      {/* Ring */}
+
+      {/* Ring — hidden when image hover (magnifier takes over) */}
       <div
         ref={cursorRingRef}
         className="pointer-events-none fixed left-0 top-0 z-[9998] hidden md:block"
         style={{
-          width: hovering ? "56px" : clicking ? "26px" : "38px",
-          height: hovering ? "56px" : clicking ? "26px" : "38px",
+          width: imageHover ? "0px" : hovering ? "56px" : clicking ? "26px" : "38px",
+          height: imageHover ? "0px" : hovering ? "56px" : clicking ? "26px" : "38px",
           borderRadius: "50%",
           border: `1.5px solid ${hovering ? "var(--teal)" : "rgba(15,159,149,0.45)"}`,
           background: hovering ? "rgba(15,159,149,0.07)" : "transparent",
-          opacity: visible ? 1 : 0,
-          transition:
-            "opacity 0.25s, width 0.3s cubic-bezier(0.22,1,0.36,1), height 0.3s cubic-bezier(0.22,1,0.36,1), border-color 0.2s, background 0.2s",
+          opacity: visible && !imageHover ? 1 : 0,
+          transition: "opacity 0.25s, width 0.3s cubic-bezier(0.22,1,0.36,1), height 0.3s cubic-bezier(0.22,1,0.36,1), border-color 0.2s, background 0.2s",
           willChange: "transform",
         }}
       />
