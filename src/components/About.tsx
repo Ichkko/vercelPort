@@ -27,7 +27,7 @@ export function About() {
     color: "from-rose-400/20 to-pink-400/10",
     iconColor: "text-rose-400",
     iconBg: "bg-rose-400/10",
-    image: "https://images.unsplash.com/photo-1616169443520-85e1c9fc6032",
+    image: "/assets/images/ae8e4a74-9975-4ea3-be2c-67f1ef341d62-1785237815157.jpg",
     imageAlt: "Colorful art supplies with sketchbook and pencils on a wooden table",
     overlayFrom: "from-rose-900/80",
     overlayTo: "to-pink-900/40"
@@ -39,7 +39,7 @@ export function About() {
     color: "from-amber-400/20 to-orange-400/10",
     iconColor: "text-amber-400",
     iconBg: "bg-amber-400/10",
-    image: "https://images.unsplash.com/photo-1688377122008-b63b23626526",
+    image: "/assets/images/08932f43-7061-44ae-b148-f30698d826ad-1785237867985.jpg",
     imageAlt: "Handmade craft supplies including scissors, thread, and paper on a table",
     overlayFrom: "from-amber-900/80",
     overlayTo: "to-orange-900/40"
