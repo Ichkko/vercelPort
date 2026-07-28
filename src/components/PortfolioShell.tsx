@@ -17,10 +17,11 @@ import { SwayingPlant, FloatingLeaf, GrassBlades } from "./PlantDecorations";
 import { Gallery } from "./Gallery";
 import { CurrentlyVibing } from "./CurrentlyVibing";
 import { AmbientPlayer } from "./AmbientPlayer";
+import { HandcraftedArt } from "./HandcraftedArt";
 
 
 // Personal section: home, about, hobbies/personal
-const PERSONAL_SECTIONS = ["personal-home", "personal-about", "personal-gallery", "personal-vibing", "personal-contact"];
+const PERSONAL_SECTIONS = ["personal-home", "personal-about", "personal-gallery", "personal-handcraft", "personal-vibing", "personal-contact"];
 // Professional section: skills, projects, experience, testimonials
 const PROFESSIONAL_SECTIONS = ["pro-skills", "pro-projects", "pro-experience", "pro-testimonials"];
 
@@ -40,6 +41,7 @@ export function PortfolioShell() {
           { id: "personal-home", label: "Home" },
           { id: "personal-about", label: "About" },
           { id: "personal-gallery", label: "Gallery" },
+          { id: "personal-handcraft", label: "Art" },
           { id: "personal-vibing", label: "Vibing" },
           { id: "personal-contact", label: "Contact" },
         ]
@@ -288,6 +290,15 @@ export function PortfolioShell() {
               <div className="section-panel px-4 py-10 sm:px-5 md:px-10 lg:px-14 sm:py-12">
                 <div className="mx-auto max-w-[1040px]">
                   <Gallery />
+                </div>
+              </div>
+            </section>
+
+            {/* Handcrafted Art */}
+            <section id="personal-handcraft" className="scroll-mt-8">
+              <div className="section-panel px-4 py-10 sm:px-5 md:px-10 lg:px-14 sm:py-12">
+                <div className="mx-auto max-w-[1040px]">
+                  <HandcraftedArt />
                 </div>
               </div>
             </section>
