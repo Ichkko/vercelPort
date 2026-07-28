@@ -6,7 +6,6 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ExternalLink,
-  Github,
   ChevronLeft,
   ChevronRight,
   ArrowLeft,
@@ -170,7 +169,7 @@ export default function PortfolioPage() {
               rel="noreferrer"
               className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--line)] px-3 py-1.5 text-xs font-semibold text-[var(--muted)] transition hover:border-[var(--teal)]/40 hover:text-[var(--ink)]"
             >
-              <Github className="h-3.5 w-3.5" strokeWidth={1.8} />
+              <GitBranch className="h-3.5 w-3.5" strokeWidth={1.8} />
               GitHub
             </a>
             <LanguageToggle compact />
@@ -304,7 +303,7 @@ export default function PortfolioPage() {
                           rel="noreferrer"
                           className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--line)] px-4 py-2 text-xs font-bold text-[var(--muted)] transition hover:border-[var(--teal)]/50 hover:text-[var(--ink)]"
                         >
-                          <Github className="h-3.5 w-3.5" strokeWidth={1.8} />
+                          <GitBranch className="h-3.5 w-3.5" strokeWidth={1.8} />
                           {t("github")}
                         </a>
                       </div>
@@ -356,7 +355,7 @@ export default function PortfolioPage() {
                                 rel="noreferrer"
                                 className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--muted)] transition hover:text-[var(--ink)]"
                               >
-                                <Github className="h-3.5 w-3.5" strokeWidth={1.8} />
+                                <GitBranch className="h-3.5 w-3.5" strokeWidth={1.8} />
                                 {t("github")}
                               </a>
                             </div>
@@ -408,7 +407,7 @@ export default function PortfolioPage() {
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 rounded-xl border border-[var(--line)] px-5 py-2.5 text-sm font-bold text-[var(--muted)] transition hover:border-[var(--teal)]/50 hover:text-[var(--ink)]"
               >
-                <Github className="h-4 w-4" strokeWidth={1.8} />
+                <GitBranch className="h-4 w-4" strokeWidth={1.8} />
                 GitHub
               </a>
             </div>
