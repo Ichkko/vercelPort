@@ -88,40 +88,30 @@ export function CustomCursor() {
   useEffect(() => {
     const dot = cursorDotRef.current;
     const ring = cursorRingRef.current;
-    const magnifier = magnifierRef.current;
-    if (!dot || !ring || !magnifier) return;
+    if (!dot || !ring) return;
 
     let mouseX = 0;
     let mouseY = 0;
     let ringX = 0;
     let ringY = 0;
-    let magX = 0;
-    let magY = 0;
     let animId: number;
 
     const onMove = (e: MouseEvent) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
       dot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
-      magnifier.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
 
       spawnParticle(mouseX, mouseY);
 
-      const target = e.target as HTMLElement;
-      const isHover = !!target.closest("a") || !!target.closest("button") || !!target.closest("[data-cursor-hover]");
-      const isImageHover = !!target.closest("[data-cursor-image]");
-
-      if (!visibleRef.current || hoveringRef.current !== isHover || imageHoverRef.current !== isImageHover) {
+      if (!visibleRef.current) {
         visibleRef.current = true;
-        hoveringRef.current = isHover;
-        imageHoverRef.current = isImageHover;
-        setState((s) => ({ ...s, visible: true, hovering: isHover, imageHover: isImageHover }));
+        setState((s) => ({ ...s, visible: true }));
       }
     };
 
     const onLeave = () => {
       visibleRef.current = false;
-      setState((s) => ({ ...s, visible: false, imageHover: false }));
+      setState((s) => ({ ...s, visible: false }));
     };
 
     const onEnter = () => {
@@ -143,8 +133,6 @@ export function CustomCursor() {
       const ease = 0.1;
       ringX += (mouseX - ringX) * ease;
       ringY += (mouseY - ringY) * ease;
-      magX += (mouseX - magX) * 0.12;
-      magY += (mouseY - magY) * 0.12;
       ring.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
       animId = requestAnimationFrame(animate);
     };
@@ -166,7 +154,7 @@ export function CustomCursor() {
     };
   }, [spawnParticle]);
 
-  const { visible, hovering, clicking, imageHover } = state;
+  const { visible, clicking } = state;
 
   return (
     <>
@@ -196,64 +184,34 @@ export function CustomCursor() {
         })}
       </div>
 
-      {/* Magnifier — shown on image hover */}
-      <div
-        ref={magnifierRef}
-        className="pointer-events-none fixed left-0 top-0 z-[9999] hidden md:flex items-center justify-center"
-        style={{
-          width: "64px",
-          height: "64px",
-          borderRadius: "50%",
-          border: `2px solid ${imageHover ? "rgba(255,255,255,0.7)" : "transparent"}`,
-          background: imageHover ? "rgba(255,255,255,0.08)" : "transparent",
-          backdropFilter: imageHover ? "blur(0px)" : "none",
-          boxShadow: imageHover ? "0 0 0 1px rgba(255,255,255,0.15), inset 0 0 20px rgba(255,255,255,0.05)" : "none",
-          opacity: imageHover && visible ? 1 : 0,
-          transition: "opacity 0.25s, border-color 0.2s, background 0.2s, box-shadow 0.2s, width 0.3s cubic-bezier(0.22,1,0.36,1), height 0.3s cubic-bezier(0.22,1,0.36,1)",
-          willChange: "transform",
-        }}
-      >
-        {/* Crosshair lines */}
-        {imageHover && (
-          <>
-            <div style={{ position: "absolute", top: "50%", left: "8px", right: "8px", height: "1px", background: "rgba(255,255,255,0.4)", transform: "translateY(-50%)" }} />
-            <div style={{ position: "absolute", left: "50%", top: "8px", bottom: "8px", width: "1px", background: "rgba(255,255,255,0.4)", transform: "translateX(-50%)" }} />
-            {/* Zoom icon */}
-            <svg style={{ position: "absolute", bottom: "10px", right: "10px", width: "10px", height: "10px", opacity: 0.6 }} fill="none" viewBox="0 0 24 24" stroke="white">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
-            </svg>
-          </>
-        )}
-      </div>
-
       {/* Dot */}
       <div
         ref={cursorDotRef}
         className="pointer-events-none fixed left-0 top-0 z-[9999] hidden md:block"
         style={{
-          width: clicking ? "5px" : imageHover ? "6px" : "9px",
-          height: clicking ? "5px" : imageHover ? "6px" : "9px",
+          width: clicking ? "5px" : "9px",
+          height: clicking ? "5px" : "9px",
           borderRadius: "50%",
-          background: imageHover ? "rgba(255,255,255,0.9)" : "var(--teal)",
+          background: "var(--teal)",
           opacity: visible ? 1 : 0,
-          transition: "opacity 0.25s, width 0.15s cubic-bezier(0.22,1,0.36,1), height 0.15s cubic-bezier(0.22,1,0.36,1), background 0.2s",
+          transition: "opacity 0.25s, width 0.15s cubic-bezier(0.22,1,0.36,1), height 0.15s cubic-bezier(0.22,1,0.36,1)",
           willChange: "transform",
-          boxShadow: imageHover ? "0 0 8px rgba(255,255,255,0.6)" : "0 0 12px var(--glow), 0 0 24px var(--glow)",
+          boxShadow: "0 0 12px var(--glow), 0 0 24px var(--glow)",
         }}
       />
 
-      {/* Ring — hidden when image hover (magnifier takes over) */}
+      {/* Ring */}
       <div
         ref={cursorRingRef}
         className="pointer-events-none fixed left-0 top-0 z-[9998] hidden md:block"
         style={{
-          width: imageHover ? "0px" : hovering ? "56px" : clicking ? "26px" : "38px",
-          height: imageHover ? "0px" : hovering ? "56px" : clicking ? "26px" : "38px",
+          width: clicking ? "26px" : "38px",
+          height: clicking ? "26px" : "38px",
           borderRadius: "50%",
-          border: `1.5px solid ${hovering ? "var(--teal)" : "rgba(15,159,149,0.45)"}`,
-          background: hovering ? "rgba(15,159,149,0.07)" : "transparent",
-          opacity: visible && !imageHover ? 1 : 0,
-          transition: "opacity 0.25s, width 0.3s cubic-bezier(0.22,1,0.36,1), height 0.3s cubic-bezier(0.22,1,0.36,1), border-color 0.2s, background 0.2s",
+          border: "1.5px solid rgba(15,159,149,0.45)",
+          background: "transparent",
+          opacity: visible ? 1 : 0,
+          transition: "opacity 0.25s, width 0.3s cubic-bezier(0.22,1,0.36,1), height 0.3s cubic-bezier(0.22,1,0.36,1)",
           willChange: "transform",
         }}
       />
