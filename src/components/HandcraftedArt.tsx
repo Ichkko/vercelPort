@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useRef, useCallback } from "react";
-import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from "framer-motion";
+import React, { useState, useRef } from "react";
+import { motion, AnimatePresence, useSpring } from "framer-motion";
 import { useLanguage } from "./LanguageProvider";
 
 interface ArtPiece {
@@ -34,20 +34,9 @@ interface ArtCardProps {
 
 function ArtCard({ piece, lang, onClick, className = "", index }: ArtCardProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const mouseX = useMotionValue(0.5);
-  const mouseY = useMotionValue(0.5);
   const [hovered, setHovered] = useState(false);
 
-  const imgX = useSpring(useTransform(mouseX, [0, 1], [-12, 12]), { stiffness: 160, damping: 26 });
-  const imgY = useSpring(useTransform(mouseY, [0, 1], [-12, 12]), { stiffness: 160, damping: 26 });
   const imgScale = useSpring(hovered ? 1.14 : 1, { stiffness: 220, damping: 24 });
-
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = containerRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    mouseX.set((e.clientX - rect.left) / rect.width);
-    mouseY.set((e.clientY - rect.top) / rect.height);
-  }, [mouseX, mouseY]);
 
   return (
     <motion.div
@@ -57,9 +46,8 @@ function ArtCard({ piece, lang, onClick, className = "", index }: ArtCardProps) 
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: index * 0.07 }}
       className={`group relative cursor-pointer overflow-hidden rounded-xl border border-[var(--line)] bg-[var(--bg-elevated)] ${className}`}
-      onMouseMove={handleMouseMove}
       onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => { setHovered(false); mouseX.set(0.5); mouseY.set(0.5); }}
+      onMouseLeave={() => setHovered(false)}
       onClick={onClick}
       data-cursor-image
     >
@@ -69,7 +57,7 @@ function ArtCard({ piece, lang, onClick, className = "", index }: ArtCardProps) 
           src={piece.src}
           alt={piece.alt}
           className="h-full w-full object-cover"
-          style={{ scale: imgScale, x: imgX, y: imgY }}
+          style={{ scale: imgScale }}
           loading="lazy"
         />
       </div>

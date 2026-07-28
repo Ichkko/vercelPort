@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
-import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from "framer-motion";
+import { useState, useRef } from "react";
+import { motion, AnimatePresence, useSpring } from "framer-motion";
 import { useLanguage } from "./LanguageProvider";
 
 interface GalleryItem {
@@ -35,20 +35,9 @@ type Category = "all" | "drawing" | "craft" | "photo";
 /* ── Magnetic zoom card ── */
 function MagneticCard({ item, lang, onClick, index }: { item: GalleryItem; lang: string; onClick: () => void; index: number }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const mouseX = useMotionValue(0.5);
-  const mouseY = useMotionValue(0.5);
   const [hovered, setHovered] = useState(false);
 
-  const imgX = useSpring(useTransform(mouseX, [0, 1], [-10, 10]), { stiffness: 180, damping: 28 });
-  const imgY = useSpring(useTransform(mouseY, [0, 1], [-10, 10]), { stiffness: 180, damping: 28 });
   const imgScale = useSpring(hovered ? 1.15 : 1, { stiffness: 240, damping: 26 });
-
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = containerRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    mouseX.set((e.clientX - rect.left) / rect.width);
-    mouseY.set((e.clientY - rect.top) / rect.height);
-  }, [mouseX, mouseY]);
 
   const isTall = item.span === "tall";
   const isWide = item.span === "wide";
@@ -62,19 +51,18 @@ function MagneticCard({ item, lang, onClick, index }: { item: GalleryItem; lang:
       transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: index * 0.06 }}
       className={`group relative cursor-pointer overflow-hidden rounded-xl border border-[var(--line)] bg-[var(--bg-elevated)] ${isTall ? "row-span-2" : ""} ${isWide ? "col-span-2" : ""}`}
       style={{ aspectRatio: isTall ? undefined : isWide ? "2/1" : "1/1", minHeight: isTall ? "360px" : undefined }}
-      onMouseMove={handleMouseMove}
       onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => { setHovered(false); mouseX.set(0.5); mouseY.set(0.5); }}
+      onMouseLeave={() => setHovered(false)}
       onClick={onClick}
       data-cursor-image
     >
-      {/* Image with parallax zoom */}
+      {/* Image with zoom */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.img
           src={item.src}
           alt={item.alt}
           className="h-full w-full object-cover"
-          style={{ scale: imgScale, x: imgX, y: imgY }}
+          style={{ scale: imgScale }}
           loading="lazy"
         />
       </div>

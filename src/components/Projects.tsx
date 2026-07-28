@@ -1,13 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from "framer-motion";
+import { motion, AnimatePresence, useSpring } from "framer-motion";
 import { ExternalLink, GitBranch, Rocket, ShieldCheck, Code2 } from "lucide-react";
 import { projectsMeta, profile } from "@/data/portfolio";
 import { FadeIn } from "./FadeIn";
 import { useLanguage } from "./LanguageProvider";
 import { type TranslationKey } from "@/data/i18n";
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect } from "react";
 
 /* ── Magnetic zoom image on hover ── */
 interface ZoomImageProps {
@@ -18,34 +18,20 @@ interface ZoomImageProps {
 }
 
 function ZoomImage({ src, alt, className = "", sizes }: ZoomImageProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const mouseX = useMotionValue(0.5);
-  const mouseY = useMotionValue(0.5);
   const [hovered, setHovered] = useState(false);
 
-  const transformX = useSpring(useTransform(mouseX, [0, 1], [-8, 8]), { stiffness: 200, damping: 30 });
-  const transformY = useSpring(useTransform(mouseY, [0, 1], [-8, 8]), { stiffness: 200, damping: 30 });
   const scale = useSpring(hovered ? 1.12 : 1, { stiffness: 260, damping: 28 });
-
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = containerRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    mouseX.set((e.clientX - rect.left) / rect.width);
-    mouseY.set((e.clientY - rect.top) / rect.height);
-  }, [mouseX, mouseY]);
 
   return (
     <div
-      ref={containerRef}
       className={`overflow-hidden ${className}`}
-      onMouseMove={handleMouseMove}
       onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => { setHovered(false); mouseX.set(0.5); mouseY.set(0.5); }}
+      onMouseLeave={() => setHovered(false)}
       data-cursor-image
     >
       <motion.div
         className="relative h-full w-full"
-        style={{ scale, x: transformX, y: transformY }}
+        style={{ scale }}
       >
         <Image
           src={src}
