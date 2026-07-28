@@ -1,12 +1,15 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { FadeIn, ScaleIn } from "./FadeIn";
 import { useLanguage } from "./LanguageProvider";
 import { GrassBlades, LeafSprout } from "./PlantDecorations";
+import { useRef } from "react";
 
 export function Timeline() {
   const { t } = useLanguage();
+  const lineRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(lineRef, { once: true, margin: "-60px" });
 
   const timeline = [
     {
@@ -54,27 +57,71 @@ export function Timeline() {
       </FadeIn>
       <ScaleIn delay={0.1}>
         <div className="mt-7 overflow-x-auto pb-2">
-          <div className="relative min-w-[680px]">
+          <div ref={lineRef} className="relative min-w-[680px]">
+            {/* Static base line */}
             <div className="absolute left-[8%] right-[8%] top-3 h-px bg-stone-200 dark:bg-[var(--line)]" />
-            <div className="absolute left-[8%] right-[8%] top-3 h-px bg-gradient-to-r from-transparent via-[var(--teal)] to-transparent opacity-60" />
+            {/* Animated progress line */}
+            <motion.div
+              className="absolute left-[8%] top-3 h-px bg-gradient-to-r from-[var(--teal)] via-cyan-400 to-[var(--teal)] opacity-80"
+              initial={{ width: 0 }}
+              animate={isInView ? { width: "84%" } : { width: 0 }}
+              transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
+            />
             <div className="grid grid-cols-4 gap-4">
               {timeline?.map((item, i) => (
                 <motion.div
                   key={item?.year}
-                  initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                  whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                  initial={{ opacity: 0, y: 28, filter: "blur(6px)" }}
+                  whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                   viewport={{ once: true, margin: "-40px" }}
-                  transition={{ delay: i * 0.1, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                  className="relative pt-8 text-center"
+                  transition={{
+                    delay: i * 0.14,
+                    duration: 0.65,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                  whileHover={{ y: -4 }}
+                  className="relative pt-8 text-center cursor-default"
                 >
-                  <div className="absolute left-1/2 top-1.5 h-3.5 w-3.5 -translate-x-1/2 rounded-full border-[3px] border-[var(--teal)] bg-white shadow-[0_0_0_4px_var(--teal-soft)] dark:bg-[var(--bg-elevated)]" />
+                  {/* Animated dot */}
+                  <motion.div
+                    className="absolute left-1/2 top-1.5 -translate-x-1/2"
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{
+                      delay: i * 0.14 + 0.2,
+                      type: "spring",
+                      stiffness: 400,
+                      damping: 18,
+                    }}
+                  >
+                    <motion.div
+                      className="h-3.5 w-3.5 rounded-full border-[3px] border-[var(--teal)] bg-white shadow-[0_0_0_4px_var(--teal-soft)] dark:bg-[var(--bg-elevated)]"
+                      animate={{
+                        boxShadow: [
+                          "0 0 0 4px var(--teal-soft)",
+                          "0 0 0 8px rgba(8,145,178,0.15)",
+                          "0 0 0 4px var(--teal-soft)",
+                        ],
+                      }}
+                      transition={{ duration: 2.5, repeat: Infinity, delay: i * 0.4 }}
+                    />
+                  </motion.div>
                   <p className="text-sm font-bold text-[var(--teal)]">{item?.year}</p>
                   <h3 className="mt-2 text-sm font-semibold text-stone-900 dark:text-stone-100">
                     {item?.title}
                   </h3>
                   <ul className="mt-3 space-y-1 text-xs leading-relaxed text-stone-500 dark:text-[var(--muted)]">
-                    {item?.items?.map((line) => (
-                      <li key={line}>{line}</li>
+                    {item?.items?.map((line, li) => (
+                      <motion.li
+                        key={line}
+                        initial={{ opacity: 0, x: -8 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: i * 0.14 + li * 0.06 + 0.4, duration: 0.4 }}
+                      >
+                        {line}
+                      </motion.li>
                     ))}
                   </ul>
                 </motion.div>
