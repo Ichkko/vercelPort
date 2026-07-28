@@ -79,24 +79,26 @@ export function Hero() {
     <section
       ref={sectionRef}
       id="home"
-      className="relative scroll-mt-6 overflow-visible px-4 py-10 sm:px-5 md:px-10 md:py-20 lg:px-14 lg:py-24"
+      className="relative scroll-mt-6 overflow-visible px-5 py-12 sm:px-6 md:px-10 md:py-20 lg:px-14 lg:py-24"
     >
-      {/* ── Sprouting plants in hero corners ── */}
+      {/* ── Subtle background orbs ── */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+        <div className="orb-1 absolute -top-20 -right-20 h-[400px] w-[400px] rounded-full opacity-[0.06] blur-3xl" style={{ background: "radial-gradient(circle, var(--teal), transparent 70%)" }} />
+        <div className="orb-2 absolute -bottom-10 -left-10 h-[300px] w-[300px] rounded-full opacity-[0.05] blur-3xl" style={{ background: "radial-gradient(circle, var(--accent), transparent 70%)" }} />
         <LeafSprout
-          className="absolute bottom-0 right-4 w-16 h-28 opacity-70"
-          color="rgba(34,197,94,0.5)"
+          className="absolute bottom-0 right-4 w-14 h-24 opacity-60"
+          color="rgba(34,197,94,0.45)"
           delay={0.8}
         />
         <LeafSprout
-          className="absolute bottom-0 left-4 w-12 h-20 opacity-60"
-          color="rgba(74,222,128,0.45)"
+          className="absolute bottom-0 left-4 w-10 h-18 opacity-50"
+          color="rgba(74,222,128,0.4)"
           delay={1.2}
         />
         <SwayingPlant
-          className="absolute -bottom-2 right-[12%] opacity-50"
-          color="rgba(34,197,94,0.45)"
-          size={70}
+          className="absolute -bottom-2 right-[12%] opacity-45"
+          color="rgba(34,197,94,0.4)"
+          size={65}
           swayAmount={8}
           duration={3.5}
           delay={0.4}
@@ -105,12 +107,12 @@ export function Hero() {
 
       <motion.div
         style={{ opacity }}
-        className="relative mx-auto grid max-w-[1040px] items-center gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16"
+        className="relative mx-auto grid max-w-[1040px] items-center gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16"
       >
         {/* ── Left content ── */}
         <motion.div
           style={{ y: contentY }}
-          className="relative z-10 space-y-6"
+          className="relative z-10 space-y-7"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -118,14 +120,14 @@ export function Hero() {
           {/* Location badge */}
           <motion.div variants={itemVariants}>
             <motion.div
-              whileHover={{ scale: 1.04, y: -1 }}
+              whileHover={{ scale: 1.03, y: -1 }}
               transition={{ type: "spring", stiffness: 400, damping: 20 }}
-              className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--bg-elevated)] px-3.5 py-1.5 text-xs font-medium text-[var(--muted)] shadow-sm dark:bg-white/[0.04]"
+              className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--bg-elevated)] px-3.5 py-1.5 text-[11px] font-semibold text-[var(--muted)] shadow-sm dark:bg-white/[0.04]"
             >
               <MapPin className="h-3 w-3 text-[var(--teal)]" strokeWidth={2} />
               Ulaanbaatar, Mongolia
               <motion.span
-                className="ml-1 h-1.5 w-1.5 rounded-full bg-emerald-400"
+                className="ml-0.5 h-1.5 w-1.5 rounded-full bg-emerald-400"
                 animate={{
                   boxShadow: [
                     "0 0 4px rgba(52,211,153,0.6)",
@@ -140,10 +142,10 @@ export function Hero() {
 
           {/* Name */}
           <motion.div variants={itemVariants} className="space-y-1">
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--teal)]">
+            <p className="section-eyebrow">
               Hi, I&apos;m
             </p>
-            <h1 className="text-3xl font-extrabold leading-[1.08] tracking-tight text-[var(--ink)] sm:text-5xl lg:text-[54px]">
+            <h1 className="text-4xl font-extrabold leading-[1.06] tracking-tight text-[var(--ink)] sm:text-5xl lg:text-[56px]">
               Ichko
               <span className="shimmer-text">.</span>
             </h1>
@@ -158,7 +160,7 @@ export function Hero() {
               >
                 <Sparkles className="h-4 w-4 flex-shrink-0 text-[var(--teal)] opacity-70" strokeWidth={1.8} />
               </motion.div>
-              <span className="font-mono text-sm font-semibold text-[var(--ink-soft)] sm:text-lg">
+              <span className="font-mono text-sm font-semibold text-[var(--ink-soft)] sm:text-[17px]">
                 {displayed}
                 <span className="ml-0.5 inline-block h-[1.1em] w-[2px] translate-y-[2px] animate-pulse bg-[var(--teal)]" />
               </span>
@@ -167,7 +169,7 @@ export function Hero() {
 
           {/* Bio */}
           <motion.div variants={itemVariants}>
-            <p className="max-w-[480px] text-sm leading-[1.85] text-[var(--muted)] sm:text-[15.5px]">
+            <p className="max-w-[480px] text-[14.5px] leading-[1.9] text-[var(--muted)] sm:text-[15px]">
               Junior full-stack developer building{" "}
               <span className="font-semibold text-[var(--ink-soft)]">clean interfaces</span> and{" "}
               <span className="font-semibold text-[var(--ink-soft)]">reliable backends</span>.
@@ -181,10 +183,10 @@ export function Hero() {
             <div className="flex flex-col gap-3 pt-1 xs:flex-row xs:flex-wrap sm:flex-row sm:flex-wrap">
               <motion.a
                 href="#projects"
-                whileHover={{ y: -3, scale: 1.04, boxShadow: "0 12px 32px rgba(8,145,178,0.4)" }}
-                whileTap={{ scale: 0.96 }}
+                whileHover={{ y: -2, scale: 1.03, boxShadow: "0 10px 28px rgba(2,132,199,0.35)" }}
+                whileTap={{ scale: 0.97 }}
                 transition={{ type: "spring", stiffness: 400, damping: 18 }}
-                className="inline-flex items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-[#0891b2] via-[#06b6d4] to-[#0891b2] bg-[length:200%_auto] px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-cyan-500/25 transition-all hover:bg-right hover:shadow-cyan-500/40"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#0284c7] via-[#0ea5e9] to-[#0284c7] bg-[length:200%_auto] px-7 py-3 text-[13px] font-bold text-white shadow-lg shadow-sky-500/20 transition-all"
                 style={{ backgroundSize: "200% auto" }}
               >
                 {t("ctaProjects")}
@@ -200,22 +202,22 @@ export function Hero() {
                 target="_blank"
                 rel="noopener noreferrer"
                 download
-                whileHover={{ y: -3, scale: 1.04 }}
-                whileTap={{ scale: 0.96 }}
+                whileHover={{ y: -2, scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
                 transition={{ type: "spring", stiffness: 400, damping: 18 }}
-                className="inline-flex items-center justify-center gap-2.5 rounded-full border border-[var(--line)] bg-[var(--bg-elevated)] px-6 py-3.5 text-sm font-bold text-[var(--ink-soft)] shadow-sm transition-all hover:border-[var(--teal)] hover:text-[var(--teal)] dark:bg-white/[0.04] dark:hover:bg-[var(--teal-soft)]"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-[var(--line)] bg-[var(--bg-elevated)] px-6 py-3 text-[13px] font-bold text-[var(--ink-soft)] shadow-sm transition-all hover:border-[var(--teal)]/40 hover:text-[var(--teal)] dark:bg-white/[0.04]"
               >
                 {t("ctaCv")}
                 <Download className="h-4 w-4" strokeWidth={1.8} />
               </motion.a>
               <motion.div
-                whileHover={{ y: -3, scale: 1.04 }}
-                whileTap={{ scale: 0.96 }}
+                whileHover={{ y: -2, scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
                 transition={{ type: "spring", stiffness: 400, damping: 18 }}
               >
                 <Link
                   href="/about"
-                  className="inline-flex w-full items-center justify-center gap-2.5 rounded-full border border-[var(--teal)]/30 bg-[var(--teal-soft)] px-6 py-3.5 text-sm font-bold text-[var(--teal)] shadow-sm transition-all hover:border-[var(--teal)]/60 hover:shadow-[0_4px_16px_rgba(8,145,178,0.2)] sm:w-auto"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-[var(--teal)]/25 bg-[var(--teal-soft)] px-6 py-3 text-[13px] font-bold text-[var(--teal)] shadow-sm transition-all hover:border-[var(--teal)]/50 hover:shadow-[0_4px_16px_rgba(2,132,199,0.18)] sm:w-auto"
                 >
                   About me
                   <User className="h-4 w-4" strokeWidth={1.8} />
@@ -228,7 +230,7 @@ export function Hero() {
           <motion.div variants={itemVariants}>
             <motion.a
               href="#about"
-              className="inline-flex items-center gap-2.5 text-xs font-medium text-[var(--muted)] transition hover:text-[var(--teal)]"
+              className="inline-flex items-center gap-2 text-[11px] font-semibold text-[var(--muted)] transition hover:text-[var(--teal)]"
               whileHover={{ x: 2 }}
               transition={{ type: "spring", stiffness: 400, damping: 20 }}
             >
@@ -246,9 +248,8 @@ export function Hero() {
           {/* Vine decoration */}
           <FadeIn delay={0.3}>
             <VineDecoration
-              className="mt-1 opacity-50"
-              color="rgba(34,197,94,0.4)"
-              width={160}
+              className="mt-1 opacity-45"
+              color="rgba(34,197,94,0.38)"
             />
           </FadeIn>
         </motion.div>
