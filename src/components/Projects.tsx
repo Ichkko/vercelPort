@@ -6,6 +6,7 @@ import { ExternalLink, GitBranch, Rocket, ShieldCheck, Code2 } from "lucide-reac
 import { projectsMeta, profile } from "@/data/portfolio";
 import { FadeIn } from "./FadeIn";
 import { useLanguage } from "./LanguageProvider";
+import { type TranslationKey } from "@/data/i18n";
 import { useState, useRef, useCallback, useEffect } from "react";
 
 /* ── Magnetic zoom image on hover ── */
@@ -119,6 +120,165 @@ function ProjectSlideshow({ images, alt, aspectClass = "aspect-[16/9]" }: Slides
         </>
       )}
     </div>
+  );
+}
+
+/* ── Fold Card — unfolds open on hover like a physical card ── */
+interface FoldCardProps {
+  project: typeof projectsMeta[number];
+  idx: number;
+  t: (key: TranslationKey) => string;
+}
+
+function FoldCard({ project, idx, t }: FoldCardProps) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <motion.article
+      className="group relative flex flex-col overflow-hidden rounded-xl border border-[var(--line)] bg-[var(--bg-elevated)] cursor-pointer"
+      style={{ perspective: "1000px", transformStyle: "preserve-3d" }}
+      onHoverStart={() => setHovered(true)}
+      onHoverEnd={() => setHovered(false)}
+      animate={hovered ? "open" : "closed"}
+      initial="closed"
+      variants={{
+        closed: {
+          rotateX: 8,
+          scaleX: 0.94,
+          y: 6,
+          boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+        },
+        open: {
+          rotateX: 0,
+          scaleX: 1,
+          y: -6,
+          boxShadow: "0 28px 56px rgba(0,0,0,0.18)",
+        },
+      }}
+      transition={{ type: "spring", stiffness: 280, damping: 26 }}
+    >
+      {/* Issue number watermark */}
+      <span className="pointer-events-none absolute right-3 top-2 z-10 font-mono text-[48px] font-black leading-none text-[var(--ink)] opacity-[0.05] select-none">
+        {String(idx + 2).padStart(2, "0")}
+      </span>
+
+      {/* ── Top fold — image section that peels back ── */}
+      <motion.div
+        className="relative origin-top overflow-hidden"
+        animate={hovered ? "open" : "closed"}
+        variants={{
+          closed: {
+            height: "80px",
+            rotateX: -18,
+          },
+          open: {
+            height: "180px",
+            rotateX: 0,
+          },
+        }}
+        transition={{ type: "spring", stiffness: 260, damping: 28 }}
+        style={{ transformOrigin: "top center", transformStyle: "preserve-3d" }}
+      >
+        {/* Fold crease line */}
+        <motion.div
+          className="absolute bottom-0 left-0 right-0 z-20 h-[2px]"
+          animate={hovered ? { opacity: 0 } : { opacity: 1 }}
+          transition={{ duration: 0.2 }}
+          style={{
+            background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.15) 20%, rgba(255,255,255,0.35) 50%, rgba(255,255,255,0.15) 80%, transparent)",
+            boxShadow: "0 1px 3px rgba(0,0,0,0.3)",
+          }}
+        />
+        {/* Fold shadow overlay */}
+        <motion.div
+          className="absolute inset-0 z-10 pointer-events-none"
+          animate={hovered ? { opacity: 0 } : { opacity: 1 }}
+          transition={{ duration: 0.3 }}
+          style={{
+            background: "linear-gradient(to bottom, transparent 30%, rgba(0,0,0,0.45) 100%)",
+          }}
+        />
+        <div className="relative h-full w-full" data-cursor-image>
+          <Image
+            src={(project.images ?? [project.image])[0]}
+            alt={t(project.titleKey)}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 33vw"
+          />
+        </div>
+      </motion.div>
+
+      {/* ── Bottom fold — content section that unfolds down ── */}
+      <motion.div
+        className="flex flex-1 flex-col origin-top overflow-hidden"
+        animate={hovered ? "open" : "closed"}
+        variants={{
+          closed: {
+            height: "72px",
+            rotateX: 12,
+            opacity: 0.7,
+          },
+          open: {
+            height: "auto",
+            rotateX: 0,
+            opacity: 1,
+          },
+        }}
+        transition={{ type: "spring", stiffness: 240, damping: 28, delay: 0.04 }}
+        style={{ transformOrigin: "top center", transformStyle: "preserve-3d" }}
+      >
+        <div className="flex flex-1 flex-col p-5">
+          {/* Category */}
+          <div className="mb-2 flex items-center gap-2">
+            <span className="h-px w-4 bg-[var(--teal)] opacity-60" />
+            <span className="font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-[var(--teal)]">
+              {project?.tags?.[0] ?? "Project"}
+            </span>
+          </div>
+
+          <h3 className="text-base font-extrabold leading-snug tracking-tight text-[var(--ink)]">
+            {t(project?.titleKey)}
+          </h3>
+
+          {/* Description — only visible when unfolded */}
+          <motion.div
+            animate={hovered ? { opacity: 1, height: "auto" } : { opacity: 0, height: 0 }}
+            transition={{ duration: 0.25, delay: hovered ? 0.1 : 0 }}
+            className="overflow-hidden"
+          >
+            <p className="mt-2 text-xs leading-relaxed text-[var(--muted)]">
+              {t(project?.descKey)}
+            </p>
+
+            {/* Tags */}
+            <div className="mt-3 flex flex-wrap gap-1.5">
+              {project?.tags?.slice(0, 3).map((tag) => (
+                <span key={tag} className="border border-[var(--line)] px-2 py-0.5 font-mono text-[9px] font-semibold uppercase tracking-widest text-[var(--muted)]">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Links */}
+          <motion.div
+            className="flex items-center justify-between gap-3 border-t border-[var(--line)] pt-4"
+            animate={hovered ? { opacity: 1, marginTop: "auto" } : { opacity: 0.5, marginTop: "8px" }}
+            transition={{ duration: 0.2 }}
+          >
+            <a href={project?.liveUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-[var(--teal)] transition hover:opacity-70">
+              <ExternalLink className="h-3.5 w-3.5" strokeWidth={2} />
+              {t("liveDemo")}
+            </a>
+            <a href={project?.githubUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--muted)] transition hover:text-[var(--ink)]">
+              <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.486 2 12.021c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.009-.866-.013-1.7-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.621.069-.608.069-.608 1.004.071 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.339-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.026 2.747-1.026.546 1.378.203 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.944.359.31.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.021C22 6.486 17.523 2 12 2Z"/></svg>
+              {t("github")}
+            </a>
+          </motion.div>
+        </div>
+      </motion.div>
+    </motion.article>
   );
 }
 
@@ -241,75 +401,11 @@ export function Projects() {
         </FadeIn>
       )}
 
-      {/* ── Rest — magazine grid ── */}
+      {/* ── Rest — folding card grid ── */}
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {rest?.map((project, idx) => (
           <FadeIn key={project?.id} delay={idx * 0.06}>
-            <motion.article
-              className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-[var(--line)] bg-[var(--bg-elevated)]"
-              whileHover={{ y: -5, boxShadow: "0 24px 48px rgba(0,0,0,0.12)" }}
-              transition={{ type: "spring", stiffness: 320, damping: 24 }}
-            >
-              {/* Issue number */}
-              <span className="pointer-events-none absolute right-3 top-2 z-10 font-mono text-[48px] font-black leading-none text-[var(--ink)] opacity-[0.05] select-none">
-                {String(idx + 2).padStart(2, "0")}
-              </span>
-
-              {/* Image with zoom */}
-              <div className="relative aspect-[16/9] overflow-hidden" data-cursor-image>
-                <ZoomImage
-                  src={(project.images ?? [project.image])[0]}
-                  alt={t(project.titleKey)}
-                  className="absolute inset-0 h-full w-full"
-                />
-                {/* Hover overlay */}
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"
-                  initial={{ opacity: 0 }}
-                  whileHover={{ opacity: 1 }}
-                  transition={{ duration: 0.3 }}
-                />
-              </div>
-
-              {/* Content */}
-              <div className="flex flex-1 flex-col p-5">
-                {/* Category */}
-                <div className="mb-2 flex items-center gap-2">
-                  <span className="h-px w-4 bg-[var(--teal)] opacity-60" />
-                  <span className="font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-[var(--teal)]">
-                    {project?.tags?.[0] ?? "Project"}
-                  </span>
-                </div>
-
-                <h3 className="text-base font-extrabold leading-snug tracking-tight text-[var(--ink)]">
-                  {t(project?.titleKey)}
-                </h3>
-                <p className="mt-2 text-xs leading-relaxed text-[var(--muted)]">
-                  {t(project?.descKey)}
-                </p>
-
-                {/* Tags */}
-                <div className="mt-3 flex flex-wrap gap-1.5">
-                  {project?.tags?.slice(0, 3).map((tag) => (
-                    <span key={tag} className="border border-[var(--line)] px-2 py-0.5 font-mono text-[9px] font-semibold uppercase tracking-widest text-[var(--muted)]">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Links */}
-                <div className="mt-auto flex items-center justify-between gap-3 border-t border-[var(--line)] pt-4">
-                  <a href={project?.liveUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-[var(--teal)] transition hover:opacity-70">
-                    <ExternalLink className="h-3.5 w-3.5" strokeWidth={2} />
-                    {t("liveDemo")}
-                  </a>
-                  <a href={project?.githubUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--muted)] transition hover:text-[var(--ink)]">
-                    <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.486 2 12.021c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.009-.866-.013-1.7-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.621.069-.608.069-.608 1.004.071 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.339-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.026 2.747-1.026.546 1.378.203 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.944.359.31.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.021C22 6.486 17.523 2 12 2Z"/></svg>
-                    {t("github")}
-                  </a>
-                </div>
-              </div>
-            </motion.article>
+            <FoldCard project={project} idx={idx} t={t} />
           </FadeIn>
         ))}
       </div>
@@ -317,7 +413,7 @@ export function Projects() {
       {/* ── Metrics — editorial strip ── */}
       <FadeIn delay={0.1}>
         <div className="mt-12 grid grid-cols-2 gap-px border border-[var(--line)] sm:grid-cols-4">
-          {metrics?.map((metric, i) => (
+          {metrics?.map((metric) => (
             <motion.div
               key={metric?.label}
               whileHover={{ backgroundColor: "var(--teal-soft)" }}
