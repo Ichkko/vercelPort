@@ -230,47 +230,38 @@ export function About() {
         </div>
       </SlideIn>
 
-      {/* Text motion flowing layout */}
-      <div className="flex flex-wrap items-center gap-x-3 gap-y-2.5">
-        {hobbies.map((hobby, i) => {
-          const Icon = hobby.icon;
-          return (
-            <motion.span
-              key={hobby.titleKey}
-              initial={{ opacity: 0, y: 14, filter: "blur(4px)" }}
-              whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.09, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-              whileHover={{ y: -2, transition: { duration: 0.2, ease: "easeOut" } }}
-              className="flex items-center gap-1.5 cursor-default"
-            >
-              <motion.span
-                whileHover={{ scale: 1.25, rotate: 8 }}
-                transition={{ type: "spring", stiffness: 400, damping: 12 }}
-                className="inline-flex"
-              >
-                <Icon size={14} className="shrink-0 text-[var(--teal)] opacity-70" />
-              </motion.span>
-              <motion.span
-                className="text-[0.88rem] font-medium text-[var(--ink)] opacity-75"
-                whileHover={{ opacity: 1, transition: { duration: 0.15 } }}
-              >
-                {t(hobby.titleKey)}
-              </motion.span>
-              {i < hobbies.length - 1 && (
-                <motion.span
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 0.2 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.09 + 0.3, duration: 0.4 }}
-                  className="ml-1.5 text-[var(--ink)] select-none"
+      {/* Dark marquee ticker */}
+      <div className="relative overflow-hidden rounded-sm" style={{ background: "linear-gradient(90deg, #0d0d18 0%, #12101e 50%, #0d0d18 100%)", borderTop: "1px solid rgba(139,92,246,0.15)", borderBottom: "1px solid rgba(139,92,246,0.15)" }}>
+        {/* Left fade */}
+        <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-12" style={{ background: "linear-gradient(to right, #0d0d18, transparent)" }} />
+        {/* Right fade */}
+        <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-12" style={{ background: "linear-gradient(to left, #0d0d18, transparent)" }} />
+        {/* Scrolling track */}
+        <div className="flex py-3" style={{ width: "max-content" }}>
+          <motion.div
+            className="flex items-center"
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{ duration: 22, ease: "linear", repeat: Infinity }}
+            style={{ width: "max-content" }}
+          >
+            {[...hobbies, ...hobbies].map((hobby, i) => (
+              <span key={i} className="flex items-center">
+                <span
+                  className="whitespace-nowrap px-6 text-[0.7rem] font-bold uppercase tracking-[0.22em]"
+                  style={{ color: "rgba(167,139,250,0.75)", letterSpacing: "0.22em" }}
                 >
-                  ·
-                </motion.span>
-              )}
-            </motion.span>
-          );
-        })}
+                  {t(hobby.titleKey)}
+                </span>
+                <span
+                  className="text-[0.6rem]"
+                  style={{ color: "rgba(139,92,246,0.5)" }}
+                >
+                  ●
+                </span>
+              </span>
+            ))}
+          </motion.div>
+        </div>
       </div>
 
       {/* ── Favorite music & movies tags ── */}
