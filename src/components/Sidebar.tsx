@@ -35,20 +35,20 @@ export function Sidebar({ active }: { active: string }) {
 
   return (
     <aside
-      className="fixed inset-y-0 left-0 z-30 hidden w-[272px] shrink-0 flex-col border-r border-[rgba(168,85,247,0.1)] bg-[rgba(6,6,14,0.96)] px-6 py-8 backdrop-blur-2xl lg:flex"
-      style={{ boxShadow: "1px 0 0 rgba(168,85,247,0.08), 6px 0 40px rgba(0,0,0,0.6)" }}
+      className="fixed inset-y-0 left-0 z-30 hidden w-[272px] shrink-0 flex-col border-r border-[var(--line)] bg-[var(--bg-panel)] px-6 py-8 backdrop-blur-2xl lg:flex dark:bg-[rgba(5,10,18,0.92)]"
+      style={{ boxShadow: "1px 0 0 var(--line), 6px 0 32px rgba(2,132,199,0.03)" }}
     >
       {/* ── Profile ── */}
       <div className="flex flex-col items-center text-center">
         <div className="relative mb-1">
           <div
-            className="absolute -inset-[3px] rounded-full opacity-70 blur-lg"
-            style={{ background: "linear-gradient(135deg, rgba(124,58,237,0.7), rgba(236,72,153,0.4))" }}
+            className="absolute -inset-[3px] rounded-full opacity-60 blur-lg"
+            style={{ background: "linear-gradient(135deg, rgba(2,132,199,0.6), rgba(109,40,217,0.35))" }}
             aria-hidden
           />
           <div
             className="absolute -inset-[1.5px] rounded-full"
-            style={{ background: "linear-gradient(135deg, rgba(124,58,237,0.6), rgba(236,72,153,0.35))", opacity: 0.7 }}
+            style={{ background: "linear-gradient(135deg, rgba(2,132,199,0.5), rgba(109,40,217,0.3))", opacity: 0.6 }}
             aria-hidden
           />
           <Image
@@ -60,20 +60,16 @@ export function Sidebar({ active }: { active: string }) {
             priority
           />
           {/* Online dot */}
-          <span className="absolute bottom-0.5 right-0.5 h-3 w-3 rounded-full border-2 border-[rgba(6,6,14,0.96)] bg-[var(--neon)]" style={{ boxShadow: "0 0 8px rgba(168,85,247,0.8)" }} />
+          <span className="absolute bottom-0.5 right-0.5 h-3 w-3 rounded-full border-2 border-[var(--bg-panel)] bg-emerald-400 dark:border-[rgba(5,10,18,0.92)]" />
         </div>
         <h2 className="mt-3 text-[15px] font-bold tracking-tight text-[var(--ink)]">
           {profile.name}
         </h2>
-        <p className="mt-0.5 font-mono text-[11px] font-medium text-[var(--neon)] opacity-90">{t("role")}</p>
+        <p className="mt-0.5 font-mono text-[11px] font-medium text-[var(--teal)] opacity-90">{t("role")}</p>
         
         {/* Status badge */}
-        <div className="mt-2.5 inline-flex items-center gap-1.5 rounded-full border border-[rgba(168,85,247,0.2)] bg-[rgba(168,85,247,0.08)] px-2.5 py-1 text-[10px] font-semibold text-[var(--neon)]">
-          <motion.span
-            className="h-1.5 w-1.5 rounded-full bg-[var(--neon)]"
-            animate={{ opacity: [1, 0.4, 1] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-          />
+        <div className="mt-2.5 inline-flex items-center gap-1.5 rounded-full border border-emerald-400/20 bg-emerald-400/8 px-2.5 py-1 text-[10px] font-semibold text-emerald-500 dark:text-emerald-400">
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
           Available for work
         </div>
       </div>
@@ -94,32 +90,28 @@ export function Sidebar({ active }: { active: string }) {
                   href={link.href}
                   className={`relative flex items-center gap-3 rounded-[10px] px-3 py-2.5 text-[13px] font-medium transition-all duration-200 ${
                     isActive
-                      ? "text-[var(--neon)]"
-                      : "text-[var(--muted)] hover:bg-[rgba(168,85,247,0.08)] hover:text-[var(--ink-soft)]"
+                      ? "text-[var(--teal)]"
+                      : "text-[var(--muted)] hover:bg-[var(--teal-soft)] hover:text-[var(--ink-soft)]"
                   }`}
                 >
                   {isActive && (
                     <motion.span
                       layoutId="nav-pill"
-                      className="absolute inset-0 rounded-[10px] bg-[rgba(168,85,247,0.1)]"
-                      style={{ boxShadow: "inset 0 0 0 1px rgba(168,85,247,0.15)" }}
+                      className="absolute inset-0 rounded-[10px] bg-[var(--teal-soft)]"
+                      style={{ boxShadow: "inset 0 0 0 1px rgba(2,132,199,0.12)" }}
                       transition={{ type: "spring", stiffness: 380, damping: 32 }}
                     />
                   )}
                   <span className="relative z-10 flex items-center gap-3">
                     {Icon && (
-                      <span className={`flex h-7 w-7 items-center justify-center rounded-[7px] transition-colors ${isActive ? "bg-gradient-to-br from-[#7c3aed] to-[#a855f7] text-white shadow-[0_0_12px_rgba(168,85,247,0.4)]" : "bg-[rgba(120,120,200,0.08)] text-[var(--muted)]"}`}>
+                      <span className={`flex h-7 w-7 items-center justify-center rounded-[7px] transition-colors ${isActive ? "bg-[var(--teal)] text-white" : "bg-[var(--line)] text-[var(--muted)]"}`}>
                         <Icon className="h-3.5 w-3.5" strokeWidth={1.8} />
                       </span>
                     )}
                     {t(link.key)}
                   </span>
                   {isActive && (
-                    <motion.span
-                      className="relative z-10 ml-auto h-1.5 w-1.5 rounded-full bg-[var(--neon)]"
-                      animate={{ opacity: [1, 0.5, 1] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
-                    />
+                    <span className="relative z-10 ml-auto h-1.5 w-1.5 rounded-full bg-[var(--teal)]" />
                   )}
                 </a>
               </li>
@@ -129,15 +121,15 @@ export function Sidebar({ active }: { active: string }) {
           <li>
             <Link
               href="/portfolio"
-              className="relative flex items-center gap-3 rounded-[10px] px-3 py-2.5 text-[13px] font-medium text-[var(--muted)] transition-all duration-200 hover:bg-[rgba(168,85,247,0.08)] hover:text-[var(--ink-soft)]"
+              className="relative flex items-center gap-3 rounded-[10px] px-3 py-2.5 text-[13px] font-medium text-[var(--muted)] transition-all duration-200 hover:bg-[var(--teal-soft)] hover:text-[var(--ink-soft)]"
             >
               <span className="flex items-center gap-3">
-                <span className="flex h-7 w-7 items-center justify-center rounded-[7px] bg-[rgba(120,120,200,0.08)] text-[var(--muted)]">
+                <span className="flex h-7 w-7 items-center justify-center rounded-[7px] bg-[var(--line)] text-[var(--muted)]">
                   <FolderKanban className="h-3.5 w-3.5" strokeWidth={1.8} />
                 </span>
                 Portfolio
               </span>
-              <span className="ml-auto rounded-full bg-gradient-to-r from-[#7c3aed] to-[#ec4899] px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white">
+              <span className="ml-auto rounded-full bg-[var(--teal)] px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white">
                 New
               </span>
             </Link>
@@ -146,7 +138,7 @@ export function Sidebar({ active }: { active: string }) {
       </nav>
 
       {/* ── Footer ── */}
-      <div className="mt-auto space-y-3 border-t border-[rgba(168,85,247,0.1)] pt-5">
+      <div className="mt-auto space-y-3 border-t border-[var(--line)] pt-5">
         {/* Social links */}
         <div className="flex items-center justify-center gap-1">
           {[
@@ -165,7 +157,7 @@ export function Sidebar({ active }: { active: string }) {
               target={item.label !== "Email" && item.label !== "CV" ? "_blank" : undefined}
               rel={item.label !== "Email" && item.label !== "CV" ? "noreferrer" : undefined}
               download={item.label === "CV" ? true : undefined}
-              className="flex h-8 w-8 items-center justify-center rounded-[8px] text-[var(--muted)] transition-all hover:bg-[rgba(168,85,247,0.1)] hover:text-[var(--neon)]"
+              className="flex h-8 w-8 items-center justify-center rounded-[8px] text-[var(--muted)] transition-all hover:bg-[var(--teal-soft)] hover:text-[var(--teal)]"
               aria-label={item.label}
             >
               {item.icon}
@@ -179,16 +171,16 @@ export function Sidebar({ active }: { active: string }) {
         <button
           type="button"
           onClick={toggleTheme}
-          className="flex w-full items-center justify-between rounded-[10px] border border-[rgba(168,85,247,0.12)] bg-[rgba(168,85,247,0.05)] px-3 py-2.5 text-[12px] font-semibold transition-all hover:border-[rgba(168,85,247,0.25)]"
+          className="flex w-full items-center justify-between rounded-[10px] border border-[var(--line)] bg-[var(--bg-elevated)] px-3 py-2.5 text-[12px] font-semibold transition-all hover:border-[var(--teal)]/25 dark:bg-white/[0.03]"
           aria-label="Toggle theme"
         >
           <span className="flex items-center gap-2 text-[var(--muted)]">
             <span>{theme === "dark" ? "🌙" : "☀️"}</span>
             {theme === "dark" ? t("themeDark") : t("themeLight")}
           </span>
-          <span className="relative h-5 w-9 rounded-full bg-[rgba(168,85,247,0.15)] p-0.5">
+          <span className="relative h-5 w-9 rounded-full bg-[var(--teal-soft)] p-0.5">
             <motion.span
-              className="block h-4 w-4 rounded-full bg-gradient-to-r from-[#7c3aed] to-[#a855f7] shadow-sm"
+              className="block h-4 w-4 rounded-full bg-[var(--teal)] shadow-sm"
               animate={{ x: theme === "dark" ? 16 : 0 }}
               transition={{ type: "spring", stiffness: 420, damping: 28 }}
             />
