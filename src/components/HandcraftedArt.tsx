@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "./LanguageProvider";
 
@@ -81,12 +81,43 @@ export function HandcraftedArt() {
   const [isDragging, setIsDragging] = useState(false);
   const [dragStartX, setDragStartX] = useState(0);
 
+  // Mouse-move carousel rotation
+  const mouseDeltaRef = useRef(0);
+  const lastMouseXRef = useRef<number | null>(null);
+  const activeIndexRef = useRef(activeIndex);
+  activeIndexRef.current = activeIndex;
+
   const goTo = useCallback((index: number) => {
     setActiveIndex(Math.max(0, Math.min(artworks.length - 1, index)));
   }, []);
 
-  const prev = useCallback(() => goTo(activeIndex - 1), [activeIndex, goTo]);
-  const next = useCallback(() => goTo(activeIndex + 1), [activeIndex, goTo]);
+  const prev = useCallback(() => goTo(activeIndexRef.current - 1), [goTo]);
+  const next = useCallback(() => goTo(activeIndexRef.current + 1), [goTo]);
+
+  // Mouse move handler on the carousel stage
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    if (lastMouseXRef.current === null) {
+      lastMouseXRef.current = e.clientX;
+      return;
+    }
+    const delta = e.clientX - lastMouseXRef.current;
+    lastMouseXRef.current = e.clientX;
+    mouseDeltaRef.current += delta;
+
+    const threshold = 80;
+    if (mouseDeltaRef.current > threshold) {
+      mouseDeltaRef.current = 0;
+      goTo(activeIndexRef.current - 1);
+    } else if (mouseDeltaRef.current < -threshold) {
+      mouseDeltaRef.current = 0;
+      goTo(activeIndexRef.current + 1);
+    }
+  }, [goTo]);
+
+  const handleMouseLeaveStage = useCallback(() => {
+    lastMouseXRef.current = null;
+    mouseDeltaRef.current = 0;
+  }, []);
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
@@ -165,9 +196,10 @@ export function HandcraftedArt() {
         <div
           className="relative mx-auto select-none"
           style={{ height: "420px", perspective: "1200px", perspectiveOrigin: "50% 50%" }}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeaveStage}
           onMouseDown={handleDragStart}
           onMouseUp={handleDragEnd}
-          onMouseLeave={() => setIsDragging(false)}
           onTouchStart={handleDragStart}
           onTouchEnd={handleDragEnd}
         >
