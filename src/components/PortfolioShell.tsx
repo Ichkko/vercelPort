@@ -343,7 +343,7 @@ export function PortfolioShell() {
               </div>
             </section>
 
-            {/* Professional Experience / Timeline */}
+            {/* Professional Experience */}
             <section id="pro-experience" className="scroll-mt-8">
               <div className="section-panel px-4 py-10 sm:px-5 md:px-10 lg:px-14 sm:py-12">
                 <div className="mx-auto max-w-[1040px]">
@@ -356,7 +356,6 @@ export function PortfolioShell() {
             <section id="pro-testimonials" className="scroll-mt-8">
               <div className="section-panel px-4 py-10 sm:px-5 md:px-10 lg:px-14 sm:py-12">
                 <div className="mx-auto max-w-[1040px]">
- 
                 </div>
               </div>
             </section>

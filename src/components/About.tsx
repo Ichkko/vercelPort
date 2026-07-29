@@ -27,10 +27,9 @@ export function About() {
     color: "from-rose-400/20 to-pink-400/10",
     iconColor: "text-rose-400",
     iconBg: "bg-rose-400/10",
-    image: "/assets/images/ae8e4a74-9975-4ea3-be2c-67f1ef341d62-1785237815157.jpg",
-    imageAlt: "Colorful art supplies with sketchbook and pencils on a wooden table",
-    overlayFrom: "from-rose-900/80",
-    overlayTo: "to-pink-900/40"
+    pillBg: "bg-rose-500",
+    pillText: "text-white",
+    arrowBg: "bg-rose-400",
   },
   {
     icon: Scissors,
@@ -39,10 +38,9 @@ export function About() {
     color: "from-amber-400/20 to-orange-400/10",
     iconColor: "text-amber-400",
     iconBg: "bg-amber-400/10",
-    image: "/assets/images/08932f43-7061-44ae-b148-f30698d826ad-1785237867985.jpg",
-    imageAlt: "Handmade craft supplies including scissors, thread, and paper on a table",
-    overlayFrom: "from-amber-900/80",
-    overlayTo: "to-orange-900/40"
+    pillBg: "bg-amber-500",
+    pillText: "text-white",
+    arrowBg: "bg-amber-400",
   },
   {
     icon: Music,
@@ -51,10 +49,9 @@ export function About() {
     color: "from-violet-400/20 to-purple-400/10",
     iconColor: "text-violet-400",
     iconBg: "bg-violet-400/10",
-    image: "https://images.unsplash.com/photo-1642784354054-e57c3be5d22e",
-    imageAlt: "Headphones resting on a vinyl record with soft purple lighting",
-    overlayFrom: "from-violet-900/80",
-    overlayTo: "to-purple-900/40"
+    pillBg: "bg-violet-600",
+    pillText: "text-white",
+    arrowBg: "bg-violet-400",
   },
   {
     icon: Film,
@@ -63,10 +60,9 @@ export function About() {
     color: "from-cyan-400/20 to-teal-400/10",
     iconColor: "text-cyan-400",
     iconBg: "bg-cyan-400/10",
-    image: "https://images.unsplash.com/photo-1643753072729-d54252008db0",
-    imageAlt: "Cinema theater seats with a bright movie screen in the background",
-    overlayFrom: "from-cyan-900/80",
-    overlayTo: "to-teal-900/40"
+    pillBg: "bg-cyan-600",
+    pillText: "text-white",
+    arrowBg: "bg-cyan-400",
   },
   {
     icon: Camera,
@@ -75,10 +71,9 @@ export function About() {
     color: "from-emerald-400/20 to-green-400/10",
     iconColor: "text-emerald-400",
     iconBg: "bg-emerald-400/10",
-    image: "https://images.unsplash.com/photo-1701120288870-5fa8fb997c19",
-    imageAlt: "DSLR camera on a wooden surface with a blurred nature background",
-    overlayFrom: "from-emerald-900/80",
-    overlayTo: "to-green-900/40"
+    pillBg: "bg-emerald-600",
+    pillText: "text-white",
+    arrowBg: "bg-emerald-400",
   },
   {
     icon: Heart,
@@ -87,10 +82,9 @@ export function About() {
     color: "from-sky-400/20 to-blue-400/10",
     iconColor: "text-sky-400",
     iconBg: "bg-sky-400/10",
-    image: "https://images.unsplash.com/photo-1576603233026-571280f1c3ec",
-    imageAlt: "Aerial view of a winding mountain road surrounded by lush green forest",
-    overlayFrom: "from-sky-900/80",
-    overlayTo: "to-blue-900/40"
+    pillBg: "bg-blue-600",
+    pillText: "text-white",
+    arrowBg: "bg-blue-400",
   }] as
   const;
 
@@ -236,53 +230,38 @@ export function About() {
         </div>
       </SlideIn>
 
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {hobbies.map((hobby, i) => {
-          const Icon = hobby.icon;
-          return (
-            <motion.div
-              key={hobby.titleKey}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.07, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-              whileHover={{ y: -6, scale: 1.02 }}
-              className="group relative overflow-hidden rounded-[20px] border border-[var(--line)] shadow-md transition-shadow hover:shadow-xl dark:border-white/[0.07]"
-              style={{ minHeight: 200 }}>
-              
-              {/* Background image */}
-              <Image
-                src={hobby.image}
-                alt={hobby.imageAlt}
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
-              
-
-              {/* Gradient overlay */}
-              <div
-                className={`absolute inset-0 bg-gradient-to-t ${hobby.overlayFrom} ${hobby.overlayTo} opacity-90 transition-opacity duration-300 group-hover:opacity-95`} />
-              
-
-              {/* Content */}
-              <div className="relative z-10 flex h-full flex-col justify-end p-5">
-                {/* Icon badge */}
+      {/* Dark marquee ticker */}
+      <div className="relative overflow-hidden rounded-sm" style={{ background: "linear-gradient(90deg, #0d0d18 0%, #12101e 50%, #0d0d18 100%)", borderTop: "1px solid rgba(139,92,246,0.15)", borderBottom: "1px solid rgba(139,92,246,0.15)" }}>
+        {/* Left fade */}
+        <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-12" style={{ background: "linear-gradient(to right, #0d0d18, transparent)" }} />
+        {/* Right fade */}
+        <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-12" style={{ background: "linear-gradient(to left, #0d0d18, transparent)" }} />
+        {/* Scrolling track */}
+        <div className="flex py-3" style={{ width: "max-content" }}>
+          <motion.div
+            className="flex items-center"
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{ duration: 22, ease: "linear", repeat: Infinity }}
+            style={{ width: "max-content" }}
+          >
+            {[...hobbies, ...hobbies].map((hobby, i) => (
+              <span key={i} className="flex items-center">
                 <span
-                  className={`mb-3 flex h-10 w-10 items-center justify-center rounded-[10px] backdrop-blur-sm ${hobby.iconBg} border border-white/10`}>
-                  
-                  <Icon className={`h-5 w-5 ${hobby.iconColor}`} strokeWidth={1.8} />
-                </span>
-
-                <p className="text-base font-bold leading-tight text-white drop-shadow">
+                  className="whitespace-nowrap px-6 text-[0.7rem] font-bold uppercase tracking-[0.22em]"
+                  style={{ color: "rgba(167,139,250,0.75)", letterSpacing: "0.22em" }}
+                >
                   {t(hobby.titleKey)}
-                </p>
-                <p className="mt-1.5 text-[12.5px] leading-relaxed text-white/75">
-                  {t(hobby.descKey)}
-                </p>
-              </div>
-            </motion.div>);
-
-        })}
+                </span>
+                <span
+                  className="text-[0.6rem]"
+                  style={{ color: "rgba(139,92,246,0.5)" }}
+                >
+                  ●
+                </span>
+              </span>
+            ))}
+          </motion.div>
+        </div>
       </div>
 
       {/* ── Favorite music & movies tags ── */}

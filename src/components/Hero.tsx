@@ -14,7 +14,6 @@ const roles = [
   "Full Stack Developer",
   "Spring Boot Engineer",
   "Next.js Developer",
-
 ];
 
 export function Hero() {
