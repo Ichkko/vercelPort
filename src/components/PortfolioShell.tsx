@@ -13,7 +13,6 @@ import { FloatingDotNav } from "./FloatingDotNav";
 import { LanguageToggle } from "./LanguageToggle";
 import { useTheme } from "./ThemeProvider";
 import { useLanguage } from "./LanguageProvider";
-import { SwayingPlant, FloatingLeaf, GrassBlades } from "./PlantDecorations";
 import { Gallery } from "./Gallery";
 import { CurrentlyVibing } from "./CurrentlyVibing";
 import { AmbientPlayer } from "./AmbientPlayer";
@@ -85,118 +84,29 @@ export function PortfolioShell() {
 
       {/* Background layers */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden" aria-hidden>
-        <div className="dot-grid absolute inset-0 opacity-50 dark:opacity-30" />
+        <div className="dot-grid absolute inset-0 opacity-40" />
         <div
-          className="orb-1 absolute -right-40 -top-40 h-[650px] w-[650px] rounded-full"
+          className="orb-1 absolute -right-40 -top-40 h-[700px] w-[700px] rounded-full"
           style={{
-            background: "radial-gradient(circle, rgba(2,132,199,0.18) 0%, rgba(14,165,233,0.08) 40%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(124,58,237,0.22) 0%, rgba(168,85,247,0.08) 40%, transparent 70%)",
             filter: "blur(90px)",
           }}
         />
         <div
-          className="orb-2 absolute -bottom-48 -left-32 h-[550px] w-[550px] rounded-full"
+          className="orb-2 absolute -bottom-48 -left-32 h-[600px] w-[600px] rounded-full"
           style={{
-            background: "radial-gradient(circle, rgba(109,40,217,0.14) 0%, rgba(167,139,250,0.06) 50%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(236,72,153,0.16) 0%, rgba(236,72,153,0.05) 50%, transparent 70%)",
             filter: "blur(100px)",
           }}
         />
         <div
-          className="orb-3 absolute left-1/2 top-1/3 h-[450px] w-[450px] -translate-x-1/2 rounded-full"
+          className="orb-3 absolute left-1/2 top-1/3 h-[500px] w-[500px] -translate-x-1/2 rounded-full"
           style={{
-            background: "radial-gradient(circle, rgba(2,132,199,0.06) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(34,211,238,0.05) 0%, transparent 70%)",
             filter: "blur(110px)",
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[var(--bg)] opacity-50" />
-
-        {/* ── Plant corner decorations ── */}
-        {/* Bottom-left tall plant */}
-        <SwayingPlant
-          className="absolute bottom-0 left-0"
-          color="rgba(34,197,94,0.22)"
-          size={110}
-          swayAmount={7}
-          duration={4.2}
-          delay={0}
-        />
-        {/* Bottom-right plant (flipped) */}
-        <SwayingPlant
-          className="absolute bottom-0 right-0"
-          color="rgba(34,197,94,0.18)"
-          size={90}
-          swayAmount={5}
-          duration={3.8}
-          delay={0.6}
-          flip
-        />
-        {/* Mid-left smaller plant */}
-        <SwayingPlant
-          className="absolute bottom-[30%] left-0"
-          color="rgba(74,222,128,0.14)"
-          size={65}
-          swayAmount={9}
-          duration={3.2}
-          delay={1.1}
-        />
-        {/* Mid-right smaller plant */}
-        <SwayingPlant
-          className="absolute bottom-[55%] right-0"
-          color="rgba(74,222,128,0.12)"
-          size={55}
-          swayAmount={8}
-          duration={4.6}
-          delay={0.3}
-          flip
-        />
-
-        {/* Grass blades bottom */}
-        <GrassBlades
-          className="absolute bottom-0 left-[10%] w-32 h-16"
-          color="rgba(34,197,94,0.25)"
-          count={6}
-        />
-        <GrassBlades
-          className="absolute bottom-0 right-[15%] w-24 h-12"
-          color="rgba(74,222,128,0.2)"
-          count={5}
-        />
-        <GrassBlades
-          className="absolute bottom-0 left-[45%] w-20 h-10"
-          color="rgba(34,197,94,0.16)"
-          count={4}
-        />
-
-        {/* Floating leaf particles */}
-        <FloatingLeaf
-          className="absolute top-[20%] left-[8%]"
-          color="rgba(34,197,94,0.28)"
-          size={18}
-          delay={0}
-        />
-        <FloatingLeaf
-          className="absolute top-[40%] right-[10%]"
-          color="rgba(74,222,128,0.24)"
-          size={14}
-          delay={1.5}
-        />
-        <FloatingLeaf
-          className="absolute top-[65%] left-[15%]"
-          color="rgba(34,197,94,0.2)"
-          size={16}
-          delay={0.8}
-        />
-        <FloatingLeaf
-          className="absolute top-[75%] right-[20%]"
-          color="rgba(134,239,172,0.24)"
-          size={12}
-          delay={2.2}
-        />
-        <FloatingLeaf
-          className="absolute top-[10%] right-[25%]"
-          color="rgba(34,197,94,0.16)"
-          size={10}
-          delay={3.0}
-        />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[var(--bg)] opacity-60" />
       </div>
 
       {/* Floating top-left controls */}
@@ -205,7 +115,7 @@ export function PortfolioShell() {
         <button
           type="button"
           onClick={toggleTheme}
-          className="flex h-8 w-8 items-center justify-center rounded-[9px] border border-[var(--line)] bg-[var(--bg-elevated)]/90 text-[var(--muted)] backdrop-blur-xl transition hover:border-[var(--teal)]/30 hover:text-[var(--ink)]"
+          className="flex h-8 w-8 items-center justify-center rounded-[9px] border border-[rgba(168,85,247,0.2)] bg-[rgba(10,10,20,0.85)] text-[var(--muted)] backdrop-blur-xl transition hover:border-[rgba(168,85,247,0.4)] hover:text-[var(--neon)]"
           aria-label="Toggle theme"
         >
           <span className="text-sm">{theme === "dark" ? "☾" : "☀"}</span>
@@ -214,7 +124,7 @@ export function PortfolioShell() {
 
       {/* Floating tab switcher — centered top */}
       <div className="fixed left-1/2 top-3 z-50 -translate-x-1/2 sm:top-5">
-        <div className="flex items-center gap-0.5 rounded-full border border-[var(--line)] bg-[var(--bg-elevated)]/92 p-1 shadow-lg backdrop-blur-xl">
+        <div className="flex items-center gap-0.5 rounded-full border border-[rgba(168,85,247,0.15)] bg-[rgba(8,8,16,0.92)] p-1 shadow-lg shadow-purple-900/20 backdrop-blur-xl">
           <button
             type="button"
             onClick={() => handleTabSwitch("personal")}
@@ -223,7 +133,7 @@ export function PortfolioShell() {
             {tab === "personal" && (
               <motion.span
                 layoutId="tab-pill"
-                className="absolute inset-0 rounded-full bg-[var(--teal)]"
+                className="absolute inset-0 rounded-full bg-gradient-to-r from-[#7c3aed] to-[#a855f7]"
                 transition={{ type: "spring", stiffness: 380, damping: 32 }}
               />
             )}
@@ -243,7 +153,7 @@ export function PortfolioShell() {
             {tab === "professional" && (
               <motion.span
                 layoutId="tab-pill"
-                className="absolute inset-0 rounded-full bg-[var(--teal)]"
+                className="absolute inset-0 rounded-full bg-gradient-to-r from-[#7c3aed] to-[#a855f7]"
                 transition={{ type: "spring", stiffness: 380, damping: 32 }}
               />
             )}
@@ -356,7 +266,6 @@ export function PortfolioShell() {
             <section id="pro-testimonials" className="scroll-mt-8">
               <div className="section-panel px-4 py-10 sm:px-5 md:px-10 lg:px-14 sm:py-12">
                 <div className="mx-auto max-w-[1040px]">
- 
                 </div>
               </div>
             </section>
