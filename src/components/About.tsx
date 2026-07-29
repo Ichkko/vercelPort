@@ -230,32 +230,89 @@ export function About() {
         </div>
       </SlideIn>
 
-      {/* Clean flowing text hobbies layout */}
-      <div className="py-2">
-        <div className="flex flex-wrap gap-x-6 gap-y-3">
-          {hobbies.map((hobby, i) => {
-            const Icon = hobby.icon;
-            return (
-              <motion.div
-                key={hobby.titleKey}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.07, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                className="flex items-center gap-2 group"
-              >
-                <Icon className="h-3.5 w-3.5 text-[var(--teal)] opacity-70 shrink-0" strokeWidth={1.8} />
-                <span className="text-sm font-medium text-[var(--ink)] opacity-80 group-hover:opacity-100 transition-opacity duration-200">
-                  {t(hobby.titleKey)}
-                </span>
-                {i < hobbies.length - 1 && (
-                  <span className="ml-2 text-[var(--ink)] opacity-20 text-xs select-none">·</span>
-                )}
-              </motion.div>
-            );
-          })}
+      {/* Newspaper / magazine editorial layout */}
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        className="relative border-t border-b border-[var(--line)] py-6"
+      >
+        {/* Thin column rule on the left */}
+        <div className="absolute left-0 top-0 h-full w-[2px] bg-[var(--line)] opacity-40" />
+
+        <div className="pl-5">
+          {/* Kicker / dateline */}
+          <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--ink)] opacity-40 select-none">
+            Personal · Lifestyle
+          </p>
+
+          {/* First paragraph — drop-cap on first letter */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.05, duration: 0.55 }}
+            className="text-[var(--ink)] text-[0.92rem] leading-[1.85] opacity-85"
+            style={{ textAlign: "justify" }}
+          >
+            <span
+              className="float-left mr-2 mt-0.5 font-serif text-[3.2rem] leading-[0.78] font-bold text-[var(--teal)] select-none"
+              aria-hidden="true"
+            >
+              {t("hobbyArtTitle").charAt(0)}
+            </span>
+            {t("hobbyArtTitle").slice(1)} {t("hobbyArtDesc")}{" "}
+            <em className="not-italic font-semibold text-[var(--ink)]">{t("hobbyCraftTitle")}</em>{" "}
+            — {t("hobbyCraftDesc")}
+          </motion.p>
+
+          {/* Pull-quote divider */}
+          <motion.blockquote
+            initial={{ opacity: 0, x: -8 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.15, duration: 0.5 }}
+            className="my-5 border-l-[3px] border-[var(--teal)] pl-4 text-[0.88rem] italic leading-[1.7] text-[var(--ink)] opacity-60"
+          >
+            &ldquo;{t("hobbyMusicDesc")}&rdquo;
+          </motion.blockquote>
+
+          {/* Second paragraph */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2, duration: 0.55 }}
+            className="text-[var(--ink)] text-[0.92rem] leading-[1.85] opacity-85"
+            style={{ textAlign: "justify" }}
+          >
+            <em className="not-italic font-semibold">{t("hobbyMovieTitle")}</em>{" "}
+            — {t("hobbyMovieDesc")}{" "}
+            <em className="not-italic font-semibold">{t("hobbyPhotoTitle")}</em>{" "}
+            {t("hobbyPhotoDesc")}
+          </motion.p>
+
+          {/* Thin rule between paragraphs */}
+          <div className="my-4 h-px w-full bg-[var(--line)] opacity-30" />
+
+          {/* Third paragraph */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.28, duration: 0.55 }}
+            className="text-[var(--ink)] text-[0.92rem] leading-[1.85] opacity-85"
+            style={{ textAlign: "justify" }}
+          >
+            <em className="not-italic font-semibold">{t("hobbyOtherTitle")}</em>{" "}
+            — {t("hobbyOtherDesc")}
+          </motion.p>
+
+          {/* End mark — editorial convention */}
+          <p className="mt-4 font-mono text-[10px] text-[var(--ink)] opacity-25 select-none">— ◆ —</p>
         </div>
-      </div>
+      </motion.div>
 
       {/* ── Favorite music & movies tags ── */}
       <ScaleIn delay={0.1}>
