@@ -230,67 +230,26 @@ export function About() {
         </div>
       </SlideIn>
 
-      {/* Editorial text-based hobbies layout */}
-      <div className="rounded-[24px] overflow-hidden bg-[#0a0e1a] border border-white/[0.06] p-6 sm:p-8">
-        <div className="flex flex-col gap-3">
+      {/* Clean flowing text hobbies layout */}
+      <div className="py-2">
+        <div className="flex flex-wrap gap-x-6 gap-y-3">
           {hobbies.map((hobby, i) => {
             const Icon = hobby.icon;
-            const isEven = i % 2 === 0;
             return (
               <motion.div
                 key={hobby.titleKey}
-                initial={{ opacity: 0, x: isEven ? -40 : 40 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.08, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                className={`flex items-center gap-3 ${isEven ? "justify-start" : "justify-end"}`}
+                transition={{ delay: i * 0.07, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                className="flex items-center gap-2 group"
               >
-                {/* Arrow badge (left side for even) */}
-                {isEven && (
-                  <motion.span
-                    initial={{ scale: 0 }}
-                    whileInView={{ scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.08 + 0.15, duration: 0.4, type: "spring", stiffness: 300 }}
-                    className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${hobby.arrowBg}`}
-                  >
-                    <Icon className="h-4 w-4 text-white" strokeWidth={2} />
-                  </motion.span>
-                )}
-
-                {/* Main pill label */}
-                <motion.div
-                  whileHover={{ scale: 1.04, y: -2 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                  className={`rounded-full px-6 py-3 ${hobby.pillBg} cursor-default select-none`}
-                >
-                  <span className={`text-xl sm:text-2xl font-extrabold tracking-tight ${hobby.pillText} leading-none`}>
-                    {t(hobby.titleKey)}
-                  </span>
-                </motion.div>
-
-                {/* Description text */}
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.08 + 0.25, duration: 0.5 }}
-                  className="hidden sm:block max-w-[180px] text-[11px] leading-snug text-white/50 font-medium"
-                >
-                  {t(hobby.descKey)}
-                </motion.p>
-
-                {/* Arrow badge (right side for odd) */}
-                {!isEven && (
-                  <motion.span
-                    initial={{ scale: 0 }}
-                    whileInView={{ scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.08 + 0.15, duration: 0.4, type: "spring", stiffness: 300 }}
-                    className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${hobby.arrowBg}`}
-                  >
-                    <Icon className="h-4 w-4 text-white" strokeWidth={2} />
-                  </motion.span>
+                <Icon className="h-3.5 w-3.5 text-[var(--teal)] opacity-70 shrink-0" strokeWidth={1.8} />
+                <span className="text-sm font-medium text-[var(--ink)] opacity-80 group-hover:opacity-100 transition-opacity duration-200">
+                  {t(hobby.titleKey)}
+                </span>
+                {i < hobbies.length - 1 && (
+                  <span className="ml-2 text-[var(--ink)] opacity-20 text-xs select-none">·</span>
                 )}
               </motion.div>
             );
