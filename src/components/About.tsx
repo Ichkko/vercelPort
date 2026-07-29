@@ -248,13 +248,13 @@ export function About() {
               <span key={i} className="flex items-center">
                 <span
                   className="whitespace-nowrap px-6 text-[0.7rem] font-bold uppercase tracking-[0.22em]"
-                  style={{ color: "rgba(167,139,250,0.75)", letterSpacing: "0.22em" }}
+                  style={{ color: "rgba(25, 195, 224)", letterSpacing: "0.22em" }}
                 >
                   {t(hobby.titleKey)}
                 </span>
                 <span
                   className="text-[0.6rem]"
-                  style={{ color: "rgba(139,92,246,0.5)" }}
+                  style={{ color: "rgba(6, 182, 212)" }}
                 >
                   ●
                 </span>
@@ -265,46 +265,7 @@ export function About() {
       </div>
 
       {/* ── Favorite music & movies tags ── */}
-      <ScaleIn delay={0.1}>
-        <div className="rounded-[16px] border border-[var(--line)] bg-[var(--bg-elevated)] p-6 dark:bg-[rgba(13,21,32,0.6)]">
-          <div className="grid gap-6 sm:grid-cols-2">
-            {/* Music */}
-            <div>
-              <div className="mb-3 flex items-center gap-2">
-                <Music className="h-4 w-4 text-violet-400" strokeWidth={1.8} />
-                <p className="text-sm font-semibold text-[var(--ink)]">{t("favMusicLabel")}</p>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {["BTS", "IU", "Lauv", "Hozier", "NewJeans", "Billie Eilish", "Imagine Dragons"].map((artist) =>
-                <span
-                  key={artist}
-                  className="rounded-full border border-violet-400/30 bg-violet-400/10 px-3 py-1 text-xs font-medium text-violet-500 dark:text-violet-300">
-                  
-                    {artist}
-                  </span>
-                )}
-              </div>
-            </div>
-            {/* Movies */}
-            <div>
-              <div className="mb-3 flex items-center gap-2">
-                <Film className="h-4 w-4 text-cyan-400" strokeWidth={1.8} />
-                <p className="text-sm font-semibold text-[var(--ink)]">{t("favMovieLabel")}</p>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {["Your Name", "Parasite", "Interstellar", "Attack on Titan", "Spirited Away", "Inception"].map((movie) =>
-                <span
-                  key={movie}
-                  className="rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-xs font-medium text-cyan-500 dark:text-cyan-300">
-                  
-                    {movie}
-                  </span>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      </ScaleIn>
+      
     </section>);
 
 }

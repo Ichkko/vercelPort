@@ -14,8 +14,8 @@ import { LanguageToggle } from "./LanguageToggle";
 import { useTheme } from "./ThemeProvider";
 import { useLanguage } from "./LanguageProvider";
 import { SwayingPlant, FloatingLeaf, GrassBlades } from "./PlantDecorations";
-import { Gallery } from "./Gallery";
-import { CurrentlyVibing } from "./CurrentlyVibing";
+// import { Gallery } from "./Gallery";
+// import { CurrentlyVibing } from "./CurrentlyVibing";
 import { AmbientPlayer } from "./AmbientPlayer";
 import { HandcraftedArt } from "./HandcraftedArt";
 
@@ -285,16 +285,7 @@ export function PortfolioShell() {
               </div>
             </section>
 
-            {/* Personal Gallery */}
-            <section id="personal-gallery" className="scroll-mt-8">
-              <div className="section-panel px-4 py-10 sm:px-5 md:px-10 lg:px-14 sm:py-12">
-                <div className="mx-auto max-w-[1040px]">
-                  <Gallery />
-                </div>
-              </div>
-            </section>
-
-            {/* Handcrafted Art */}
+             {/* Handcrafted Art */}
             <section id="personal-handcraft" className="scroll-mt-8">
               <div className="section-panel px-4 py-10 sm:px-5 md:px-10 lg:px-14 sm:py-12">
                 <div className="mx-auto max-w-[1040px]">
@@ -303,14 +294,25 @@ export function PortfolioShell() {
               </div>
             </section>
 
-            {/* Currently Vibing */}
+            {/* Personal Gallery */}
+            {/* <section id="personal-gallery" className="scroll-mt-8">
+              <div className="section-panel px-4 py-10 sm:px-5 md:px-10 lg:px-14 sm:py-12">
+                <div className="mx-auto max-w-[1040px]">
+                  <Gallery />
+                </div>
+              </div>
+            </section> */}
+
+           
+
+            {/* Currently Vibing
             <section id="personal-vibing" className="scroll-mt-8">
               <div className="section-panel px-4 py-10 sm:px-5 md:px-10 lg:px-14 sm:py-12">
                 <div className="mx-auto max-w-[1040px]">
                   <CurrentlyVibing />
                 </div>
               </div>
-            </section>
+            </section> */}
 
             {/* Personal Contact */}
             <section id="personal-contact" className="scroll-mt-8">

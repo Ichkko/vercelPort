@@ -18,8 +18,19 @@ const artworks: ArtPiece[] = [
   { id: 1, src: "/assets/images/2c14c3a6-98ee-4bc1-87ec-15df1a338ebe-1785254739320.jpg", alt: "Handmade clay sculpture artwork by Ichko", titleEn: "Clay Sculpture", titleMn: "Шавар баримал", mediumEn: "Clay · Handmade", mediumMn: "Шавар · Гараар" },
   { id: 2, src: "/assets/images/4b268892-82e4-43ea-91c6-5162d9c65e95-1785254751921.jpg", alt: "Handcrafted fabric art piece by Ichko", titleEn: "Fabric Art", titleMn: "Даавуун урлал", mediumEn: "Fabric · Textile", mediumMn: "Даавуу · Нэхмэл" },
   { id: 3, src: "/assets/images/ae8e4a74-9975-4ea3-be2c-67f1ef341d62-1785254772484.jpg", alt: "Handmade painting artwork by Ichko", titleEn: "Painting", titleMn: "Зураг", mediumEn: "Acrylic · Canvas", mediumMn: "Акрил · Даавуу" },
-  { id: 4, src: "/assets/images/72b335ee-74e2-4a02-abd4-cd089cbb258c-1785254782913.jpg", alt: "Handcrafted decorative art by Ichko", titleEn: "Decorative Craft", titleMn: "Чимэглэлийн урлал", mediumEn: "Mixed Media", mediumMn: "Холимог материал" },
+  { id: 4, src: "/assets/images/z6.jpg", alt: "Handcrafted decorative art by Ichko", titleEn: "Decorative Craft", titleMn: "Чимэглэлийн урлал", mediumEn: "Mixed Media", mediumMn: "Холимог материал" },
   { id: 5, src: "/assets/images/87a7c6db-e01c-4527-b974-cb911864f7aa-1785254797293.jpg", alt: "Personal handmade artwork by Ichko", titleEn: "Handmade Creation", titleMn: "Гараар хийсэн бүтээл", mediumEn: "Handcrafted", mediumMn: "Гар урлал" },
+  { id: 6, src: "/assets/images/z1.jpg", alt: "Handmade painting artwork by Ichko", titleEn: "Painting", titleMn: "Зураг", mediumEn: "Acrylic · Canvas", mediumMn: "Акрил · Даавуу" },
+  { id: 7, src: "/assets/images/z2.jpg", alt: "Handcrafted decorative art by Ichko", titleEn: "Decorative Craft", titleMn: "Чимэглэлийн урлал", mediumEn: "Mixed Media", mediumMn: "Холимог материал" },
+  { id: 8, src: "/assets/images/zurag10.jpg", alt: "Personal handmade artwork by Ichko", titleEn: "Handmade Creation", titleMn: "Гараар хийсэн бүтээл", mediumEn: "Handcrafted", mediumMn: "Гар урлал" },
+  { id: 9, src: "/assets/images/zurag8.jpg", alt: "Personal handmade artwork by Ichko", titleEn: "Handmade Creation", titleMn: "Гараар хийсэн бүтээл", mediumEn: "Handcrafted", mediumMn: "Гар урлал" },
+  { id: 10, src: "/assets/images/zurag7.jpg", alt: "Handmade painting artwork by Ichko", titleEn: "Painting", titleMn: "Зураг", mediumEn: "Acrylic · Canvas", mediumMn: "Акрил · Даавуу" },
+  { id: 11, src: "/assets/images/zu1.jpg", alt: "Handcrafted decorative art by Ichko", titleEn: "Decorative Craft", titleMn: "Чимэглэлийн урлал", mediumEn: "Mixed Media", mediumMn: "Холимог материал" },
+  { id: 12, src: "/assets/images/zurag6.jpg", alt: "Personal handmade artwork by Ichko", titleEn: "Handmade Creation", titleMn: "Гараар хийсэн бүтээл", mediumEn: "Handcrafted", mediumMn: "Гар урлал" },
+  { id: 13, src: "/assets/images/zurag9.jpg", alt: "Personal handmade artwork by Ichko", titleEn: "Handmade Creation", titleMn: "Гараар хийсэн бүтээл", mediumEn: "Handcrafted", mediumMn: "Гар урлал" },
+   { id: 14, src: "/assets/images/zurag11.jpg", alt: "Personal handmade artwork by Ichko", titleEn: "Handmade Creation", titleMn: "Гараар хийсэн бүтээл", mediumEn: "Handcrafted", mediumMn: "Гар урлал" },
+  { id: 15, src: "/assets/images/z3.jpg", alt: "Personal handmade artwork by Ichko", titleEn: "Handmade Creation", titleMn: "Гараар хийсэн бүтээл", mediumEn: "Handcrafted", mediumMn: "Гар урлал" },
+  
 ];
 
 function getCardStyle(offset: number) {

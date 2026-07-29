@@ -215,53 +215,9 @@ export function CurrentlyVibing() {
         ))}
       </div>
 
-      {/* Artists section */}
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.5, delay: 0.4 }}
-        className="mb-5"
-      >
-        <h3 className="text-base font-semibold" style={{ color: "var(--ink)" }}>
-          Favorite Artists
-          <span className="ml-2 text-xs font-normal" style={{ color: "var(--muted)" }}>
-            — Дуртай дуучид
-          </span>
-        </h3>
-      </motion.div>
+     
 
-      <div className="flex flex-wrap gap-3">
-        {ARTISTS.map((artist, i) => (
-          <motion.div
-            key={artist.name}
-            initial={{ opacity: 0, scale: 0.85 }}
-            animate={inView ? { opacity: 1, scale: 1 } : {}}
-            transition={{
-              duration: 0.4,
-              delay: 0.45 + i * 0.06,
-              type: "spring",
-              stiffness: 260,
-              damping: 20,
-            }}
-            whileHover={{ scale: 1.08, y: -2 }}
-            className="group flex items-center gap-2 rounded-full border px-4 py-2 cursor-default"
-            style={{
-              background: artist.color,
-              borderColor: "var(--line)",
-            }}
-          >
-            <span className="text-base">{artist.emoji}</span>
-            <div>
-              <p className="text-xs font-semibold leading-tight" style={{ color: "var(--ink)" }}>
-                {artist.name}
-              </p>
-              <p className="text-[10px] leading-tight" style={{ color: "var(--muted)" }}>
-                {artist.genre}
-              </p>
-            </div>
-          </motion.div>
-        ))}
-      </div>
+     
     </div>
   );
 }
