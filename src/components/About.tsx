@@ -231,24 +231,42 @@ export function About() {
       </SlideIn>
 
       {/* Text motion flowing layout */}
-      <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-2.5">
         {hobbies.map((hobby, i) => {
           const Icon = hobby.icon;
           return (
             <motion.span
               key={hobby.titleKey}
-              initial={{ opacity: 0, x: i % 2 === 0 ? -18 : 18 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 14, filter: "blur(4px)" }}
+              whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.07, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              className="flex items-center gap-1.5"
+              transition={{ delay: i * 0.09, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+              whileHover={{ y: -2, transition: { duration: 0.2, ease: "easeOut" } }}
+              className="flex items-center gap-1.5 cursor-default"
             >
-              <Icon size={14} className="shrink-0 text-[var(--teal)] opacity-70" />
-              <span className="text-[0.88rem] font-medium text-[var(--ink)] opacity-75">
+              <motion.span
+                whileHover={{ scale: 1.25, rotate: 8 }}
+                transition={{ type: "spring", stiffness: 400, damping: 12 }}
+                className="inline-flex"
+              >
+                <Icon size={14} className="shrink-0 text-[var(--teal)] opacity-70" />
+              </motion.span>
+              <motion.span
+                className="text-[0.88rem] font-medium text-[var(--ink)] opacity-75"
+                whileHover={{ opacity: 1, transition: { duration: 0.15 } }}
+              >
                 {t(hobby.titleKey)}
-              </span>
+              </motion.span>
               {i < hobbies.length - 1 && (
-                <span className="ml-1.5 text-[var(--ink)] opacity-20 select-none">·</span>
+                <motion.span
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 0.2 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.09 + 0.3, duration: 0.4 }}
+                  className="ml-1.5 text-[var(--ink)] select-none"
+                >
+                  ·
+                </motion.span>
               )}
             </motion.span>
           );
