@@ -3,6 +3,7 @@
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "./LanguageProvider";
+import { useTheme } from "./ThemeProvider";
 
 interface ArtPiece {
   id: number;
@@ -15,78 +16,47 @@ interface ArtPiece {
 }
 
 const artworks: ArtPiece[] = [
-  { id: 1, src: "/assets/images/zurag8.jpg", alt: "Handmade clay sculpture artwork by Ichko", titleEn: "I drew it many years ago.", titleMn: "Зурдаг байсымаа", mediumEn: "Painting", mediumMn: "Зурсан зураг" },
-  { id: 2, src: "/assets/images/4b268892-82e4-43ea-91c6-5162d9c65e95-1785254751921.jpg", alt: "Handcrafted fabric art piece by Ichko", titleEn: "Mongolian woman", titleMn: "Монгол эмэгтэй", mediumEn: "Acrylic · Canvas", mediumMn: "Акрил" },
-  { id: 3, src: "/assets/images/zu1.jpg", alt: "Handmade painting artwork by Ichko", titleEn: "Painting", titleMn: "Хөөрхөн ёстойй хөөрхөн", mediumEn: "Clay art", mediumMn: "Шавар урлал" },
-  { id: 4, src: "/assets/images/z6.jpg", alt: "Handcrafted decorative art by Ichko", titleEn: "A star that radiates happiness", titleMn: "Аз жаргал цацруулдаг од", mediumEn: "Clay art", mediumMn: "Шавар урлал" },
-  { id: 5, src: "/assets/images/87a7c6db-e01c-4527-b974-cb911864f7aa-1785254797293.jpg", alt: "Personal handmade artwork by Ichko", titleEn: "Little mushroom", titleMn: "Бяцхан мөөг", mediumEn: "Clay art", mediumMn: "Шавар урлал" },
-  { id: 6, src: "/assets/images/z1.jpg", alt: "Handmade painting artwork by Ichko", titleEn: "Starfish", titleMn: "Далайн од", mediumEn: "Mixed Media", mediumMn: "Холимог материал" },
-  { id: 7, src: "/assets/images/z2.jpg", alt: "Handcrafted decorative art by Ichko", titleEn: "The first cake ever madet", titleMn: "Хамгийн анхны хийсэн торт", mediumEn: "Dessert", mediumMn: "Амттан" },
-  { id: 8, src: "/assets/images/zurag10.jpg", alt: "Personal handmade artwork by Ichko", titleEn: "I drew it many years ago.", titleMn: "Олоон жилийн өмнө зурж билээ", mediumEn: "Painting", mediumMn: "Зурсан зураг" },
-  { id: 9, src: "/assets/images/2c14c3a6-98ee-4bc1-87ec-15df1a338ebe-1785254739320.jpg", alt: "Personal handmade artwork by Ichko", titleEn: "When there was a lot", titleMn: "Олуулаа байхдаа", mediumEn: "Clay art", mediumMn: "Шавар урлал" },
-  { id: 10, src: "/assets/images/ae8e4a74-9975-4ea3-be2c-67f1ef341d62-1785254772484.jpg", alt: "Handmade painting artwork by Ichko", titleEn: "First time experiment, of course it's cute", titleMn: "Анх удаагийн туршилт мэдээж хөөрхөн", mediumEn: "Fabric paint & Sewing", mediumMn: "Даавууны зураг & оёдол" },
-  { id: 11, src: "/assets/images/zurag7.jpg", alt: "Handcrafted decorative art by Ichko", titleEn: "I drew it many years ago.", titleMn: "Бүр царайлаг болгочихсон байгаа биз хх", mediumEn: "Painting", mediumMn: "Зурсан зураг" },
-  { id: 12, src: "/assets/images/zurag6.jpg", alt: "Personal handmade artwork by Ichko", titleEn: "crown made of seashells", titleMn: "Хясаагаар хийсэн титэм", mediumEn: "Handcrafted", mediumMn: "Гар урлал" },
-  { id: 13, src: "/assets/images/zurag9.jpg", alt: "Personal handmade artwork by Ichko", titleEn: "I drew it many years ago.", titleMn: "Бас л олон жилийн өмнө аруун жилдээ зурж байсан", mediumEn: "Painting", mediumMn: "Зурсан зураг" },
-   { id: 14, src: "/assets/images/zurag11.jpg", alt: "Personal handmade artwork by Ichko", titleEn: "My first self-sewn creation", titleMn: "Миний анхны өөрөө оёсон бүтээл", mediumEn: "Sewing", mediumMn: "Оёдол" },
-  { id: 15, src: "/assets/images/z3.jpg", alt: "Personal handmade artwork by Ichko", titleEn: "Christmas dessert", titleMn: "Баярын ширээний амттан", mediumEn: "Dessert", mediumMn: "Амттан" },
-  
+  { id: 1, src: "/assets/images/zurag8.jpg", alt: "Handmade painting by Ichko", titleEn: "Drawn years ago", titleMn: "Олон жилийн өмнө зурсан", mediumEn: "Painting", mediumMn: "Зурсан зураг" },
+  { id: 2, src: "/assets/images/4b268892-82e4-43ea-91c6-5162d9c65e95-1785254751921.jpg", alt: "Acrylic painting of a Mongolian woman by Ichko", titleEn: "Mongolian woman", titleMn: "Монгол эмэгтэй", mediumEn: "Acrylic · Canvas", mediumMn: "Акрил" },
+  { id: 3, src: "/assets/images/zu1.jpg", alt: "Handmade clay artwork by Ichko", titleEn: "Simply cute", titleMn: "Ёстой хөөрхөн", mediumEn: "Clay art", mediumMn: "Шавар урлал" },
+  { id: 4, src: "/assets/images/z6.jpg", alt: "Handcrafted decorative clay star by Ichko", titleEn: "A star that radiates happiness", titleMn: "Аз жаргал цацруулдаг од", mediumEn: "Clay art", mediumMn: "Шавар урлал" },
+  { id: 5, src: "/assets/images/87a7c6db-e01c-4527-b974-cb911864f7aa-1785254797293.jpg", alt: "Little mushroom clay art by Ichko", titleEn: "Little mushroom", titleMn: "Бяцхан мөөг", mediumEn: "Clay art", mediumMn: "Шавар урлал" },
+  { id: 6, src: "/assets/images/z1.jpg", alt: "Starfish mixed-media artwork by Ichko", titleEn: "Starfish", titleMn: "Далайн од", mediumEn: "Mixed media", mediumMn: "Холимог материал" },
+  { id: 7, src: "/assets/images/z2.jpg", alt: "First homemade cake by Ichko", titleEn: "The first cake I ever made", titleMn: "Хамгийн анхны хийсэн торт", mediumEn: "Dessert", mediumMn: "Амттан" },
+  { id: 8, src: "/assets/images/zurag10.jpg", alt: "Older painting by Ichko", titleEn: "Drawn years ago", titleMn: "Олон жилийн өмнө зурсан", mediumEn: "Painting", mediumMn: "Зурсан зураг" },
+  { id: 9, src: "/assets/images/2c14c3a6-98ee-4bc1-87ec-15df1a338ebe-1785254739320.jpg", alt: "Clay art piece by Ichko", titleEn: "When we were many", titleMn: "Олуулаа байхдаа", mediumEn: "Clay art", mediumMn: "Шавар урлал" },
+  { id: 10, src: "/assets/images/ae8e4a74-9975-4ea3-be2c-67f1ef341d62-1785254772484.jpg", alt: "Fabric paint and sewing experiment by Ichko", titleEn: "First experiment — of course it's cute", titleMn: "Анхны туршилт, мэдээж хөөрхөн", mediumEn: "Fabric paint & sewing", mediumMn: "Даавууны зураг & оёдол" },
+  { id: 11, src: "/assets/images/zurag7.jpg", alt: "Portrait painting by Ichko", titleEn: "A more polished portrait", titleMn: "Царайлаг болгосон зураг", mediumEn: "Painting", mediumMn: "Зурсан зураг" },
+  { id: 12, src: "/assets/images/zurag6.jpg", alt: "Seashell crown handmade by Ichko", titleEn: "Crown made of seashells", titleMn: "Хясаагаар хийсэн титэм", mediumEn: "Handcrafted", mediumMn: "Гар урлал" },
+  { id: 13, src: "/assets/images/zurag9.jpg", alt: "Painting from tenth grade by Ichko", titleEn: "Drawn in 10th grade", titleMn: "10-р ангид зурсан", mediumEn: "Painting", mediumMn: "Зурсан зураг" },
+  { id: 14, src: "/assets/images/zurag11.jpg", alt: "First self-sewn creation by Ichko", titleEn: "My first self-sewn piece", titleMn: "Миний анхны өөрөө оёсон бүтээл", mediumEn: "Sewing", mediumMn: "Оёдол" },
+  { id: 15, src: "/assets/images/z3.jpg", alt: "Holiday dessert by Ichko", titleEn: "Holiday dessert", titleMn: "Баярын ширээний амттан", mediumEn: "Dessert", mediumMn: "Амттан" },
 ];
 
 function getCardStyle(offset: number) {
   const absOffset = Math.abs(offset);
+  const sign = offset > 0 ? 1 : -1;
+  const x = absOffset === 0 ? 0 : absOffset === 1 ? sign * 168 : absOffset === 2 ? sign * 270 : sign * 340;
 
   if (offset === 0) {
-    return {
-      zIndex: 10,
-      x: "0%",
-      scale: 1,
-      rotateY: 0,
-      opacity: 1,
-      filter: "blur(0px)",
-      brightness: 1,
-    };
+    return { zIndex: 10, x, scale: 1, rotateY: 0, opacity: 1, blur: 0, lightBrightness: 1, darkBrightness: 1 };
   }
 
-  const sign = offset > 0 ? 1 : -1;
-
   if (absOffset === 1) {
-    return {
-      zIndex: 7,
-      x: `${sign * 58}%`,
-      scale: 0.78,
-      rotateY: sign * -18,
-      opacity: 0.85,
-      filter: "blur(1.5px)",
-      brightness: 0.7,
-    };
+    return { zIndex: 7, x, scale: 0.82, rotateY: sign * -14, opacity: 0.9, blur: 1, lightBrightness: 0.94, darkBrightness: 0.7 };
   }
 
   if (absOffset === 2) {
-    return {
-      zIndex: 4,
-      x: `${sign * 95}%`,
-      scale: 0.58,
-      rotateY: sign * -28,
-      opacity: 0.55,
-      filter: "blur(4px)",
-      brightness: 0.45,
-    };
+    return { zIndex: 4, x, scale: 0.66, rotateY: sign * -22, opacity: 0.65, blur: 2.5, lightBrightness: 0.88, darkBrightness: 0.45 };
   }
 
-  return {
-    zIndex: 1,
-    x: `${sign * 120}%`,
-    scale: 0.42,
-    rotateY: sign * -35,
-    opacity: 0,
-    filter: "blur(8px)",
-    brightness: 0.3,
-  };
+  return { zIndex: 1, x, scale: 0.5, rotateY: sign * -28, opacity: 0, blur: 6, lightBrightness: 0.8, darkBrightness: 0.3 };
 }
 
 export function HandcraftedArt() {
   const { lang } = useLanguage();
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
   const [activeIndex, setActiveIndex] = useState(2);
   const [lightbox, setLightbox] = useState<ArtPiece | null>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -159,19 +129,19 @@ export function HandcraftedArt() {
   return (
     <section className="w-full">
       {/* Header */}
-      <div className="mb-10 border-b border-[var(--line)] pb-6">
+      <div className="mb-5 border-b border-[var(--line)] pb-4">
         <motion.div
           initial={{ opacity: 0, x: -12 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="flex items-center gap-3 mb-3"
+          className="mb-3 flex items-center gap-3"
         >
-          <span className="font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-[var(--teal)] opacity-70">
+          <span className="section-eyebrow">
             {lang === "mn" ? "Гар урлал" : "Handcrafted Art"}
           </span>
           <span className="h-px w-8 bg-[var(--teal)] opacity-40" />
-          <span className="font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-[var(--muted)] opacity-60">
+          <span className="section-eyebrow text-[var(--muted)] opacity-70">
             {lang === "mn" ? "Бүтээлүүд" : "Works"}
           </span>
         </motion.div>
@@ -180,7 +150,7 @@ export function HandcraftedArt() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.55, delay: 0.05 }}
-          className="text-3xl font-extrabold tracking-tight text-[var(--ink)] sm:text-4xl"
+          className="section-title text-[var(--ink)] md:text-3xl"
         >
           {lang === "mn" ? "Миний гараар хийсэн бүтээлүүд" : "Things I Made With My Hands"}
         </motion.h2>
@@ -189,24 +159,23 @@ export function HandcraftedArt() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="mt-2 max-w-xl text-sm text-[var(--muted)]"
+          className="section-desc mt-2 max-w-xl"
         >
           {lang === "mn" ?"Шавар баримал, зураг, даавуун урлал — кодоос гадна бүтээх дуртай зүйлс минь." :"Clay sculptures, paintings, fabric art — creative work I make outside of code."}
         </motion.p>
       </div>
 
-      {/* 3D Carousel */}
+      {/* 3D Carousel — centered focal area */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="relative w-full"
+        className="relative mx-auto mt-2 w-full"
       >
-        {/* Carousel stage */}
         <div
-          className="relative mx-auto select-none"
-          style={{ height: "420px", perspective: "1200px", perspectiveOrigin: "50% 50%" }}
+          className="relative mx-auto h-[340px] w-full select-none overflow-hidden sm:h-[420px] md:h-[460px] md:overflow-visible"
+          style={{ perspective: "1400px", perspectiveOrigin: "50% 50%" }}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeaveStage}
           onMouseDown={handleDragStart}
@@ -218,24 +187,23 @@ export function HandcraftedArt() {
             const offset = i - activeIndex;
             const style = getCardStyle(offset);
             const isCenter = offset === 0;
+            const brightness = isDark ? style.darkBrightness : style.lightBrightness;
 
             return (
-              <motion.div
+              <div
                 key={piece.id}
-                className="absolute top-0 left-1/2 cursor-pointer"
-                style={{
-                  width: "260px",
-                  height: "380px",
-                  marginLeft: "-130px",
-                  transformStyle: "preserve-3d",
-                }}
+                className="pointer-events-none absolute top-1/2 left-1/2"
+                style={{ zIndex: style.zIndex, transform: "translate(-50%, -50%)" }}
+              >
+              <motion.div
+                className="pointer-events-auto h-[300px] w-[200px] cursor-pointer sm:h-[360px] sm:w-[240px] md:h-[400px] md:w-[280px]"
+                style={{ transformStyle: "preserve-3d", transformOrigin: "center center" }}
                 animate={{
                   x: style.x,
                   scale: style.scale,
                   rotateY: style.rotateY,
                   opacity: style.opacity,
-                  zIndex: style.zIndex,
-                  filter: `blur(${style.filter.replace("blur(", "").replace(")", "")}) brightness(${style.brightness})`,
+                  filter: `blur(${style.blur}px) brightness(${brightness})`,
                 }}
                 transition={{
                   type: "spring",
@@ -250,17 +218,8 @@ export function HandcraftedArt() {
                     goTo(i);
                   }
                 }}
-                whileHover={isCenter ? { scale: 1.03 } : {}}
               >
-                {/* Card */}
-                <div
-                  className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl"
-                  style={{
-                    boxShadow: isCenter
-                      ? "0 30px 80px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.08)"
-                      : "0 10px 40px rgba(0,0,0,0.35)",
-                  }}
-                >
+                <div className={`relative h-full w-full overflow-hidden rounded-2xl ${isCenter ? "art-card-center" : "art-card"}`}>
                   {/* Image */}
                   <img
                     src={piece.src}
@@ -271,10 +230,10 @@ export function HandcraftedArt() {
                   />
 
                   {/* Gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+                  <div className="art-card-fade absolute inset-0" />
 
                   {/* Index watermark */}
-                  <span className="pointer-events-none absolute right-3 top-2 font-mono text-[48px] font-black leading-none text-white opacity-[0.07] select-none">
+                  <span className="pointer-events-none absolute right-3 top-2 font-mono text-[32px] font-black leading-none text-white opacity-[0.07] select-none sm:text-[48px]">
                     {String(i + 1).padStart(2, "0")}
                   </span>
 
@@ -282,7 +241,7 @@ export function HandcraftedArt() {
                   <AnimatePresence>
                     {isCenter && (
                       <motion.div
-                        className="absolute bottom-0 left-0 right-0 p-5"
+                        className="absolute bottom-0 left-0 right-0 p-3.5 sm:p-5"
                         initial={{ y: 16, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         exit={{ y: 10, opacity: 0 }}
@@ -320,6 +279,7 @@ export function HandcraftedArt() {
                   )}
                 </div>
               </motion.div>
+              </div>
             );
           })}
         </div>

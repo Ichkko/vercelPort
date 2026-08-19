@@ -78,7 +78,7 @@ export function Hero() {
     <section
       ref={sectionRef}
       id="home"
-      className="relative scroll-mt-6 overflow-visible px-5 py-12 sm:px-6 md:px-10 md:py-20 lg:px-14 lg:py-24"
+      className="relative scroll-mt-6 overflow-hidden px-4 pb-10 pt-6 sm:px-6 md:overflow-visible md:px-10 md:py-20 lg:px-14 lg:py-24"
     >
       {/* ── Subtle background orbs ── */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
@@ -106,12 +106,12 @@ export function Hero() {
 
       <motion.div
         style={{ opacity }}
-        className="relative mx-auto grid max-w-[1040px] items-center gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16"
+        className="relative mx-auto grid max-w-[1040px] items-center gap-8 md:gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16"
       >
         {/* ── Left content ── */}
         <motion.div
           style={{ y: contentY }}
-          className="relative z-10 space-y-7"
+          className="relative z-10 order-2 space-y-5 md:space-y-7 lg:order-1"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -124,7 +124,7 @@ export function Hero() {
               className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--bg-elevated)] px-3.5 py-1.5 text-[11px] font-semibold text-[var(--muted)] shadow-sm dark:bg-white/[0.04]"
             >
               <MapPin className="h-3 w-3 text-[var(--teal)]" strokeWidth={2} />
-              Ulaanbaatar, Mongolia
+              {t("locationValue")}
               <motion.span
                 className="ml-0.5 h-1.5 w-1.5 rounded-full bg-emerald-400"
                 animate={{
@@ -141,10 +141,10 @@ export function Hero() {
 
           {/* Name */}
           <motion.div variants={itemVariants} className="space-y-1">
-            <p className="section-eyebrow">
-              Hi, I&apos;m
+            <p className="font-mono text-[11px] font-semibold tracking-wide text-[var(--teal)] sm:text-xs">
+              {t("greeting")}
             </p>
-            <h1 className="text-4xl font-extrabold leading-[1.06] tracking-tight text-[var(--ink)] sm:text-5xl lg:text-[56px]">
+            <h1 className="text-[2rem] font-extrabold leading-[1.08] tracking-tight text-[var(--ink)] md:text-5xl lg:text-[56px]">
               Ichko
               <span className="shimmer-text">.</span>
             </h1>
@@ -159,7 +159,7 @@ export function Hero() {
               >
                 <Sparkles className="h-4 w-4 flex-shrink-0 text-[var(--teal)] opacity-70" strokeWidth={1.8} />
               </motion.div>
-              <span className="font-mono text-sm font-semibold text-[var(--ink-soft)] sm:text-[17px]">
+              <span className="font-mono text-[13px] font-semibold text-[var(--ink-soft)] md:text-[17px]">
                 {displayed}
                 <span className="ml-0.5 inline-block h-[1.1em] w-[2px] translate-y-[2px] animate-pulse bg-[var(--teal)]" />
               </span>
@@ -168,24 +168,20 @@ export function Hero() {
 
           {/* Bio */}
           <motion.div variants={itemVariants}>
-            <p className="max-w-[480px] text-[14.5px] leading-[1.9] text-[var(--muted)] sm:text-[15px]">
-              Junior full-stack developer building{" "}
-              <span className="font-semibold text-[var(--ink-soft)]">clean interfaces</span> and{" "}
-              <span className="font-semibold text-[var(--ink-soft)]">reliable backends</span>.
-              I ship practical products with Spring Boot, Next.js, MySQL, and Flutter — focused on
-              code that&apos;s readable, maintainable, and actually useful.
+            <p className="body-copy max-w-[480px]">
+              {t("heroDesc")}
             </p>
           </motion.div>
 
           {/* CTA buttons */}
           <motion.div variants={itemVariants}>
-            <div className="flex flex-col gap-3 pt-1 xs:flex-row xs:flex-wrap sm:flex-row sm:flex-wrap">
+            <div className="flex flex-col gap-2.5 pt-1 md:flex-row md:flex-wrap md:gap-3">
               <motion.a
-                href="#projects"
+                href="/portfolio"
                 whileHover={{ y: -2, scale: 1.03, boxShadow: "0 10px 28px rgba(2,132,199,0.35)" }}
                 whileTap={{ scale: 0.97 }}
                 transition={{ type: "spring", stiffness: 400, damping: 18 }}
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#0284c7] via-[#0ea5e9] to-[#0284c7] bg-[length:200%_auto] px-7 py-3 text-[13px] font-bold text-white shadow-lg shadow-sky-500/20 transition-all"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#0284c7] via-[#0ea5e9] to-[#0284c7] bg-[length:200%_auto] px-6 py-2.5 text-[13px] font-bold text-white shadow-lg shadow-sky-500/20 transition-all md:w-auto md:px-7 md:py-3"
                 style={{ backgroundSize: "200% auto" }}
               >
                 {t("ctaProjects")}
@@ -204,21 +200,22 @@ export function Hero() {
                 whileHover={{ y: -2, scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 transition={{ type: "spring", stiffness: 400, damping: 18 }}
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-[var(--line)] bg-[var(--bg-elevated)] px-6 py-3 text-[13px] font-bold text-[var(--ink-soft)] shadow-sm transition-all hover:border-[var(--teal)]/40 hover:text-[var(--teal)] dark:bg-white/[0.04]"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-[var(--line)] bg-[var(--bg-elevated)] px-6 py-2.5 text-[13px] font-bold text-[var(--ink-soft)] shadow-sm transition-all hover:border-[var(--teal)]/40 hover:text-[var(--teal)] dark:bg-white/[0.04] md:w-auto md:py-3"
               >
                 {t("ctaCv")}
                 <Download className="h-4 w-4" strokeWidth={1.8} />
               </motion.a>
               <motion.div
+                className="w-full md:w-auto"
                 whileHover={{ y: -2, scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 transition={{ type: "spring", stiffness: 400, damping: 18 }}
               >
                 <Link
                   href="/about"
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-[var(--teal)]/25 bg-[var(--teal-soft)] px-6 py-3 text-[13px] font-bold text-[var(--teal)] shadow-sm transition-all hover:border-[var(--teal)]/50 hover:shadow-[0_4px_16px_rgba(2,132,199,0.18)] sm:w-auto"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-[var(--teal)]/25 bg-[var(--teal-soft)] px-6 py-3 text-[13px] font-bold text-[var(--teal)] shadow-sm transition-all hover:border-[var(--teal)]/50 hover:shadow-[0_4px_16px_rgba(2,132,199,0.18)] md:w-auto"
                 >
-                  About me
+                  {t("ctaAbout")}
                   <User className="h-4 w-4" strokeWidth={1.8} />
                 </Link>
               </motion.div>
@@ -228,7 +225,7 @@ export function Hero() {
           {/* Scroll indicator */}
           <motion.div variants={itemVariants}>
             <motion.a
-              href="#about"
+              href="#personal-about"
               className="inline-flex items-center gap-2 text-[11px] font-semibold text-[var(--muted)] transition hover:text-[var(--teal)]"
               whileHover={{ x: 2 }}
               transition={{ type: "spring", stiffness: 400, damping: 20 }}
@@ -240,7 +237,7 @@ export function Hero() {
               >
                 <ArrowDown className="h-3.5 w-3.5 text-[var(--teal)]" strokeWidth={2} />
               </motion.span>
-              Scroll to explore
+              {t("scrollExplore")}
             </motion.a>
           </motion.div>
 
@@ -256,7 +253,7 @@ export function Hero() {
         {/* ── Right — image + stats ── */}
         <motion.div
           style={{ y: imageY }}
-          className="relative mx-auto w-full max-w-[280px] sm:max-w-[360px]"
+          className="relative order-1 mx-auto w-full max-w-[220px] md:max-w-[360px] lg:order-2"
           initial={{ opacity: 0, scale: 0.9, filter: "blur(10px)" }}
           animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}

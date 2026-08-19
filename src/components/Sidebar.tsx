@@ -70,14 +70,14 @@ export function Sidebar({ active }: { active: string }) {
         {/* Status badge */}
         <div className="mt-2.5 inline-flex items-center gap-1.5 rounded-full border border-emerald-400/20 bg-emerald-400/8 px-2.5 py-1 text-[10px] font-semibold text-emerald-500 dark:text-emerald-400">
           <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-          Available for work
+          {t("availableForWork")}
         </div>
       </div>
 
       {/* ── Navigation ── */}
       <nav className="mt-7 flex-1">
         <p className="mb-2 px-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-[var(--muted)] opacity-60">
-          Navigation
+          {t("navLabel")}
         </p>
         <ul className="space-y-0.5">
           {navKeys.map((link) => {
@@ -127,10 +127,7 @@ export function Sidebar({ active }: { active: string }) {
                 <span className="flex h-7 w-7 items-center justify-center rounded-[7px] bg-[var(--line)] text-[var(--muted)]">
                   <FolderKanban className="h-3.5 w-3.5" strokeWidth={1.8} />
                 </span>
-                Portfolio
-              </span>
-              <span className="ml-auto rounded-full bg-[var(--teal)] px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white">
-                New
+                {t("workEyebrow")}
               </span>
             </Link>
           </li>

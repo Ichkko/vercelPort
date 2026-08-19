@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { ThemeProvider } from "@/components/ThemeProvider";
-import { LanguageProvider } from "@/components/LanguageProvider";
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
@@ -28,9 +26,5 @@ export default function PortfolioLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <ThemeProvider>
-      <LanguageProvider>{children}</LanguageProvider>
-    </ThemeProvider>
-  );
+  return children;
 }

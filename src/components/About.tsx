@@ -90,69 +90,59 @@ export function About() {
 
   return (
     <section id="about" className="relative scroll-mt-8 space-y-14">
-      {/* ── Top: Profile image + info card ── */}
-      <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-start">
-        {/* Left — profile image + bio */}
-        <SlideIn direction="left" className="space-y-6">
-          <div>
-            <span className="font-mono text-xs font-semibold uppercase tracking-[0.15em] text-[var(--teal)]">
-              {t("aboutEyebrow")}
-            </span>
-            <h2 className="mt-2 text-3xl font-extrabold leading-tight tracking-tight text-[var(--ink)]">
-              {t("aboutTitle")}
-            </h2>
-            <div className="mt-3 h-[3px] w-10 rounded-full accent-line" />
-            <VineDecoration
-              className="mt-3 opacity-50"
-              color="rgba(34,197,94,0.4)"
-              width={140} />
-            
-          </div>
+      <div>
+        <span className="section-eyebrow">
+          {t("aboutEyebrow")}
+        </span>
+        <h2 className="section-title mt-2 text-[var(--ink)] md:text-3xl">
+          {t("aboutTitle")}
+        </h2>
+        <div className="mt-3 h-[3px] w-10 rounded-full accent-line" />
+        <VineDecoration
+          className="mt-3 opacity-50"
+          color="rgba(34,197,94,0.4)"
+          width={140} />
+      </div>
 
-          {/* Profile image */}
+      <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-start">
+        <SlideIn direction="left" className="space-y-6">
           <ScaleIn delay={0.08}>
-            <div className="relative mx-auto w-fit -mt-4">
-              {/* Glow ring */}
+            <div className="relative mx-auto w-fit lg:mx-0">
               <div
                 className="absolute -inset-3 rounded-[20px] opacity-40 blur-2xl"
                 style={{ background: "radial-gradient(circle, rgba(8,145,178,0.5), rgba(124,58,237,0.3) 60%, transparent 80%)" }}
                 aria-hidden />
-              
               <div
                 className="absolute -inset-[2px] rounded-[18px] opacity-50"
                 style={{ background: "linear-gradient(135deg, rgba(8,145,178,0.7), rgba(124,58,237,0.4), transparent)" }}
                 aria-hidden />
-              
               <motion.div
                 whileHover={{ scale: 1.03 }}
                 transition={{ type: "spring", stiffness: 260, damping: 20 }}
                 className="relative overflow-hidden rounded-[16px] shadow-[0_16px_48px_rgba(8,145,178,0.2)]">
-                
                 <Image
                   src="/assets/images/b6bffd14-e8d3-48a2-8f7a-19700eb0152c-1785172311996.jpg"
                   alt="Гомбосүрэн Ичинхорлоо — хувийн зураг"
                   width={480}
                   height={320}
-                  className="w-[380px] sm:w-[450px] object-cover"
+                  className="w-full max-w-[280px] object-cover md:w-[450px] md:max-w-none"
                   style={{ aspectRatio: "3/2" }}
                   priority />
-                
                 <div className="absolute inset-0 bg-gradient-to-t from-[rgba(8,145,178,0.15)] via-transparent to-transparent" />
               </motion.div>
             </div>
           </ScaleIn>
 
-          <div className="space-y-4 text-[15px] leading-[1.85] text-[var(--muted)]">
+          <div className="space-y-4 body-copy">
             <p>{t("aboutP1")}</p>
             <p>{t("aboutP2")}</p>
           </div>
         </SlideIn>
 
-        {/* Right — info card */}
         <SlideIn direction="right" delay={0.1}>
           <div className="card-soft overflow-hidden">
-            <div className="border-b border-[var(--line)] px-6 py-4">
-              <p className="text-sm font-semibold text-[var(--ink)]">Profile</p>
+            <div className="border-b border-[var(--line)] px-6 py-3">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--muted)]">{t("profileLabel")}</p>
             </div>
             <ul className="divide-y divide-[var(--line)]">
               {info?.map((row, i) => {
@@ -171,7 +161,7 @@ export function About() {
                     </span>
                     <div className="min-w-0">
                       <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--muted)]">{row?.label}</p>
-                      <p className="mt-0.5 truncate text-sm font-medium text-[var(--ink)]">{row?.value}</p>
+                      <p className="mt-0.5 text-sm font-medium text-[var(--ink)] break-words">{row?.value}</p>
                     </div>
                   </motion.li>);
 
@@ -220,10 +210,10 @@ export function About() {
       {/* ── Hobbies & Interests ── */}
       <SlideIn direction="left" delay={0.05}>
         <div>
-          <span className="font-mono text-xs font-semibold uppercase tracking-[0.15em] text-[var(--teal)]">
+          <span className="section-eyebrow">
             {t("hobbiesEyebrow")}
           </span>
-          <h3 className="mt-2 text-2xl font-extrabold leading-tight tracking-tight text-[var(--ink)]">
+          <h3 className="section-title mt-2 text-[var(--ink)] md:text-2xl">
             {t("hobbiesTitle")}
           </h3>
           <div className="mt-3 h-[3px] w-10 rounded-full accent-line" />

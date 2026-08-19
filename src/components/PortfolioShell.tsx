@@ -20,36 +20,31 @@ import { AmbientPlayer } from "./AmbientPlayer";
 import { HandcraftedArt } from "./HandcraftedArt";
 
 
-// Personal section: home, about, hobbies/personal
-const PERSONAL_SECTIONS = ["personal-home", "personal-about", "personal-gallery", "personal-handcraft", "personal-vibing", "personal-contact"];
-// Professional section: skills, projects, experience, testimonials
-const PROFESSIONAL_SECTIONS = ["pro-skills", "pro-projects", "pro-experience", "pro-testimonials"];
-
-const ALL_SECTIONS = [...PERSONAL_SECTIONS, ...PROFESSIONAL_SECTIONS];
+// Personal: home, about, art, contact
+const PERSONAL_SECTIONS = ["personal-home", "personal-about", "personal-handcraft", "personal-contact"];
+// Professional: skills, projects, experience
+const PROFESSIONAL_SECTIONS = ["pro-skills", "pro-projects", "pro-experience"];
 
 type Tab = "personal" | "professional";
 
 export function PortfolioShell() {
-  const [active, setActive] = useState(PERSONAL_SECTIONS[0]);
-  const [tab, setTab] = useState<Tab>("personal");
+  const [active, setActive] = useState(PROFESSIONAL_SECTIONS[0]);
+  const [tab, setTab] = useState<Tab>("professional");
   const { theme, toggleTheme } = useTheme();
   const { t } = useLanguage();
 
   const currentSections =
     tab === "personal"
       ? [
-          { id: "personal-home", label: "Home" },
-          { id: "personal-about", label: "About" },
-          { id: "personal-gallery", label: "Gallery" },
-          { id: "personal-handcraft", label: "Art" },
-          { id: "personal-vibing", label: "Vibing" },
-          { id: "personal-contact", label: "Contact" },
+          { id: "personal-home", label: t("navHome") },
+          { id: "personal-about", label: t("navAbout") },
+          { id: "personal-handcraft", label: t("navArt") },
+          { id: "personal-contact", label: t("navContact") },
         ]
       : [
-          { id: "pro-skills", label: "Skills" },
-          { id: "pro-projects", label: "Projects" },
-          { id: "pro-experience", label: "Experience" },
-          { id: "pro-testimonials", label: "Testimonials" },
+          { id: "pro-skills", label: t("navSkills") },
+          { id: "pro-projects", label: t("navProjects") },
+          { id: "pro-experience", label: t("navExperience") },
         ];
 
   useEffect(() => {
@@ -109,7 +104,7 @@ export function PortfolioShell() {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[var(--bg)] opacity-50" />
 
-        {/* ── Plant corner decorations ── */}
+        <div className="hide-mobile-decor">
         {/* Bottom-left tall plant */}
         <SwayingPlant
           className="absolute bottom-0 left-0"
@@ -197,10 +192,68 @@ export function PortfolioShell() {
           size={10}
           delay={3.0}
         />
+        </div>
       </div>
 
-      {/* Floating top-left controls */}
-      <div className="fixed left-3 top-3 z-50 flex items-center gap-1.5 sm:left-5 sm:top-5">
+      <header className="fixed inset-x-0 top-0 z-50 border-b border-[var(--line)] bg-[var(--bg-panel)]/92 px-3 py-2 backdrop-blur-xl md:hidden">
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex shrink-0 items-center gap-1.5">
+            <LanguageToggle compact />
+            <button
+              type="button"
+              onClick={toggleTheme}
+              className="flex h-8 w-8 items-center justify-center rounded-[9px] border border-[var(--line)] bg-[var(--bg-elevated)]/90 text-[var(--muted)] backdrop-blur-xl transition hover:border-[var(--teal)]/30 hover:text-[var(--ink)]"
+              aria-label="Toggle theme"
+            >
+              <span className="text-sm">{theme === "dark" ? "☾" : "☀"}</span>
+            </button>
+          </div>
+          <div className="flex items-center gap-0.5 rounded-full border border-[var(--line)] bg-[var(--bg-elevated)]/92 p-0.5 shadow-md backdrop-blur-xl">
+            <button
+              type="button"
+              onClick={() => handleTabSwitch("personal")}
+              className="relative rounded-full px-2.5 py-1.5 text-[11px] font-semibold transition-colors"
+            >
+              {tab === "personal" && (
+                <motion.span
+                  layoutId="tab-pill-mobile"
+                  className="absolute inset-0 rounded-full bg-[var(--teal)]"
+                  transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                />
+              )}
+              <span
+                className={`relative z-10 ${
+                  tab === "personal" ? "text-white" : "text-[var(--muted)]"
+                }`}
+              >
+                {t("tabPersonal")}
+              </span>
+            </button>
+            <button
+              type="button"
+              onClick={() => handleTabSwitch("professional")}
+              className="relative rounded-full px-2.5 py-1.5 text-[11px] font-semibold transition-colors"
+            >
+              {tab === "professional" && (
+                <motion.span
+                  layoutId="tab-pill-mobile"
+                  className="absolute inset-0 rounded-full bg-[var(--teal)]"
+                  transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                />
+              )}
+              <span
+                className={`relative z-10 ${
+                  tab === "professional" ? "text-white" : "text-[var(--muted)]"
+                }`}
+              >
+                {t("tabProfessional")}
+              </span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <div className="fixed left-5 top-5 z-50 hidden items-center gap-1.5 md:flex">
         <LanguageToggle compact />
         <button
           type="button"
@@ -212,13 +265,12 @@ export function PortfolioShell() {
         </button>
       </div>
 
-      {/* Floating tab switcher — centered top */}
-      <div className="fixed left-1/2 top-3 z-50 -translate-x-1/2 sm:top-5">
+      <div className="fixed left-1/2 top-5 z-50 hidden -translate-x-1/2 md:block">
         <div className="flex items-center gap-0.5 rounded-full border border-[var(--line)] bg-[var(--bg-elevated)]/92 p-1 shadow-lg backdrop-blur-xl">
           <button
             type="button"
             onClick={() => handleTabSwitch("personal")}
-            className="relative rounded-full px-3.5 py-1.5 text-[12px] font-semibold transition-colors sm:px-5 sm:py-2 sm:text-[13px]"
+            className="relative rounded-full px-5 py-2 text-[13px] font-semibold transition-colors"
           >
             {tab === "personal" && (
               <motion.span
@@ -232,13 +284,13 @@ export function PortfolioShell() {
                 tab === "personal" ? "text-white" : "text-[var(--muted)] hover:text-[var(--ink)]"
               }`}
             >
-              Personal
+              {t("tabPersonal")}
             </span>
           </button>
           <button
             type="button"
             onClick={() => handleTabSwitch("professional")}
-            className="relative rounded-full px-3.5 py-1.5 text-[12px] font-semibold transition-colors sm:px-5 sm:py-2 sm:text-[13px]"
+            className="relative rounded-full px-5 py-2 text-[13px] font-semibold transition-colors"
           >
             {tab === "professional" && (
               <motion.span
@@ -252,7 +304,7 @@ export function PortfolioShell() {
                 tab === "professional" ? "text-white" : "text-[var(--muted)] hover:text-[var(--ink)]"
               }`}
             >
-              Pro
+              {t("tabProfessional")}
             </span>
           </button>
         </div>
@@ -262,7 +314,7 @@ export function PortfolioShell() {
       <FloatingDotNav sections={currentSections} active={active} />
 
       {/* Main content */}
-      <main className="relative z-10 w-full">
+      <main className="relative z-10 w-full pt-[52px] md:pt-0">
         {tab === "personal" ? (
           <motion.div
             key="personal"
@@ -278,7 +330,7 @@ export function PortfolioShell() {
 
             {/* Personal About */}
             <section id="personal-about" className="scroll-mt-8">
-              <div className="section-panel px-4 py-10 sm:px-5 md:px-10 lg:px-14 sm:py-12">
+              <div className="section-panel px-4 py-8 sm:px-5 md:px-10 md:py-12 lg:px-14">
                 <div className="mx-auto max-w-[1040px]">
                   <About />
                 </div>
@@ -287,7 +339,7 @@ export function PortfolioShell() {
 
              {/* Handcrafted Art */}
             <section id="personal-handcraft" className="scroll-mt-8">
-              <div className="section-panel px-4 py-10 sm:px-5 md:px-10 lg:px-14 sm:py-12">
+              <div className="section-panel px-4 py-8 sm:px-5 md:px-10 md:py-12 lg:px-14">
                 <div className="mx-auto max-w-[1040px]">
                   <HandcraftedArt />
                 </div>
@@ -296,7 +348,7 @@ export function PortfolioShell() {
 
             {/* Personal Gallery */}
             {/* <section id="personal-gallery" className="scroll-mt-8">
-              <div className="section-panel px-4 py-10 sm:px-5 md:px-10 lg:px-14 sm:py-12">
+              <div className="section-panel px-4 py-8 sm:px-5 md:px-10 md:py-12 lg:px-14">
                 <div className="mx-auto max-w-[1040px]">
                   <Gallery />
                 </div>
@@ -307,7 +359,7 @@ export function PortfolioShell() {
 
             {/* Currently Vibing
             <section id="personal-vibing" className="scroll-mt-8">
-              <div className="section-panel px-4 py-10 sm:px-5 md:px-10 lg:px-14 sm:py-12">
+              <div className="section-panel px-4 py-8 sm:px-5 md:px-10 md:py-12 lg:px-14">
                 <div className="mx-auto max-w-[1040px]">
                   <CurrentlyVibing />
                 </div>
@@ -329,7 +381,7 @@ export function PortfolioShell() {
           >
             {/* Professional Skills */}
             <section id="pro-skills" className="scroll-mt-0">
-              <div className="section-panel px-4 pt-20 pb-10 sm:px-5 sm:pt-24 sm:pb-12 md:px-10 lg:px-14">
+              <div className="section-panel px-4 pb-8 pt-8 sm:px-5 md:px-10 md:pb-12 md:pt-24 lg:px-14">
                 <div className="mx-auto max-w-[1040px]">
                   <Skills />
                 </div>
@@ -338,7 +390,7 @@ export function PortfolioShell() {
 
             {/* Professional Projects */}
             <section id="pro-projects" className="scroll-mt-8">
-              <div className="section-panel px-4 py-10 sm:px-5 md:px-10 lg:px-14 sm:py-12">
+              <div className="section-panel px-4 py-8 sm:px-5 md:px-10 md:py-12 lg:px-14">
                 <div className="mx-auto max-w-[1040px]">
                   <Projects />
                 </div>
@@ -347,20 +399,13 @@ export function PortfolioShell() {
 
             {/* Professional Experience */}
             <section id="pro-experience" className="scroll-mt-8">
-              <div className="section-panel px-4 py-10 sm:px-5 md:px-10 lg:px-14 sm:py-12">
+              <div className="section-panel px-4 py-8 sm:px-5 md:px-10 md:py-12 lg:px-14">
                 <div className="mx-auto max-w-[1040px]">
                   <Timeline />
                 </div>
               </div>
             </section>
 
-            {/* Professional Testimonials */}
-            <section id="pro-testimonials" className="scroll-mt-8">
-              <div className="section-panel px-4 py-10 sm:px-5 md:px-10 lg:px-14 sm:py-12">
-                <div className="mx-auto max-w-[1040px]">
-                </div>
-              </div>
-            </section>
           </motion.div>
         )}
       </main>

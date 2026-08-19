@@ -4,14 +4,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowLeft, MapPin, GraduationCap, Heart, Sparkles, Code2, BookOpen, Star, Lightbulb, Users, Zap, Target } from "lucide-react";
-import { ThemeProvider, useTheme } from "@/components/ThemeProvider";
-import { LanguageProvider, useLanguage } from "@/components/LanguageProvider";
+import { useTheme } from "@/components/ThemeProvider";
+import { useLanguage } from "@/components/LanguageProvider";
 import { SwayingPlant, FloatingLeaf, GrassBlades } from "@/components/PlantDecorations";
 import { CustomCursor } from "@/components/CustomCursor";
 
 function AboutPageContent() {
   const { theme, toggleTheme } = useTheme();
-  const { lang, setLang } = useLanguage();
+  const { lang, setLang, t } = useLanguage();
 
   const careerMilestones = [
     {
@@ -82,7 +82,7 @@ function AboutPageContent() {
     {
       icon: Users,
       title: "Empathy",
-      titleMn: "Хүмүүнлэг байдал",
+      titleMn: "Ойлголцол",
       desc: "Good software is built for people. I think about the end user in every decision — not just what works, but what feels right.",
       descMn: "Сайн програм хүмүүст зориулагдсан байдаг. Зөвхөн ажилладаг зүйл биш, зөв мэдрэгддэг зүйлийг бүтээхийг зорьдог.",
       color: "text-violet-400",
@@ -91,7 +91,7 @@ function AboutPageContent() {
     {
       icon: Star,
       title: "Craft",
-      titleMn: "Урлаг",
+      titleMn: "Ур хийц",
       desc: "Details matter. Clean code, thoughtful UI, and smooth interactions aren't extras — they're the standard I hold myself to.",
       descMn: "Нарийн ширийн зүйлс чухал. Цэвэр код, бодолтой UI, зөөлөн харилцан үйлчлэл нь нэмэлт биш — миний стандарт.",
       color: "text-rose-400",
@@ -130,13 +130,13 @@ function AboutPageContent() {
         <FloatingLeaf className="absolute top-[65%] left-[15%]" color="rgba(34,197,94,0.25)" size={16} delay={0.8} />
       </div>
       {/* Top controls */}
-      <div className="fixed left-6 top-6 z-50 flex items-center gap-2">
+      <div className="fixed left-3 top-3 z-50 flex max-w-[calc(100%-1.5rem)] flex-wrap items-center gap-2 md:left-6 md:top-6">
         <Link
           href="/"
           className="flex items-center gap-2 rounded-xl border border-[var(--line)] bg-[var(--bg-elevated)]/90 px-3 py-2 text-xs font-semibold text-[var(--muted)] backdrop-blur-xl transition hover:border-[var(--teal)]/40 hover:text-[var(--ink)]"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
-          {isMn ? "Буцах" : "Back"}
+          {t("back")}
         </Link>
         <button
           type="button"
@@ -155,7 +155,7 @@ function AboutPageContent() {
         </button>
       </div>
       {/* Main content */}
-      <main className="relative z-10 mx-auto max-w-[860px] px-5 pb-24 pt-28 md:px-10">
+      <main className="relative z-10 mx-auto max-w-[860px] px-4 pb-20 pt-24 sm:px-5 md:px-10 md:pb-24 md:pt-28">
 
         {/* ── Hero intro ── */}
         <motion.div
@@ -164,10 +164,10 @@ function AboutPageContent() {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="mb-16"
         >
-          <span className="font-mono text-xs font-semibold uppercase tracking-[0.15em] text-[var(--teal)]">
+          <span className="section-eyebrow">
             {isMn ? "Миний тухай" : "About me"}
           </span>
-          <h1 className="mt-3 text-4xl font-extrabold leading-tight tracking-tight text-[var(--ink)] sm:text-5xl">
+          <h1 className="section-title mt-3 text-[var(--ink)] md:text-5xl">
             {isMn ? "Кодоос цааш" : "Beyond the code"}
           </h1>
           <div className="mt-3 h-[3px] w-12 rounded-full" style={{ background: "var(--teal)" }} />
@@ -209,7 +209,7 @@ function AboutPageContent() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-              className="space-y-4 text-[15px] leading-[1.9] text-[var(--muted)]"
+              className="space-y-4 body-copy"
             >
               {isMn ? (
                 <>
@@ -249,17 +249,17 @@ function AboutPageContent() {
           className="mb-16"
         >
           <div className="mb-6">
-            <span className="font-mono text-xs font-semibold uppercase tracking-[0.15em] text-[var(--teal)]">
+            <span className="section-eyebrow">
               {isMn ? "Боловсрол" : "Education"}
             </span>
-            <h2 className="mt-2 text-2xl font-extrabold leading-tight tracking-tight text-[var(--ink)]">
+            <h2 className="section-title mt-2 text-[var(--ink)] md:text-2xl">
               {isMn ? "Академик суурь" : "Academic foundation"}
             </h2>
             <div className="mt-2 h-[3px] w-8 rounded-full" style={{ background: "var(--teal)" }} />
           </div>
 
           <div className="overflow-hidden rounded-[18px] border border-[var(--line)] bg-[var(--bg-elevated)] dark:bg-[rgba(13,21,32,0.7)]">
-            <div className="flex items-start gap-5 p-6 sm:p-8">
+            <div className="flex items-start gap-4 p-4 sm:gap-5 sm:p-6 md:p-8">
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[12px] bg-[var(--teal-soft)]">
                 <GraduationCap className="h-6 w-6 text-[var(--teal)]" strokeWidth={1.8} />
               </div>
@@ -305,10 +305,10 @@ function AboutPageContent() {
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className="mb-8"
           >
-            <span className="font-mono text-xs font-semibold uppercase tracking-[0.15em] text-[var(--teal)]">
+            <span className="section-eyebrow">
               {isMn ? "Замнал" : "Journey"}
             </span>
-            <h2 className="mt-2 text-2xl font-extrabold leading-tight tracking-tight text-[var(--ink)]">
+            <h2 className="section-title mt-2 text-[var(--ink)] md:text-2xl">
               {isMn ? "Хэрхэн энд хүрсэн бэ" : "How I got here"}
             </h2>
             <div className="mt-2 h-[3px] w-8 rounded-full" style={{ background: "var(--teal)" }} />
@@ -361,10 +361,10 @@ function AboutPageContent() {
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className="mb-8"
           >
-            <span className="font-mono text-xs font-semibold uppercase tracking-[0.15em] text-[var(--teal)]">
+            <span className="section-eyebrow">
               {isMn ? "Үнэт зүйлс" : "Values"}
             </span>
-            <h2 className="mt-2 text-2xl font-extrabold leading-tight tracking-tight text-[var(--ink)]">
+            <h2 className="section-title mt-2 text-[var(--ink)] md:text-2xl">
               {isMn ? "Юунд итгэдэг вэ" : "What I believe in"}
             </h2>
             <div className="mt-2 h-[3px] w-8 rounded-full" style={{ background: "var(--teal)" }} />
@@ -411,7 +411,7 @@ function AboutPageContent() {
           className="rounded-[20px] border border-[var(--teal)]/20 bg-gradient-to-br from-[var(--teal-soft)] to-violet-400/10 p-8 text-center"
         >
           <Heart className="mx-auto mb-3 h-7 w-7 text-rose-400" strokeWidth={1.8} />
-          <h3 className="text-xl font-extrabold text-[var(--ink)]">
+          <h3 className="text-xl font-extrabold text-[var(--ink)] sm:text-2xl">
             {isMn ? "Хамтран ажиллах уу?" : "Want to work together?"}
           </h3>
           <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-[var(--muted)]">
@@ -440,11 +440,5 @@ function AboutPageContent() {
 }
 
 export default function AboutPage() {
-  return (
-    <ThemeProvider>
-      <LanguageProvider>
-        <AboutPageContent />
-      </LanguageProvider>
-    </ThemeProvider>
-  );
+  return <AboutPageContent />;
 }

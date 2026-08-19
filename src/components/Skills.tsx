@@ -60,10 +60,10 @@ export function Skills() {
 
       <ScaleIn>
         <div className="mb-8">
-          <span className="font-mono text-xs font-semibold uppercase tracking-[0.15em] text-[var(--teal)]">
-            Tech Stack
+          <span className="section-eyebrow">
+            {t("skillsEyebrow")}
           </span>
-          <h2 className="mt-2 text-3xl font-extrabold tracking-tight text-[var(--ink)]">
+          <h2 className="section-title mt-2 text-[var(--ink)] md:text-3xl">
             {t("skillsTitle")}
           </h2>
           <div className="mt-3 h-[3px] w-10 rounded-full accent-line" />
@@ -88,7 +88,7 @@ export function Skills() {
               borderColor: activeCategory === null ? "var(--teal)" : "transparent",
             }}
           >
-            All
+            {t("filterAll")}
           </button>
           {skillCategories.map((cat) => {
             const Icon = iconMap[cat.icon];
@@ -142,7 +142,7 @@ export function Skills() {
                   className="ml-auto font-mono text-[10px] font-semibold px-2 py-0.5 rounded-full"
                   style={{ background: cat.colorSoft, color: cat.color }}
                 >
-                  {cat.skills.length} skills
+                  {cat.skills.length} {t("skillsCount")}
                 </span>
               </div>
 
@@ -155,9 +155,9 @@ export function Skills() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.3, delay: catIdx * 0.07 + skillIdx * 0.04 }}
                   >
-                    <div className="mb-1 flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-semibold text-[var(--ink-soft)]">
+                    <div className="mb-1 flex flex-col gap-0.5 md:flex-row md:items-center md:justify-between">
+                      <div className="flex min-w-0 items-center gap-2">
+                        <span className="text-[13px] font-semibold text-[var(--ink-soft)]">
                           {skill.name}
                         </span>
                         <span
@@ -168,11 +168,11 @@ export function Skills() {
                         </span>
                       </div>
                       <div className="flex items-center gap-1.5">
-                        <span className="font-mono text-[10px] text-[var(--muted)]">
+                        <span className="font-mono text-[11px] text-[var(--muted)]">
                           {getProficiencyLabel(skill.level, t)}
                         </span>
                         <span
-                          className="font-mono text-[10px] font-bold"
+                          className="font-mono text-[11px] font-bold"
                           style={{ color: cat.color }}
                         >
                           {skill.level}%
@@ -208,7 +208,7 @@ export function Skills() {
       <FadeIn delay={0.3}>
         <div className="mt-6 pt-5 border-t border-[var(--line)]">
           <p className="mb-3 font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-[var(--muted)]">
-            Quick reference
+            {t("quickReference")}
           </p>
           <Stagger className="flex flex-wrap gap-2">
             {techStack.map((item) => {

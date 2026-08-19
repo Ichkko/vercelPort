@@ -16,6 +16,7 @@ interface SlideshowProps {
 }
 
 function ProjectSlideshow({ images, alt, aspectClass = "aspect-[16/9]" }: SlideshowProps) {
+  const { t } = useLanguage();
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);
 
@@ -81,14 +82,14 @@ function ProjectSlideshow({ images, alt, aspectClass = "aspect-[16/9]" }: Slides
           <button
             onClick={prev}
             className="absolute left-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/40 p-1 text-white backdrop-blur-sm transition hover:bg-black/60"
-            aria-label="Previous image"
+            aria-label={t("prevImage")}
           >
             <ChevronLeft className="h-4 w-4" />
           </button>
           <button
             onClick={handleNext}
             className="absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/40 p-1 text-white backdrop-blur-sm transition hover:bg-black/60"
-            aria-label="Next image"
+            aria-label={t("nextImage")}
           >
             <ChevronRight className="h-4 w-4" />
           </button>
@@ -128,10 +129,10 @@ export function Projects() {
       <FadeIn>
         <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <span className="font-mono text-xs font-semibold uppercase tracking-[0.15em] text-[var(--teal)]">
-              Portfolio
+            <span className="section-eyebrow">
+              {t("workEyebrow")}
             </span>
-            <h2 className="mt-2 text-3xl font-extrabold tracking-tight text-[var(--ink)]">
+            <h2 className="section-title mt-2 text-[var(--ink)] md:text-3xl">
               {t("projectsTitle")}
             </h2>
             <div className="mt-3 h-[3px] w-10 rounded-full accent-line" />
@@ -167,17 +168,17 @@ export function Projects() {
                 />
                 {/* Featured badge */}
                 <span className="absolute left-3 top-3 z-20 rounded-full bg-[var(--teal)] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest text-white shadow">
-                  Featured
+                  {t("featured")}
                 </span>
               </div>
 
               {/* Content */}
               <div className="flex flex-1 flex-col justify-between p-4 sm:p-6">
                 <div>
-                  <h3 className="text-lg font-extrabold leading-snug tracking-tight text-[var(--ink)] sm:text-xl">
+                  <h3 className="card-title sm:text-xl">
                     {t(featured?.titleKey)}
                   </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
+                  <p className="mt-2 body-copy">
                     {t(featured?.descKey)}
                   </p>
                   <div className="mt-3 flex flex-wrap gap-1.5">
@@ -189,6 +190,7 @@ export function Projects() {
                   </div>
                 </div>
                 <div className="mt-4 flex items-center gap-3 border-t border-[var(--line)] pt-4">
+                  {!featured.liveUrl.includes("github.com") && (
                   <a
                     href={featured?.liveUrl}
                     target="_blank"
@@ -198,6 +200,7 @@ export function Projects() {
                     <ExternalLink className="h-3.5 w-3.5" strokeWidth={2} />
                     {t("liveDemo")}
                   </a>
+                  )}
                   <a
                     href={featured?.githubUrl}
                     target="_blank"
@@ -232,10 +235,10 @@ export function Projects() {
 
               {/* Content */}
               <div className="flex flex-1 flex-col p-5">
-                <h3 className="text-base font-bold leading-snug tracking-tight text-[var(--ink)]">
+                <h3 className="card-title">
                   {t(project?.titleKey)}
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
+                <p className="mt-2 body-copy">
                   {t(project?.descKey)}
                 </p>
                 <div className="mt-3 flex flex-wrap gap-1.5">
@@ -245,7 +248,8 @@ export function Projects() {
                     </span>
                   ))}
                 </div>
-                <div className="mt-auto flex items-center justify-between gap-4 border-t border-[var(--line)] pt-4">
+                <div className="mt-auto flex items-center gap-4 border-t border-[var(--line)] pt-4">
+                  {!project.liveUrl.includes("github.com") && (
                   <a
                     href={project?.liveUrl}
                     target="_blank"
@@ -255,6 +259,7 @@ export function Projects() {
                     <ExternalLink className="h-3.5 w-3.5" strokeWidth={2} />
                     {t("liveDemo")}
                   </a>
+                  )}
                   <a
                     href={project?.githubUrl}
                     target="_blank"

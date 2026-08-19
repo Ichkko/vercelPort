@@ -13,7 +13,7 @@ export function FloatingDotNav({ sections, active }: DotNavProps) {
 
   return (
     <nav
-      className="fixed right-6 top-1/2 z-50 -translate-y-1/2 flex flex-col items-center gap-3"
+      className="fixed right-6 top-1/2 z-50 hidden -translate-y-1/2 flex-col items-center gap-3 md:flex"
       aria-label="Section navigation"
     >
       {sections.map((section) => {

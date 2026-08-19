@@ -33,7 +33,7 @@ export function Timeline() {
       items: [t("year2025Item1"), t("year2025Item2"), t("year2025Item3")],
     },
     {
-      year: "now",
+      year: t("timelineNow"),
       title: t("year2026Title"),
       items: [t("year2026Item1"), t("year2026Item2"), t("year2026Item3")],
     },
@@ -56,7 +56,7 @@ export function Timeline() {
         />
       </div>
       <FadeIn>
-        <h2 className="text-xl font-extrabold leading-tight text-[#151b31] dark:text-stone-50">
+        <h2 className="text-xl font-extrabold leading-tight text-[#151b31] md:text-xl dark:text-stone-50">
           {t("timelineTitle")}
         </h2>
         <div className="mt-2 h-0.5 w-8 bg-[var(--teal)]" />
@@ -95,10 +95,10 @@ export function Timeline() {
                     <div className="h-3 w-3 rounded-full border-2 border-[var(--teal)] bg-white shadow-[0_0_0_3px_var(--teal-soft)] dark:bg-[var(--bg-elevated)]" />
                   </motion.div>
                   <p className="text-xs font-bold text-[var(--teal)]">{item?.year}</p>
-                  <h3 className="mt-1 text-sm font-semibold text-stone-900 dark:text-stone-100">
+                  <h3 className="mt-1 card-title text-sm">
                     {item?.title}
                   </h3>
-                  <ul className="mt-2 space-y-1 text-xs leading-relaxed text-stone-500 dark:text-[var(--muted)]">
+                  <ul className="mt-2 space-y-1 text-[13px] leading-relaxed text-[var(--muted)]">
                     {item?.items?.map((line) => (
                       <li key={line}>{line}</li>
                     ))}
@@ -162,10 +162,10 @@ export function Timeline() {
                     />
                   </motion.div>
                   <p className="text-sm font-bold text-[var(--teal)]">{item?.year}</p>
-                  <h3 className="mt-2 text-sm font-semibold text-stone-900 dark:text-stone-100">
+                  <h3 className="mt-2 card-title text-sm">
                     {item?.title}
                   </h3>
-                  <ul className="mt-3 space-y-1 text-xs leading-relaxed text-stone-500 dark:text-[var(--muted)]">
+                  <ul className="mt-3 space-y-1 text-[13px] leading-relaxed text-[var(--muted)]">
                     {item?.items?.map((line, li) => (
                       <motion.li
                         key={line}

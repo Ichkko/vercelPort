@@ -36,24 +36,22 @@ export function Contact() {
         body: JSON.stringify(form),
       });
 
-      const data = await res.json();
-
       if (!res.ok) {
-        setErrorMsg(data?.error || "Failed to send. Please try again.");
+        setErrorMsg(t("formError"));
         setStatus("error");
       } else {
         setStatus("success");
         setForm({ name: "", email: "", message: "" });
       }
     } catch {
-      setErrorMsg("Network error. Please try again.");
+      setErrorMsg(t("formNetworkError"));
       setStatus("error");
     }
   };
 
   return (
     <section id="contact" className="scroll-mt-8 lg:ml-[0px]">
-      <div className="relative overflow-hidden px-5 py-10 sm:px-6 sm:py-12 md:px-10 md:py-14 lg:px-14"
+      <div className="relative overflow-hidden px-4 py-10 pb-24 sm:px-6 md:px-10 md:py-14 md:pb-14 lg:px-14"
         style={{ background: "linear-gradient(160deg, #0f1e35 0%, #0a1628 50%, #071020 100%)" }}
       >
         {/* Subtle background orbs */}
@@ -68,13 +66,13 @@ export function Contact() {
           {/* Left — Contact Form */}
           <SlideIn direction="left">
             <div className="mb-6">
-              <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--teal)]">
-                Get in touch
+              <p className="section-eyebrow">
+                {t("contactEyebrow")}
               </p>
-              <h2 className="mt-2 text-2xl font-extrabold leading-tight tracking-tight text-white sm:text-3xl md:text-[36px]">
+              <h2 className="section-title mt-2 text-white md:text-[36px]">
                 {t("contactTitle")}
               </h2>
-              <p className="mt-3 max-w-md text-[14px] leading-relaxed text-white/50">
+              <p className="section-desc mt-3 max-w-md text-white/55">
                 {t("contactDesc")}
               </p>
             </div>
@@ -83,7 +81,7 @@ export function Contact() {
               {/* Name */}
               <div>
                 <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-white/40">
-                  Name
+                  {t("formName")}
                 </label>
                 <input
                   type="text"
@@ -91,15 +89,15 @@ export function Contact() {
                   value={form.name}
                   onChange={handleChange}
                   required
-                  placeholder="Your name"
-                  className="w-full rounded-[12px] border border-white/[0.08] bg-white/[0.05] px-4 py-2.5 text-[13px] text-white placeholder-white/25 outline-none transition focus:border-[var(--teal)]/50 focus:bg-white/[0.08] focus:ring-1 focus:ring-[var(--teal)]/30"
+                  placeholder={t("formNamePlaceholder")}
+                  className="w-full rounded-[12px] border border-white/[0.08] bg-white/[0.05] px-4 py-3 text-[15px] text-white placeholder-white/25 outline-none transition focus:border-[var(--teal)]/50 focus:bg-white/[0.08] focus:ring-1 focus:ring-[var(--teal)]/30"
                 />
               </div>
 
               {/* Email */}
               <div>
                 <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-white/40">
-                  Email
+                  {t("formEmail")}
                 </label>
                 <input
                   type="email"
@@ -107,15 +105,15 @@ export function Contact() {
                   value={form.email}
                   onChange={handleChange}
                   required
-                  placeholder="your@email.com"
-                  className="w-full rounded-[12px] border border-white/[0.08] bg-white/[0.05] px-4 py-2.5 text-[13px] text-white placeholder-white/25 outline-none transition focus:border-[var(--teal)]/50 focus:bg-white/[0.08] focus:ring-1 focus:ring-[var(--teal)]/30"
+                  placeholder={t("formEmailPlaceholder")}
+                  className="w-full rounded-[12px] border border-white/[0.08] bg-white/[0.05] px-4 py-3 text-[15px] text-white placeholder-white/25 outline-none transition focus:border-[var(--teal)]/50 focus:bg-white/[0.08] focus:ring-1 focus:ring-[var(--teal)]/30"
                 />
               </div>
 
               {/* Message */}
               <div>
                 <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-white/40">
-                  Message
+                  {t("formMessage")}
                 </label>
                 <textarea
                   name="message"
@@ -123,8 +121,8 @@ export function Contact() {
                   onChange={handleChange}
                   required
                   rows={4}
-                  placeholder="Tell me about your project or just say hi..."
-                  className="w-full resize-none rounded-[12px] border border-white/[0.08] bg-white/[0.05] px-4 py-2.5 text-[13px] text-white placeholder-white/25 outline-none transition focus:border-[var(--teal)]/50 focus:bg-white/[0.08] focus:ring-1 focus:ring-[var(--teal)]/30"
+                  placeholder={t("formMessagePlaceholder")}
+                  className="w-full resize-none rounded-[12px] border border-white/[0.08] bg-white/[0.05] px-4 py-3 text-[15px] text-white placeholder-white/25 outline-none transition focus:border-[var(--teal)]/50 focus:bg-white/[0.08] focus:ring-1 focus:ring-[var(--teal)]/30"
                 />
               </div>
 
@@ -136,7 +134,7 @@ export function Contact() {
                   className="flex items-center gap-2 rounded-[12px] border border-teal-500/30 bg-teal-500/10 px-4 py-3 text-[13px] text-teal-300"
                 >
                   <CheckCircle className="h-4 w-4 shrink-0" strokeWidth={1.5} />
-                  Message sent! I'll get back to you soon.
+                  {t("formSuccess")}
                 </motion.div>
               )}
 
@@ -162,7 +160,7 @@ export function Contact() {
                 {status === "loading" ? (
                   <>
                     <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-                    Sending…
+                    {t("formSending")}
                   </>
                 ) : (
                   <>
@@ -177,7 +175,7 @@ export function Contact() {
           {/* Right — Contact links */}
           <ScaleIn delay={0.15}>
             <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-white/40">
-              Or reach me directly
+              {t("reachDirectly")}
             </p>
             <div className="grid grid-cols-1 gap-2 text-sm sm:grid-cols-3 lg:grid-cols-1">
               {links?.map((item, i) => (

@@ -90,10 +90,7 @@ export function MobileHeader({ active }: { active: string }) {
             >
               <span className="flex items-center gap-2">
                 <FolderKanban className="h-3.5 w-3.5" strokeWidth={1.8} />
-                Portfolio
-              </span>
-              <span className="rounded-full bg-[var(--teal)] px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white">
-                New
+                {t("workEyebrow")}
               </span>
             </Link>
           </motion.nav>

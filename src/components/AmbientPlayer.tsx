@@ -220,7 +220,7 @@ export function AmbientPlayer() {
   };
 
   return (
-    <div ref={playerRef} className="fixed bottom-5 left-5 z-50 flex flex-col items-start gap-2">
+    <div ref={playerRef} className="fixed bottom-[max(0.75rem,env(safe-area-inset-bottom))] left-3 z-50 flex flex-col items-start gap-2 md:bottom-5 md:left-5">
       {/* Hidden YT.Player container */}
       <div
         ref={containerRef}
@@ -233,7 +233,7 @@ export function AmbientPlayer() {
         <div
           className="rounded-2xl shadow-2xl border px-4 py-3"
           style={{
-            width: 220,
+            width: "min(220px, calc(100vw - 1.5rem))",
             background: "rgba(10,10,10,0.94)",
             backdropFilter: "blur(16px)",
             borderColor: "rgba(74,222,128,0.3)",

@@ -97,6 +97,7 @@ interface SlideshowProps {
 }
 
 function ProjectSlideshow({ images, alt }: SlideshowProps) {
+  const { t } = useLanguage();
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);
   const total = images.length;
@@ -159,14 +160,14 @@ function ProjectSlideshow({ images, alt }: SlideshowProps) {
           <button
             onClick={prev}
             className="absolute left-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/40 p-1.5 text-white backdrop-blur-sm transition hover:bg-black/60"
-            aria-label="Previous image"
+            aria-label={t("prevImage")}
           >
             <ChevronLeft className="h-4 w-4" />
           </button>
           <button
             onClick={handleNext}
             className="absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/40 p-1.5 text-white backdrop-blur-sm transition hover:bg-black/60"
-            aria-label="Next image"
+            aria-label={t("nextImage")}
           >
             <ChevronRight className="h-4 w-4" />
           </button>
@@ -212,9 +213,9 @@ export default function PortfolioPage() {
       : projectsMeta.filter((p) => p.tags.includes(activeTag));
 
   const metrics = [
-    { value: "20+", numericValue: 20, suffix: "+", label: t("metricProjects"), Icon: Code2 },
+    { value: "6+", numericValue: 6, suffix: "+", label: t("metricProjects"), Icon: Code2 },
     { value: "500+", numericValue: 500, suffix: "+", label: t("metricCommits"), Icon: GitBranch },
-    { value: "3+", numericValue: 3, suffix: "+", label: t("metricYears"), Icon: Rocket },
+    { value: "4+", numericValue: 4, suffix: "+", label: t("metricYears"), Icon: Rocket },
     { value: "100%", numericValue: 100, suffix: "%", label: t("metricResponsibility"), Icon: ShieldCheck },
   ];
 
@@ -228,7 +229,7 @@ export default function PortfolioPage() {
             className="inline-flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-semibold text-[var(--muted)] transition hover:bg-[var(--teal-soft)] hover:text-[var(--teal)]"
           >
             <ArrowLeft className="h-4 w-4" strokeWidth={2} />
-            Back
+            {t("back")}
           </Link>
 
           <div className="flex items-center gap-2">
@@ -254,17 +255,17 @@ export default function PortfolioPage() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-6xl px-5 py-14">
+      <main className="mx-auto max-w-6xl px-4 py-10 sm:px-5 md:py-14">
         {/* Hero heading */}
         <FadeIn>
           <div className="mb-12 text-center">
-            <span className="font-mono text-xs font-semibold uppercase tracking-[0.18em] text-[var(--teal)]">
-              Portfolio
+            <span className="section-eyebrow">
+              {t("workEyebrow")}
             </span>
-            <h1 className="mt-3 text-4xl font-extrabold tracking-tight text-[var(--ink)] sm:text-5xl">
+            <h1 className="section-title mt-3 text-[var(--ink)] md:text-5xl">
               {t("projectsTitle")}
             </h1>
-            <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-[var(--muted)]">
+            <p className="section-desc mx-auto mt-4 max-w-xl">
               {t("projectsDesc")}
             </p>
             <div className="mx-auto mt-5 h-[3px] w-10 rounded-full accent-line" />
@@ -301,7 +302,7 @@ export default function PortfolioPage() {
                     : "border border-[var(--line)] text-[var(--muted)] hover:border-[var(--teal)]/40 hover:text-[var(--ink)]"
                 }`}
               >
-                {tag}
+                {tag === "All" ? t("filterAll") : tag}
               </button>
             ))}
           </div>
@@ -331,7 +332,7 @@ export default function PortfolioPage() {
                         alt={t(filtered[0].titleKey)}
                       />
                       <span className="absolute left-3 top-3 z-20 rounded-full bg-[var(--teal)] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest text-white shadow">
-                        Featured
+                        {t("featured")}
                       </span>
                     </div>
                     <div className="flex flex-1 flex-col justify-between p-6">
@@ -351,6 +352,7 @@ export default function PortfolioPage() {
                         </div>
                       </div>
                       <div className="mt-6 flex items-center gap-4 border-t border-[var(--line)] pt-4">
+                        {!filtered[0].liveUrl.includes("github.com") && (
                         <a
                           href={filtered[0].liveUrl}
                           target="_blank"
@@ -360,6 +362,7 @@ export default function PortfolioPage() {
                           <ExternalLink className="h-3.5 w-3.5" strokeWidth={2} />
                           {t("liveDemo")}
                         </a>
+                        )}
                         <a
                           href={filtered[0].githubUrl}
                           target="_blank"
@@ -402,7 +405,8 @@ export default function PortfolioPage() {
                                 </span>
                               ))}
                             </div>
-                            <div className="mt-auto flex items-center justify-between gap-4 border-t border-[var(--line)] pt-4">
+                            <div className="mt-auto flex items-center gap-4 border-t border-[var(--line)] pt-4">
+                              {!project.liveUrl.includes("github.com") && (
                               <a
                                 href={project.liveUrl}
                                 target="_blank"
@@ -412,6 +416,7 @@ export default function PortfolioPage() {
                                 <ExternalLink className="h-3.5 w-3.5" strokeWidth={2} />
                                 {t("liveDemo")}
                               </a>
+                              )}
                               <a
                                 href={project.githubUrl}
                                 target="_blank"
@@ -433,12 +438,12 @@ export default function PortfolioPage() {
 
             {filtered.length === 0 && (
               <div className="flex flex-col items-center justify-center py-24 text-center">
-                <p className="text-lg font-semibold text-[var(--muted)]">No projects found for &ldquo;{activeTag}&rdquo;</p>
+                <p className="text-lg font-semibold text-[var(--muted)]">{t("noProjects")} &ldquo;{activeTag}&rdquo;</p>
                 <button
                   onClick={() => setActiveTag("All")}
                   className="mt-4 rounded-lg bg-[var(--teal-soft)] px-4 py-2 text-sm font-semibold text-[var(--teal)] transition hover:opacity-80"
                 >
-                  Show all projects
+                  {t("showAllProjects")}
                 </button>
               </div>
             )}
@@ -449,7 +454,7 @@ export default function PortfolioPage() {
         <FadeIn delay={0.1}>
           <div className="mt-16 flex flex-col items-center gap-4 rounded-2xl border border-[var(--line)] bg-[var(--bg-elevated)] px-8 py-10 text-center">
             <span className="font-mono text-xs font-semibold uppercase tracking-[0.15em] text-[var(--teal)]">
-              Open to work
+              {t("openToWork")}
             </span>
             <h2 className="text-2xl font-extrabold tracking-tight text-[var(--ink)]">
               {t("contactTitle")}
