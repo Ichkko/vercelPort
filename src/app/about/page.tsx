@@ -3,108 +3,120 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowLeft, MapPin, GraduationCap, Heart, Sparkles, Code2, BookOpen, Star, Lightbulb, Users, Zap, Target } from "lucide-react";
+import {
+  ArrowLeft,
+  MapPin,
+  GraduationCap,
+  Heart,
+  Briefcase,
+  Award,
+  Languages,
+  Trophy,
+} from "lucide-react";
 import { useTheme } from "@/components/ThemeProvider";
 import { useLanguage } from "@/components/LanguageProvider";
 import { SwayingPlant, FloatingLeaf, GrassBlades } from "@/components/PlantDecorations";
 import { CustomCursor } from "@/components/CustomCursor";
+import { profile } from "@/data/portfolio";
+
+const skills = [
+  "HTML/CSS",
+  "Java",
+  "JavaScript",
+  "TypeScript",
+  "Spring Boot / JPA",
+  "REST API",
+  "MySQL",
+  "PostgreSQL",
+  "React",
+  "Next.js",
+  "Tailwind CSS",
+  "Flutter",
+  "Astro",
+  "GitHub",
+  "Canva",
+  "PowerPoint / Word",
+];
 
 function AboutPageContent() {
   const { theme, toggleTheme } = useTheme();
   const { lang, setLang, t } = useLanguage();
-
-  const careerMilestones = [
-    {
-      year: "2022",
-      icon: BookOpen,
-      title: "The Beginning",
-      titleMn: "Эхлэл",
-      desc: "Started my software engineering journey at NUM. Fell in love with problem-solving through code — HTML, CSS, and JavaScript were my first languages.",
-      descMn: "МУИС-д програм хангамжийн инженерчлэлийн аялалаа эхлүүлсэн. HTML, CSS, JavaScript-ийг анхны хэл болгон сурч, кодоор асуудал шийдэхэд дурлав.",
-      color: "from-amber-400/20 to-orange-400/10",
-      dot: "bg-amber-400",
-      border: "border-amber-400/30",
-    },
-    {
-      year: "2023",
-      icon: Code2,
-      title: "Backend Roots",
-      titleMn: "Backend суурь",
-      desc: "Dived deep into Java and Spring Boot. Built my first REST APIs, learned MySQL database design, and discovered how the server side of the web actually works.",
-      descMn: "Java болон Spring Boot-д гүнзгий орсон. Анхны REST API-уудаа бүтээж, MySQL өгөгдлийн сангийн загварчлалыг сурч, серверийн тал хэрхэн ажилладгийг ойлгосон.",
-      color: "from-teal-400/20 to-cyan-400/10",
-      dot: "bg-[var(--teal)]",
-      border: "border-[var(--teal)]/30",
-    },
-    {
-      year: "2024",
-      icon: Sparkles,
-      title: "Full Stack Leap",
-      titleMn: "Full Stack үсрэлт",
-      desc: "Expanded into Next.js, React, and Tailwind CSS. Shipped real products — a QR-based POS system and a hotel booking platform — from design to deployment.",
-      descMn: "Next.js, React, Tailwind CSS-д тэлсэн. QR-д суурилсан POS систем болон зочид буудлын захиалгын платформыг дизайнаас деплой хүртэл бүтээсэн.",
-      color: "from-violet-400/20 to-purple-400/10",
-      dot: "bg-violet-400",
-      border: "border-violet-400/30",
-    },
-    {
-      year: "2025",
-      icon: Zap,
-      title: "Polishing & Growing",
-      titleMn: "Боловсруулалт & Өсөлт",
-      desc: "Exploring Flutter for mobile, refining UX craft, and building production-ready portfolios. Currently open to internships and junior roles where I can keep growing.",
-      descMn: "Flutter mobile-д судалгаа хийж, UX чадварыг нарийлуулж, production-ready портфолиуд бүтээж байна. Одоо дадлага болон junior ажлын байрт нээлттэй.",
-      color: "from-rose-400/20 to-pink-400/10",
-      dot: "bg-rose-400",
-      border: "border-rose-400/30",
-    },
-  ];
-
-  const coreValues = [
-    {
-      icon: Target,
-      title: "Ownership",
-      titleMn: "Хариуцлага",
-      desc: "I take full responsibility for what I build — from the first commit to the final deploy. If it ships under my name, it works.",
-      descMn: "Бүтээсэн зүйлдээ эхний commit-ээс эцсийн deploy хүртэл бүрэн хариуцлага хүлээдэг. Миний нэрээр гарсан бол ажилладаг.",
-      color: "text-amber-400",
-      bg: "bg-amber-400/10",
-    },
-    {
-      icon: Lightbulb,
-      title: "Curiosity",
-      titleMn: "Сониуч зан",
-      desc: "I'm always asking 'why does this work?' and 'how can it be better?' Curiosity is what turns a task into a craft.",
-      descMn: "'Яагаад ажилладаг вэ?\' \'Хэрхэн сайжруулах вэ?\' гэж байнга асуудаг. Сониуч зан нь ажлыг урлаг болгодог.",
-      color: "text-[var(--teal)]",
-      bg: "bg-[var(--teal)]/10",
-    },
-    {
-      icon: Users,
-      title: "Empathy",
-      titleMn: "Ойлголцол",
-      desc: "Good software is built for people. I think about the end user in every decision — not just what works, but what feels right.",
-      descMn: "Сайн програм хүмүүст зориулагдсан байдаг. Зөвхөн ажилладаг зүйл биш, зөв мэдрэгддэг зүйлийг бүтээхийг зорьдог.",
-      color: "text-violet-400",
-      bg: "bg-violet-400/10",
-    },
-    {
-      icon: Star,
-      title: "Craft",
-      titleMn: "Ур хийц",
-      desc: "Details matter. Clean code, thoughtful UI, and smooth interactions aren't extras — they're the standard I hold myself to.",
-      descMn: "Нарийн ширийн зүйлс чухал. Цэвэр код, бодолтой UI, зөөлөн харилцан үйлчлэл нь нэмэлт биш — миний стандарт.",
-      color: "text-rose-400",
-      bg: "bg-rose-400/10",
-    },
-  ];
-
   const isMn = lang === "mn";
+
+  const jobs = [
+    {
+      role: isMn ? "Үйлдвэрлэлийн дадлага" : "Software intern",
+      company: isMn ? "Гэрэлт Ай Ти ХХК" : "Gerelt IT LLC",
+      period: "2025.06 – 2025.08",
+      place: isMn ? "Ховд аймаг, Монгол" : "Khovd, Mongolia",
+      points: isMn
+        ? [
+            "West.mn сургалтын платформын вебсайтыг боловсруулсан.",
+            "Сургалтын төвийн хичээлүүдийг цахим орчинд нэгтгэж, бүртгүүлэх, мэдээлэл авах, сургалтад оролцох боломжийг бүрдүүлсэн.",
+          ]
+        : [
+            "Built the West.mn training-platform website.",
+            "Brought the center’s courses online so people could register, get information, and take part in training.",
+          ],
+    },
+    {
+      role: isMn ? "Худалдааны зөвлөх" : "Sales consultant",
+      company: "Dariim beauty",
+      period: "2024.06 – 2024.08",
+      place: isMn ? "Ховд аймаг" : "Khovd, Mongolia",
+      points: isMn
+        ? [
+            "Үйлчлүүлэгчдэд гоо сайхны бүтээгдэхүүний талаар зөвлөгөө өгч, хэрэгцээнд нь тохирсон бараа санал болгон борлуулалт хийсэн.",
+            "Барааны өрөлт, бүрэн бүтэн байдал, үлдэгдлийг хянаж, найрсаг үйлчилгээгээр борлуулалтын зорилтыг биелүүлсэн.",
+          ]
+        : [
+            "Advised customers on beauty products and recommended items that matched their needs.",
+            "Handled merchandising, stock integrity, and inventory while meeting sales targets with friendly service.",
+          ],
+    },
+  ];
+
+  const awards = [
+    {
+      title: isMn ? "Full Stack Hackathon-2026 · Тэргүүн байр" : "Full Stack Hackathon 2026 · 1st place",
+      org: isMn
+        ? "МУИС-ийн ББС · West IT Student's Club"
+        : "NUM Western Regional School · West IT Student's Club",
+    },
+    {
+      title: isMn ? "Дартс · Тэргүүн байр" : "Darts · 1st place",
+      org: isMn
+        ? "Математик, компьютерын ухааны тэнхим"
+        : "Department of Mathematics and Computer Science",
+    },
+  ];
+
+  const certificates = [
+    {
+      title: isMn ? "Солонгос хэл — Sejong Course 2A" : "Korean — Sejong Course 2A",
+      org: isMn
+        ? "Сэжон Хаан Институт, Улаанбаатар 2"
+        : "King Sejong Institute Ulaanbaatar 2",
+      period: "2024.02.19 – 2024.03.30",
+    },
+    {
+      title: isMn ? "Солонгос хэл — Анхан шат (1-р түвшин)" : "Korean Language Level 1",
+      org: isMn
+        ? "Чаншин Их Сургуулийн Солонгос хэлний боловсролын төв"
+        : "Changshin University Korean Language Education Center",
+      period: "2022.11.21 – 2023.01.11",
+    },
+  ];
+
+  const languages = [
+    { name: isMn ? "Монгол" : "Mongolian", level: isMn ? "Эх хэл" : "Native" },
+    { name: isMn ? "Солонгос" : "Korean", level: isMn ? "Дунд" : "Intermediate" },
+    { name: isMn ? "Англи" : "English", level: isMn ? "Анхан" : "Beginner" },
+  ];
 
   return (
     <div className="relative min-h-screen" style={{ background: "var(--bg)" }}>
       <CustomCursor />
-      {/* Background layers */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden" aria-hidden>
         <div className="dot-grid absolute inset-0 opacity-60 dark:opacity-40" />
         <div
@@ -129,7 +141,7 @@ function AboutPageContent() {
         <FloatingLeaf className="absolute top-[40%] right-[10%]" color="rgba(74,222,128,0.3)" size={14} delay={1.5} />
         <FloatingLeaf className="absolute top-[65%] left-[15%]" color="rgba(34,197,94,0.25)" size={16} delay={0.8} />
       </div>
-      {/* Top controls */}
+
       <div className="fixed left-3 top-3 z-50 flex max-w-[calc(100%-1.5rem)] flex-wrap items-center gap-2 md:left-6 md:top-6">
         <Link
           href="/"
@@ -154,10 +166,8 @@ function AboutPageContent() {
           {theme === "dark" ? "☾" : "☀"}
         </button>
       </div>
-      {/* Main content */}
-      <main className="relative z-10 mx-auto max-w-[860px] px-4 pb-20 pt-24 sm:px-5 md:px-10 md:pb-24 md:pt-28">
 
-        {/* ── Hero intro ── */}
+      <main className="relative z-10 mx-auto max-w-[860px] px-4 pb-20 pt-24 sm:px-5 md:px-10 md:pb-24 md:pt-28">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -168,12 +178,11 @@ function AboutPageContent() {
             {isMn ? "Миний тухай" : "About me"}
           </span>
           <h1 className="section-title mt-3 text-[var(--ink)] md:text-5xl">
-            {isMn ? "Кодоос цааш" : "Beyond the code"}
+            {isMn ? "Программ хангамжийн төгсөгч" : "Software graduate"}
           </h1>
           <div className="mt-3 h-[3px] w-12 rounded-full" style={{ background: "var(--teal)" }} />
 
           <div className="mt-8 grid gap-8 sm:grid-cols-[auto_1fr] sm:items-start">
-            {/* Photo */}
             <motion.div
               initial={{ opacity: 0, scale: 0.92 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -197,14 +206,12 @@ function AboutPageContent() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[rgba(8,145,178,0.15)] via-transparent to-transparent" />
               </div>
-              {/* Location badge */}
-              <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 whitespace-nowrap rounded-full border border-[var(--line)] bg-[var(--bg-elevated)]/95 px-3 py-1.5 text-[11px] font-semibold text-[var(--muted)] shadow-sm backdrop-blur-sm">
+              <div className="absolute -bottom-3 left-1/2 flex -translate-x-1/2 items-center gap-1.5 whitespace-nowrap rounded-full border border-[var(--line)] bg-[var(--bg-elevated)]/95 px-3 py-1.5 text-[11px] font-semibold text-[var(--muted)] shadow-sm backdrop-blur-sm">
                 <MapPin className="h-3 w-3 text-[var(--teal)]" strokeWidth={2} />
                 {isMn ? "Улаанбаатар, Монгол" : "Ulaanbaatar, Mongolia"}
               </div>
             </motion.div>
 
-            {/* Story */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -214,33 +221,35 @@ function AboutPageContent() {
               {isMn ? (
                 <>
                   <p>
-                    Намайг <span className="font-semibold text-[var(--ink)]">Гомбосүрэн Ичинхорлоо</span> гэдэг — Монгол улсын Улаанбаатар хотод амьдардаг програм хангамжийн инженерчлэлийн оюутан. Хүмүүс ашиглахад хялбар, харахад гоё, найдвартай ажилладаг зүйлс бүтээхийг зорьдог.
+                    Намайг <span className="font-semibold text-[var(--ink)]">Гомбосүрэн Ичинхорлоо</span> гэдэг. Spring Boot, Java, MySQL болон Next.js, React, Tailwind ашиглан веб системийн бие даасан хөгжүүлэлт хийсэн туршлагатай программ хангамжийн төгсөгч.
                   </p>
                   <p>
-                    Програмчлалд дурлах нь санамсаргүй биш байсан — асуудлыг задлан шинжлэх, шийдлийг кодоор илэрхийлэх нь надад байгалийн мэт санагдсан. Тэр мэдрэмж одоо ч хэвээр байна.
+                    Frontend болон цэвэрхэн UI/UX-д гол анхаарлаа хандуулдаг. Ресторан, зочид буудал, сургалтын платформ зэрэг веб системийг өөрөө эцэс хүртэл хийж үзсэн.
                   </p>
                   <p>
-                    Ажлаасаа гадна зураг зурах, гар урлал хийх, хөгжим сонсох, аялах дуртай. Эдгээр нь зөвхөн хобби биш — бүтээлч сэтгэлгээг хурцалдаг зүйлс.
+                    Full-stack хөгжүүлэгчийн байрлалд орж, бодит бүтээгдэхүүн дээр ажиллахыг зорьж байна.
                   </p>
                 </>
               ) : (
                 <>
                   <p>
-                    I'm <span className="font-semibold text-[var(--ink)]">Gombosuren Ichinhorloo</span> — a software engineering student from Ulaanbaatar, Mongolia. I build things that are easy to use, pleasant to look at, and reliable to run.
+                    I’m <span className="font-semibold text-[var(--ink)]">Gombosuren Ichinhorloo</span> — a software graduate with independent experience building web systems in Spring Boot, Java, MySQL, Next.js, React, and Tailwind.
                   </p>
                   <p>
-                    Falling in love with programming wasn't accidental — breaking down problems and expressing solutions through code felt natural from the start. That feeling hasn't changed.
+                    I focus on frontend work and clean UI/UX. I have shipped restaurant, hotel, and training-platform web systems end to end.
                   </p>
                   <p>
-                    Outside of work, I draw, make crafts, listen to music, and explore new places. These aren't just hobbies — they sharpen the creative thinking I bring to every project.
+                    I’m looking for a full-stack developer role where I can work on real products.
                   </p>
                 </>
               )}
+              <p className="text-sm text-[var(--muted)]">
+                {profile.email} · {profile.phone}
+              </p>
             </motion.div>
           </div>
         </motion.div>
 
-        {/* ── Education ── */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -249,11 +258,9 @@ function AboutPageContent() {
           className="mb-16"
         >
           <div className="mb-6">
-            <span className="section-eyebrow">
-              {isMn ? "Боловсрол" : "Education"}
-            </span>
+            <span className="section-eyebrow">{isMn ? "Боловсрол" : "Education"}</span>
             <h2 className="section-title mt-2 text-[var(--ink)] md:text-2xl">
-              {isMn ? "Академик суурь" : "Academic foundation"}
+              {isMn ? "Бакалавр" : "Bachelor’s degree"}
             </h2>
             <div className="mt-2 h-[3px] w-8 rounded-full" style={{ background: "var(--teal)" }} />
           </div>
@@ -267,36 +274,23 @@ function AboutPageContent() {
                 <div className="flex flex-wrap items-start justify-between gap-2">
                   <div>
                     <p className="text-lg font-extrabold text-[var(--ink)]">
-                      {isMn ? "Програм хангамжийн инженерчлэл" : "Software Engineering"}
+                      {isMn ? "Программ хангамж" : "Software Engineering"}
                     </p>
                     <p className="mt-0.5 font-semibold text-[var(--teal)]">
-                      {isMn ? "Монгол Улсын Их Сургууль (МУИС)" : "National University of Mongolia (NUM)"}
+                      {isMn
+                        ? "Монгол Улсын Их Сургуулийн Баруун Бүсийн Сургууль"
+                        : "National University of Mongolia — Western Regional School"}
                     </p>
                   </div>
                   <span className="rounded-full border border-[var(--teal)]/30 bg-[var(--teal-soft)] px-3 py-1 font-mono text-xs font-semibold text-[var(--teal)]">
-                    2022 – {isMn ? "Одоо" : "Present"}
+                    2022.09 – 2026.06
                   </span>
-                </div>
-                <p className="mt-4 text-[14px] leading-[1.85] text-[var(--muted)]">
-                  {isMn
-                    ? "Алгоритм, өгөгдлийн бүтэц, объект хандалтат програмчлал, мэдээллийн сангийн дизайн, програм хангамжийн архитектурын суурь мэдлэгийг эзэмшиж байна. Онолын мэдлэгийг практик төслүүдэд хэрэглэхийг чухалчилдаг." :"Studying algorithms, data structures, object-oriented programming, database design, and software architecture fundamentals. I focus on applying theoretical knowledge to practical, real-world projects."}
-                </p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {["Java", "OOP", "Algorithms", "MySQL", "Software Design"]?.map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded-full border border-[var(--line)] bg-[var(--bg)] px-2.5 py-1 text-[11px] font-semibold text-[var(--muted)]"
-                    >
-                      {tag}
-                    </span>
-                  ))}
                 </div>
               </div>
             </div>
           </div>
         </motion.div>
 
-        {/* ── Career Journey ── */}
         <div className="mb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -305,104 +299,130 @@ function AboutPageContent() {
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className="mb-8"
           >
-            <span className="section-eyebrow">
-              {isMn ? "Замнал" : "Journey"}
-            </span>
+            <span className="section-eyebrow">{isMn ? "Ажлын туршлага" : "Experience"}</span>
             <h2 className="section-title mt-2 text-[var(--ink)] md:text-2xl">
-              {isMn ? "Хэрхэн энд хүрсэн бэ" : "How I got here"}
+              {isMn ? "Дадлага ба ажил" : "Internship and work"}
             </h2>
             <div className="mt-2 h-[3px] w-8 rounded-full" style={{ background: "var(--teal)" }} />
           </motion.div>
 
           <div className="space-y-4">
-            {careerMilestones?.map((milestone, i) => {
-              const Icon = milestone?.icon;
-              return (
-                <motion.div
-                  key={milestone?.year}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.08, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                  whileHover={{ x: 4 }}
-                  className={`relative overflow-hidden rounded-[16px] border ${milestone?.border} bg-gradient-to-br ${milestone?.color} p-5 backdrop-blur-sm transition-shadow hover:shadow-md dark:border-white/[0.06]`}
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="flex flex-col items-center gap-2">
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] bg-white/30 dark:bg-white/[0.07]">
-                        <Icon className="h-5 w-5 text-[var(--ink)]" strokeWidth={1.8} />
-                      </div>
-                      <span className={`h-2 w-2 rounded-full ${milestone?.dot}`} />
+            {jobs.map((job) => (
+              <motion.div
+                key={job.company}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="rounded-[16px] border border-[var(--line)] bg-[var(--bg-elevated)] p-5 dark:border-white/[0.06] dark:bg-[rgba(13,21,32,0.6)]"
+              >
+                <div className="flex items-start gap-4">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] bg-[var(--teal-soft)]">
+                    <Briefcase className="h-5 w-5 text-[var(--teal)]" strokeWidth={1.8} />
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <p className="font-bold text-[var(--ink)]">{job.role}</p>
+                      <span className="font-mono text-xs font-semibold text-[var(--teal)]">{job.period}</span>
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex flex-wrap items-center gap-3 mb-1">
-                        <span className="font-mono text-xs font-bold text-[var(--teal)]">{milestone?.year}</span>
-                        <p className="font-bold text-[var(--ink)]">
-                          {isMn ? milestone?.titleMn : milestone?.title}
-                        </p>
-                      </div>
-                      <p className="text-[13px] leading-[1.8] text-[var(--muted)]">
-                        {isMn ? milestone?.descMn : milestone?.desc}
-                      </p>
-                    </div>
+                    <p className="mt-0.5 text-sm font-semibold text-[var(--teal)]">{job.company}</p>
+                    <p className="mt-0.5 text-xs text-[var(--muted)]">{job.place}</p>
+                    <ul className="mt-3 space-y-1.5 text-[13px] leading-[1.8] text-[var(--muted)]">
+                      {job.points.map((point) => (
+                        <li key={point}>{point}</li>
+                      ))}
+                    </ul>
                   </div>
-                </motion.div>
-              );
-            })}
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
 
-        {/* ── Core Values ── */}
+        <div className="mb-16 grid gap-8 sm:grid-cols-2">
+          <div>
+            <div className="mb-5">
+              <span className="section-eyebrow">{isMn ? "Шагнал" : "Awards"}</span>
+              <h2 className="section-title mt-2 text-[var(--ink)] md:text-2xl">
+                {isMn ? "Тэргүүн байр" : "First place"}
+              </h2>
+            </div>
+            <div className="space-y-3">
+              {awards.map((item) => (
+                <div
+                  key={item.title}
+                  className="rounded-[14px] border border-[var(--line)] bg-[var(--bg-elevated)] p-4 dark:border-white/[0.06]"
+                >
+                  <Trophy className="mb-2 h-4 w-4 text-amber-400" strokeWidth={1.8} />
+                  <p className="text-sm font-bold text-[var(--ink)]">{item.title}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-[var(--muted)]">{item.org}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <div className="mb-5">
+              <span className="section-eyebrow">{isMn ? "Гэрчилгээ" : "Certificates"}</span>
+              <h2 className="section-title mt-2 text-[var(--ink)] md:text-2xl">
+                {isMn ? "Солонгос хэл" : "Korean language"}
+              </h2>
+            </div>
+            <div className="space-y-3">
+              {certificates.map((item) => (
+                <div
+                  key={item.title}
+                  className="rounded-[14px] border border-[var(--line)] bg-[var(--bg-elevated)] p-4 dark:border-white/[0.06]"
+                >
+                  <Award className="mb-2 h-4 w-4 text-[var(--teal)]" strokeWidth={1.8} />
+                  <p className="text-sm font-bold text-[var(--ink)]">{item.title}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-[var(--muted)]">{item.org}</p>
+                  <p className="mt-1 font-mono text-[11px] text-[var(--teal)]">{item.period}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
         <div className="mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="mb-8"
-          >
-            <span className="section-eyebrow">
-              {isMn ? "Үнэт зүйлс" : "Values"}
-            </span>
+          <div className="mb-6">
+            <span className="section-eyebrow">{isMn ? "Хэл" : "Languages"}</span>
             <h2 className="section-title mt-2 text-[var(--ink)] md:text-2xl">
-              {isMn ? "Юунд итгэдэг вэ" : "What I believe in"}
+              {isMn ? "Ярьдаг хэлнүүд" : "What I speak"}
             </h2>
-            <div className="mt-2 h-[3px] w-8 rounded-full" style={{ background: "var(--teal)" }} />
-          </motion.div>
-
-          <div className="grid gap-4 sm:grid-cols-2">
-            {coreValues?.map((value, i) => {
-              const Icon = value?.icon;
-              return (
-                <motion.div
-                  key={value?.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.07, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                  whileHover={{ y: -3, scale: 1.01 }}
-                  className="rounded-[16px] border border-[var(--line)] bg-[var(--bg-elevated)] p-5 transition-shadow hover:shadow-md dark:bg-[rgba(13,21,32,0.6)] dark:border-white/[0.06]"
-                >
-                  <div className="flex items-start gap-4">
-                    <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] ${value?.bg}`}>
-                      <Icon className={`h-5 w-5 ${value?.color}`} strokeWidth={1.8} />
-                    </span>
-                    <div>
-                      <p className="font-bold text-[var(--ink)]">
-                        {isMn ? value?.titleMn : value?.title}
-                      </p>
-                      <p className="mt-1.5 text-[13px] leading-[1.8] text-[var(--muted)]">
-                        {isMn ? value?.descMn : value?.desc}
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              );
-            })}
+          </div>
+          <div className="grid gap-3 sm:grid-cols-3">
+            {languages.map((item) => (
+              <div
+                key={item.name}
+                className="rounded-[14px] border border-[var(--line)] bg-[var(--bg-elevated)] px-4 py-4 dark:border-white/[0.06]"
+              >
+                <Languages className="mb-2 h-4 w-4 text-[var(--teal)]" strokeWidth={1.8} />
+                <p className="font-bold text-[var(--ink)]">{item.name}</p>
+                <p className="mt-0.5 text-xs text-[var(--muted)]">{item.level}</p>
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* ── CTA ── */}
+        <div className="mb-16">
+          <div className="mb-6">
+            <span className="section-eyebrow">{isMn ? "Ур чадвар" : "Skills"}</span>
+            <h2 className="section-title mt-2 text-[var(--ink)] md:text-2xl">
+              {isMn ? "CV дээрх технологи" : "From the resume"}
+            </h2>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {skills.map((skill) => (
+              <span
+                key={skill}
+                className="rounded-full border border-[var(--line)] bg-[var(--bg-elevated)] px-3 py-1.5 text-[12px] font-semibold text-[var(--muted)]"
+              >
+                {skill}
+              </span>
+            ))}
+          </div>
+        </div>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -416,7 +436,8 @@ function AboutPageContent() {
           </h3>
           <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-[var(--muted)]">
             {isMn
-              ? "Дадлага, junior ажлын байр, freelance web ажилд нээлттэй. Холбоо бариарай." :"Open to internships, junior roles, and freelance web work. I'd love to hear from you."}
+              ? "Full-stack хөгжүүлэгчийн байрлалд нээлттэй. Бодит бүтээгдэхүүн дээр ажиллахыг зорьж байна."
+              : "Open to full-stack developer roles. I want to work on real products."}
           </p>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
             <Link

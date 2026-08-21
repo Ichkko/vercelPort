@@ -12,8 +12,8 @@ import { useState, useEffect, useRef } from "react";
 
 const roles = [
   "Full Stack Developer",
-  "Spring Boot Engineer",
-  "Next.js Developer",
+  "Software Engineer",
+ 
 ];
 
 export function Hero() {
@@ -54,8 +54,8 @@ export function Hero() {
 
   const stats = [
     { value: "4+", label: t("statYears") },
-    { value: "6+", label: t("statProjects") },
-    { value: "100%", label: t("statOwnership") },
+    { value: "4", label: t("statProjects") },
+    { value: "1st", label: t("metricHackathon") },
   ];
 
   const containerVariants = {

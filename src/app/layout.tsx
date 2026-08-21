@@ -78,7 +78,7 @@ export default function RootLayout({
       "https://www.instagram.com/iichh.kuu__/",
     ],
     email: "ichkoog79@gmail.com",
-    telephone: "+976 8015 0000",
+    telephone: "+976 8015 0920",
     address: {
       "@type": "PostalAddress",
       addressLocality: "Ulaanbaatar",

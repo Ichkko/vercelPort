@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Code2, ExternalLink, GitBranch, Rocket, ShieldCheck, ChevronLeft, ChevronRight } from "lucide-react";
+import { Code2, ExternalLink, Rocket, Trophy, ChevronLeft, ChevronRight } from "lucide-react";
 import { projectsMeta, profile } from "@/data/portfolio";
 import { FadeIn, Stagger, StaggerItem } from "./FadeIn";
 import { useLanguage } from "./LanguageProvider";
@@ -20,7 +20,8 @@ function ProjectSlideshow({ images, alt, aspectClass = "aspect-[16/9]" }: Slides
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);
 
-  const total = images.length;
+  const frames = images.filter(Boolean);
+  const total = frames.length;
 
   const next = useCallback(() => {
     setDirection(1);
@@ -47,6 +48,14 @@ function ProjectSlideshow({ images, alt, aspectClass = "aspect-[16/9]" }: Slides
     return () => clearInterval(id);
   }, [next, total]);
 
+  if (total === 0) {
+    return (
+      <div className={`relative flex w-full items-center justify-center overflow-hidden ${aspectClass} bg-gradient-to-br from-[var(--teal-soft)] to-violet-400/20`}>
+        <p className="px-4 text-center text-sm font-bold text-[var(--muted)]">{alt}</p>
+      </div>
+    );
+  }
+
   const variants = {
     enter: (dir: number) => ({ x: dir > 0 ? "100%" : "-100%", opacity: 0 }),
     center: { x: 0, opacity: 1 },
@@ -67,7 +76,7 @@ function ProjectSlideshow({ images, alt, aspectClass = "aspect-[16/9]" }: Slides
           className="absolute inset-0"
         >
           <Image
-            src={images[current]}
+            src={frames[current]}
             alt={`${alt} — ${current + 1}`}
             fill
             className="object-cover"
@@ -96,7 +105,7 @@ function ProjectSlideshow({ images, alt, aspectClass = "aspect-[16/9]" }: Slides
 
           {/* Dot indicators */}
           <div className="absolute bottom-2 left-1/2 z-10 flex -translate-x-1/2 gap-1.5">
-            {images.map((_, i) => (
+            {frames.map((_, i) => (
               <button
                 key={i}
                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); setDirection(i > current ? 1 : -1); setCurrent(i); }}
@@ -115,14 +124,13 @@ export function Projects() {
   const { t } = useLanguage();
 
   const metrics = [
-    { value: "6+", label: t("metricProjects"), Icon: Code2 },
-    { value: "500+", label: t("metricCommits"), Icon: GitBranch },
+    { value: "4", label: t("metricProjects"), Icon: Code2 },
     { value: "4+", label: t("metricYears"), Icon: Rocket },
-    { value: "100%", label: t("metricResponsibility"), Icon: ShieldCheck },
+    { value: "1st", label: t("metricHackathon"), Icon: Trophy },
   ];
 
-  const featured = projectsMeta?.[0];
-  const rest = projectsMeta?.slice(1);
+  const featured = projectsMeta[0];
+  const rest = projectsMeta.slice(1);
 
   return (
     <section id="projects" className="scroll-mt-8">
@@ -190,9 +198,9 @@ export function Projects() {
                   </div>
                 </div>
                 <div className="mt-4 flex items-center gap-3 border-t border-[var(--line)] pt-4">
-                  {!featured.liveUrl.includes("github.com") && (
+                  {featured.liveUrl && !featured.liveUrl.includes("github.com") && (
                   <a
-                    href={featured?.liveUrl}
+                    href={featured.liveUrl}
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex items-center gap-1.5 rounded-lg bg-[var(--teal)] px-4 py-2 text-xs font-bold text-white shadow transition hover:opacity-85"
@@ -201,8 +209,9 @@ export function Projects() {
                     {t("liveDemo")}
                   </a>
                   )}
+                  {featured.githubUrl && (
                   <a
-                    href={featured?.githubUrl}
+                    href={featured.githubUrl}
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--line)] px-4 py-2 text-xs font-bold text-[var(--muted)] transition hover:border-[var(--teal)]/50 hover:text-[var(--ink)]"
@@ -210,6 +219,7 @@ export function Projects() {
                     <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.486 2 12.021c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.009-.866-.013-1.7-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.621.069-.608.069-.608 1.004.071 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.339-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.026 2.747-1.026.546 1.378.203 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.944.359.31.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.021C22 6.486 17.523 2 12 2Z"/></svg>
                     {t("github")}
                   </a>
+                  )}
                 </div>
               </div>
             </div>
@@ -249,9 +259,9 @@ export function Projects() {
                   ))}
                 </div>
                 <div className="mt-auto flex items-center gap-4 border-t border-[var(--line)] pt-4">
-                  {!project.liveUrl.includes("github.com") && (
+                  {project.liveUrl && !project.liveUrl.includes("github.com") && (
                   <a
-                    href={project?.liveUrl}
+                    href={project.liveUrl}
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--teal)] transition hover:opacity-75"
@@ -260,8 +270,9 @@ export function Projects() {
                     {t("liveDemo")}
                   </a>
                   )}
+                  {project.githubUrl && (
                   <a
-                    href={project?.githubUrl}
+                    href={project.githubUrl}
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--muted)] transition hover:text-[var(--ink)]"
@@ -269,6 +280,7 @@ export function Projects() {
                     <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.486 2 12.021c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.009-.866-.013-1.7-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.621.069-.608.069-.608 1.004.071 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.339-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.026 2.747-1.026.546 1.378.203 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.944.359.31.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.021C22 6.486 17.523 2 12 2Z"/></svg>
                     {t("github")}
                   </a>
+                  )}
                 </div>
               </div>
             </motion.article>
@@ -278,7 +290,7 @@ export function Projects() {
 
       {/* Metrics */}
       <FadeIn delay={0.1}>
-        <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3">
           {metrics?.map((metric) => (
             <motion.div
               key={metric?.label}

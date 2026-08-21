@@ -1,7 +1,7 @@
 export const profile = {
   name: "Гомбосүрэн Ичинхорлоо",
   email: "ichkoog79@gmail.com",
-  phone: "+976 8015 0000",
+  phone: "+976 8015 0920",
   github: "https://github.com/Ichkko",
   linkedin: "https://www.linkedin.com/in/ichko",
   instagram: "https://www.instagram.com/iichh.kuu__/",
@@ -30,7 +30,8 @@ export const skillCategories = [
     skills: [
       { name: "Java", level: 85, tag: "Core" },
       { name: "Spring Boot", level: 80, tag: "API" },
-      { name: "MySQL", level: 78, tag: "DB" },
+      { name: "MySQL", level: 80, tag: "DB" },
+      { name: "PostgreSQL", level: 74, tag: "DB" },
       { name: "JPA / Hibernate", level: 70, tag: "ORM" },
       { name: "REST API", level: 82, tag: "Design" },
       { name: "JWT Auth", level: 72, tag: "Security" },
@@ -48,7 +49,7 @@ export const skillCategories = [
       { name: "TypeScript", level: 75, tag: "Language" },
       { name: "Tailwind CSS", level: 88, tag: "Styling" },
       { name: "HTML / CSS", level: 90, tag: "Core" },
-      { name: "Framer Motion", level: 65, tag: "Animation" },
+      { name: "Framer Motion", level: 60, tag: "Animation" },
     ],
   },
   {
@@ -74,7 +75,7 @@ export const skillCategories = [
       { name: "Docker", level: 60, tag: "DevOps" },
       { name: "IntelliJ IDEA", level: 82, tag: "IDE" },
       { name: "VS Code", level: 88, tag: "IDE" },
-      { name: "Postman", level: 80, tag: "Testing" },
+      { name: "Postman", level: 72, tag: "Testing" },
     ],
   },
 ];
@@ -90,9 +91,9 @@ export const projectsMeta = [
       "/assets/images/foodmenu4-1785173342054.png",
       "/assets/images/foodmenu5-1785173355844.png",
     ],
-    tags: ["Spring Boot", "WebSocket", "MySQL", "Next.js", "JPA", "REST API"],
-    liveUrl: "https://github.com/Ichkko",
-    githubUrl: "https://github.com/Ichkko",
+    tags: ["Spring Boot", "WebSocket", "PostgreSQL", "Next.js", "JPA", "REST API", "QPay"],
+    liveUrl: "https://foodmenu-front.vercel.app/customer?table=5",
+    githubUrl: "https://github.com/Ichkko/foodmenuBackendCode",
     titleKey: "project1Title" as const,
     descKey: "project1Desc" as const,
   },
@@ -110,8 +111,7 @@ export const projectsMeta = [
       '/assets/images/hotel7.png',
     ],
     tags: ["Java", "Spring Boot", "MySQL", "JWT", "React", "Next.js"],
-    liveUrl: "https://github.com/Ichkko",
-    githubUrl: "https://github.com/Ichkko",
+    githubUrl: "https://github.com/Ichkko/hotelback",
     titleKey: "project2Title" as const,
     descKey: "project2Desc" as const,
   },
@@ -126,8 +126,8 @@ export const projectsMeta = [
         "/assets/images/west4.png",
     ],
     tags: ["TypeScript", "JavaScript", "Axios", "Tailwind CSS", "Astro"],
-    liveUrl: "https://github.com/Ichkko",
-    githubUrl: "https://github.com/Ichkko",
+    liveUrl: "https://west.mn/",
+
     titleKey: "project3Title" as const,
     descKey: "project3Desc" as const,
   },
@@ -142,10 +142,8 @@ export const projectsMeta = [
  
     ],
     tags: ["Spring Boot", "REST API", "MySQL", "Next.js", "React", "Tailwind CSS", "Java"],
-    liveUrl: "https://github.com/Ichkko",
-    githubUrl: "https://github.com/Ichkko",
+    githubUrl: "https://github.com/Ichkko/oyutanback",
     titleKey: "project4Title" as const,
     descKey: "project4Desc" as const,
   },
-  
 ];

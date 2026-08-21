@@ -12,7 +12,7 @@ import {
   Code2,
   GitBranch,
   Rocket,
-  ShieldCheck,
+  Trophy,
   Filter,
 } from "lucide-react";
 import { projectsMeta, profile } from "@/data/portfolio";
@@ -100,7 +100,8 @@ function ProjectSlideshow({ images, alt }: SlideshowProps) {
   const { t } = useLanguage();
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);
-  const total = images.length;
+  const frames = images.filter(Boolean);
+  const total = frames.length;
 
   const next = useCallback(() => {
     setDirection(1);
@@ -126,6 +127,14 @@ function ProjectSlideshow({ images, alt }: SlideshowProps) {
     return () => clearInterval(id);
   }, [next, total]);
 
+  if (total === 0) {
+    return (
+      <div className="relative flex aspect-[16/9] w-full items-center justify-center overflow-hidden bg-gradient-to-br from-[var(--teal-soft)] to-violet-400/20">
+        <p className="px-4 text-center text-sm font-bold text-[var(--muted)]">{alt}</p>
+      </div>
+    );
+  }
+
   const variants = {
     enter: (dir: number) => ({ x: dir > 0 ? "100%" : "-100%", opacity: 0 }),
     center: { x: 0, opacity: 1 },
@@ -146,7 +155,7 @@ function ProjectSlideshow({ images, alt }: SlideshowProps) {
           className="absolute inset-0"
         >
           <Image
-            src={images[current]}
+            src={frames[current]}
             alt={`${alt} — ${current + 1}`}
             fill
             className="object-cover"
@@ -172,7 +181,7 @@ function ProjectSlideshow({ images, alt }: SlideshowProps) {
             <ChevronRight className="h-4 w-4" />
           </button>
           <div className="absolute bottom-2.5 left-1/2 z-10 flex -translate-x-1/2 gap-1.5">
-            {images.map((_, i) => (
+            {frames.map((_, i) => (
               <button
                 key={i}
                 onClick={(e) => {
@@ -213,10 +222,9 @@ export default function PortfolioPage() {
       : projectsMeta.filter((p) => p.tags.includes(activeTag));
 
   const metrics = [
-    { value: "6+", numericValue: 6, suffix: "+", label: t("metricProjects"), Icon: Code2 },
-    { value: "500+", numericValue: 500, suffix: "+", label: t("metricCommits"), Icon: GitBranch },
-    { value: "4+", numericValue: 4, suffix: "+", label: t("metricYears"), Icon: Rocket },
-    { value: "100%", numericValue: 100, suffix: "%", label: t("metricResponsibility"), Icon: ShieldCheck },
+    { numericValue: 4, suffix: "", label: t("metricProjects"), Icon: Code2 },
+    { numericValue: 4, suffix: "+", label: t("metricYears"), Icon: Rocket },
+    { numericValue: 1, suffix: "st", label: t("metricHackathon"), Icon: Trophy },
   ];
 
   return (
@@ -274,7 +282,7 @@ export default function PortfolioPage() {
 
         {/* Metrics strip */}
         <FadeIn delay={0.05}>
-          <div className="mb-12 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div className="mb-12 grid grid-cols-2 gap-3 sm:grid-cols-3">
             {metrics.map((m, i) => (
               <MetricCard
                 key={m.label}
@@ -352,7 +360,7 @@ export default function PortfolioPage() {
                         </div>
                       </div>
                       <div className="mt-6 flex items-center gap-4 border-t border-[var(--line)] pt-4">
-                        {!filtered[0].liveUrl.includes("github.com") && (
+                        {filtered[0].liveUrl && !filtered[0].liveUrl.includes("github.com") && (
                         <a
                           href={filtered[0].liveUrl}
                           target="_blank"
@@ -363,6 +371,7 @@ export default function PortfolioPage() {
                           {t("liveDemo")}
                         </a>
                         )}
+                        {filtered[0].githubUrl && (
                         <a
                           href={filtered[0].githubUrl}
                           target="_blank"
@@ -372,6 +381,7 @@ export default function PortfolioPage() {
                           <GitBranch className="h-3.5 w-3.5" strokeWidth={1.8} />
                           {t("github")}
                         </a>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -406,7 +416,7 @@ export default function PortfolioPage() {
                               ))}
                             </div>
                             <div className="mt-auto flex items-center gap-4 border-t border-[var(--line)] pt-4">
-                              {!project.liveUrl.includes("github.com") && (
+                              {project.liveUrl && !project.liveUrl.includes("github.com") && (
                               <a
                                 href={project.liveUrl}
                                 target="_blank"
@@ -417,6 +427,7 @@ export default function PortfolioPage() {
                                 {t("liveDemo")}
                               </a>
                               )}
+                              {project.githubUrl && (
                               <a
                                 href={project.githubUrl}
                                 target="_blank"
@@ -426,6 +437,7 @@ export default function PortfolioPage() {
                                 <GitBranch className="h-3.5 w-3.5" strokeWidth={1.8} />
                                 {t("github")}
                               </a>
+                              )}
                             </div>
                           </div>
                         </motion.article>
