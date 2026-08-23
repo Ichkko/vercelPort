@@ -53,7 +53,7 @@ export function Hero() {
   }, [displayed, typing, roleIndex]);
 
   const stats = [
-    { value: "4+", label: t("statYears") },
+    { value: "4", label: t("statYears") },
     { value: "4", label: t("statProjects") },
     { value: "1st", label: t("metricHackathon") },
   ];

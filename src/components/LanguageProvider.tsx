@@ -20,16 +20,19 @@ type LanguageContextValue = {
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Lang>(() => {
-    if (typeof window === "undefined") return "mn";
-    const stored = window.localStorage.getItem("portfolio-lang") as Lang | null;
-    return stored === "en" || stored === "mn" ? stored : "mn";
-  });
+  const [lang, setLangState] = useState<Lang>("mn");
 
   const setLang = useCallback((next: Lang) => {
     setLangState(next);
     document.documentElement.lang = next;
     window.localStorage.setItem("portfolio-lang", next);
+  }, []);
+
+  useEffect(() => {
+    const stored = window.localStorage.getItem("portfolio-lang") as Lang | null;
+    if (stored === "en" || stored === "mn") {
+      setLangState(stored);
+    }
   }, []);
 
   useEffect(() => {

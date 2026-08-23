@@ -111,7 +111,7 @@ function AboutPageContent() {
   const languages = [
     { name: isMn ? "Монгол" : "Mongolian", level: isMn ? "Эх хэл" : "Native" },
     { name: isMn ? "Солонгос" : "Korean", level: isMn ? "Дунд" : "Intermediate" },
-    { name: isMn ? "Англи" : "English", level: isMn ? "Анхан" : "Beginner" },
+    { name: isMn ? "Англи" : "English", level: isMn ? "Суурь" : "Basic" },
   ];
 
   return (
@@ -221,25 +221,25 @@ function AboutPageContent() {
               {isMn ? (
                 <>
                   <p>
-                    Намайг <span className="font-semibold text-[var(--ink)]">Гомбосүрэн Ичинхорлоо</span> гэдэг. Spring Boot, Java, MySQL болон Next.js, React, Tailwind ашиглан веб системийн бие даасан хөгжүүлэлт хийсэн туршлагатай программ хангамжийн төгсөгч.
+                    Намайг <span className="font-semibold text-[var(--ink)]">Гомбосүрэн Ичинхорлоо</span> гэдэг. Ресторан, зочид буудал, сургалт, оюутны дотуур байрны удирдлагын систем зэрэг бодит хэрэглээтэй төслүүд дээр ажилласан программ хангамжийн төгсөгч.
                   </p>
                   <p>
-                    Frontend болон цэвэрхэн UI/UX-д гол анхаарлаа хандуулдаг. Ресторан, зочид буудал, сургалтын платформ зэрэг веб системийг өөрөө эцэс хүртэл хийж үзсэн.
+                    React/Next.js frontend болон Spring Boot API дээр ажиллаж, цэвэр UI, role-based урсгал, database design, засварлахад ойлгомжтой кодонд анхаардаг.
                   </p>
                   <p>
-                    Full-stack хөгжүүлэгчийн байрлалд орж, бодит бүтээгдэхүүн дээр ажиллахыг зорьж байна.
+                    Junior full-stack хөгжүүлэгчээр бодит бүтээгдэхүүний багт орж хувь нэмэр оруулахад бэлэн байна.
                   </p>
                 </>
               ) : (
                 <>
                   <p>
-                    I’m <span className="font-semibold text-[var(--ink)]">Gombosuren Ichinhorloo</span> — a software graduate with independent experience building web systems in Spring Boot, Java, MySQL, Next.js, React, and Tailwind.
+                    I’m <span className="font-semibold text-[var(--ink)]">Gombosuren Ichinhorloo</span> — a Software Engineering graduate with hands-on experience building restaurant, hotel, education, and dormitory management systems.
                   </p>
                   <p>
-                    I focus on frontend work and clean UI/UX. I have shipped restaurant, hotel, and training-platform web systems end to end.
+                    I work across React/Next.js frontends and Spring Boot APIs, with attention to clean UI, role-based flows, database design, and maintainable implementation.
                   </p>
                   <p>
-                    I’m looking for a full-stack developer role where I can work on real products.
+                    I’m ready to contribute as a junior full-stack developer on a real product team.
                   </p>
                 </>
               )}
@@ -436,8 +436,8 @@ function AboutPageContent() {
           </h3>
           <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-[var(--muted)]">
             {isMn
-              ? "Full-stack хөгжүүлэгчийн байрлалд нээлттэй. Бодит бүтээгдэхүүн дээр ажиллахыг зорьж байна."
-              : "Open to full-stack developer roles. I want to work on real products."}
+              ? "Junior full-stack хөгжүүлэгч, дадлага, бүтээгдэхүүнд төвлөрсөн багийн боломжуудад нээлттэй."
+              : "Open to junior full-stack developer roles, internships, and product-focused teams."}
           </p>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
             <Link

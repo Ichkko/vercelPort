@@ -125,7 +125,7 @@ export function Projects() {
 
   const metrics = [
     { value: "4", label: t("metricProjects"), Icon: Code2 },
-    { value: "4+", label: t("metricYears"), Icon: Rocket },
+    { value: "4", label: t("metricYears"), Icon: Rocket },
     { value: "1st", label: t("metricHackathon"), Icon: Trophy },
   ];
 
