@@ -172,11 +172,11 @@ export const translations = {
     statOwnership: "Хариуцлага",
     aboutEyebrow: "Тухай",
     aboutTitle: "Товчхон миний тухай",
-    aboutP1:
-      "Би ресторан, зочид буудал, сургалт, оюутны дотуур байрны удирдлагын систем зэрэг бодит хэрэглээтэй төслүүд дээр ажилласан программ хангамжийн төгсөгч.",
-    aboutP2:
-      "React/Next.js frontend болон Spring Boot API дээр ажиллаж, цэвэр UI, role-based урсгал, database design, засварлахад ойлгомжтой кодонд анхаардаг. Junior full-stack хөгжүүлэгчээр бодит бүтээгдэхүүний багт ороход бэлэн байна.",
-    infoName: "Нэр",
+       aboutP1:
+      "Би Зочид буудлын мэдээллийн систем болон хоол захиалгын систем зэрэг бодит хэрэглээнд чиглэсэн төслүүдийг frontend, backend, database болон realtime communication хэсгүүдийг хамруулан бүрэн хэрэгжүүлсэн туршлагатай. Мөн JWT-д суурилсан authentication болон role-based authorization, захиалгын төлөвийн удирдлага, kitchen workflow, order tracking зэрэг системийн үндсэн үйл ажиллагааг хөгжүүлж байсан.",
+     aboutP2:
+      "Frontend хөгжүүлэлт, цэвэрхэн UI/UX болон maintainable code-д анхаардаг бөгөөд цаашид бодит бүтээгдэхүүн хөгжүүлдэг багт ажиллан Full-stack хөгжүүлэлтийн ур чадвараа хөгжүүлэх зорилготой.",
+      infoName: "Нэр",
     infoLocation: "Байршил",
     infoEmail: "И-мэйл",
     infoEducation: "Боловсрол",
@@ -248,7 +248,7 @@ export const translations = {
     timelineNow: "Одоо",
     contactTitle: "Хамтран ажиллах уу?",
     contactDesc:
-      "Junior full-stack хөгжүүлэгч, дадлага, бүтээгдэхүүнд төвлөрсөн багийн боломжуудад нээлттэй. Би бодит ажилд хувь нэмэр оруулж, цааш өсөхийг хүсэж байна.",
+      "Junior full-stack хөгжүүлэгч, бүтээгдэхүүнд төвлөрсөн багийн боломжуудад нээлттэй. Би бодит ажилд хувь нэмэр оруулж, цааш өсөхийг хүсэж байна.",
     contactCta: "Холбогдох",
     contactEyebrow: "Холбоо барих",
     formName: "Нэр",
