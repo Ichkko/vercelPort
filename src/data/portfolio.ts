@@ -31,7 +31,7 @@ export const skillCategories = [
       { name: "Java", level: 85, tag: "Core" },
       { name: "Spring Boot", level: 80, tag: "API" },
       { name: "MySQL", level: 80, tag: "DB" },
-      { name: "PostgreSQL", level: 74, tag: "DB" },
+      { name: "PostgreSQL", level: 65, tag: "DB" },
       { name: "JPA / Hibernate", level: 70, tag: "ORM" },
       { name: "REST API", level: 82, tag: "Design" },
       { name: "JWT Auth", level: 72, tag: "Security" },
